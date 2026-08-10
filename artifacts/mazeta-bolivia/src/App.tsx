@@ -704,6 +704,7 @@ function HomePage() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeTab, setActiveTab] = useState<BottomTab>("inicio");
   const [activeHeroSlide, setActiveHeroSlide] = useState(0);
+  const [announcementPaused, setAnnouncementPaused] = useState(false);
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [cartOpen, setCartOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
@@ -751,6 +752,36 @@ function HomePage() {
 
   return (
     <main className="mazeta-app">
+      <button
+        type="button"
+        className={`mazeta-announcement-bar${announcementPaused ? " is-paused" : ""}`}
+        aria-label={announcementPaused ? "Reanudar anuncio" : "Pausar anuncio"}
+        aria-pressed={announcementPaused}
+        onClick={() => setAnnouncementPaused((paused) => !paused)}
+      >
+        <span className="mazeta-announcement-viewport" aria-hidden="true">
+          <span className="mazeta-announcement-track">
+            <span className="mazeta-announcement-message">
+              <b>MAZETA WORLD ONLINE</b>
+              <i />
+              <strong>ENVÍOS A TODA BOLIVIA</strong>
+              <span className="mazeta-announcement-flag">🇧🇴</span>
+              <i />
+              <b>NUEVA COLECCIÓN DISPONIBLE</b>
+              <i />
+            </span>
+            <span className="mazeta-announcement-message" aria-hidden="true">
+              <b>MAZETA WORLD ONLINE</b>
+              <i />
+              <strong>ENVÍOS A TODA BOLIVIA</strong>
+              <span className="mazeta-announcement-flag">🇧🇴</span>
+              <i />
+              <b>NUEVA COLECCIÓN DISPONIBLE</b>
+              <i />
+            </span>
+          </span>
+        </span>
+      </button>
       <header className="mazeta-header">
         <button
           className="mazeta-wordmark"
