@@ -555,11 +555,11 @@ function OrderFormModal({
 function StorePage({
   onAddToCart,
   onOpenProduct,
-  onOpenOrder,
+  onOpenCart,
 }: {
-  onAddToCart: () => void;
+  onAddToCart: (product: Product, quantity?: number) => void;
   onOpenProduct: (product: Product) => void;
-  onOpenOrder: () => void;
+  onOpenCart: () => void;
 }) {
   const [favorites, setFavorites] = useState<string[]>([]);
 
@@ -598,7 +598,7 @@ function StorePage({
         <strong>{product.price}</strong>
         <button type="button" className="store-add-button" onClick={(event) => {
           event.stopPropagation();
-          onAddToCart();
+           onAddToCart(product);
         }}>
           AGREGAR <ShoppingCart aria-hidden="true" />
         </button>
@@ -629,7 +629,7 @@ function StorePage({
         <div className="store-hero-copy">
           <h2>RENDIMIENTO<br />SIN LÍMITES</h2>
           <p>Nueva colección deportiva<br />ya disponible.</p>
-          <button type="button" onClick={onAddToCart}>VER COLECCIÓN</button>
+          <button type="button" onClick={() => onOpenCart()}>VER COLECCIÓN</button>
         </div>
         <div className="store-dots"><span className="is-active" /><span /><span /></div>
       </section>
@@ -665,7 +665,7 @@ function StorePage({
         <div className="store-offer-copy">
           <h2>20% OFF<br />EN HOODIES</h2>
           <p>Por tiempo limitado.<br />No te lo pierdas.</p>
-          <button type="button" onClick={onAddToCart}>VER OFERTAS</button>
+          <button type="button" onClick={() => onOpenCart()}>VER OFERTAS</button>
         </div>
         <div className="store-discount">20%<br /><span>OFF</span></div>
       </section>
@@ -687,15 +687,41 @@ function StorePage({
 function HomePage() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeTab, setActiveTab] = useState<BottomTab>("tienda");
-  const [cartCount, setCartCount] = useState(0);
+  const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  const [cartOpen, setCartOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
-  const [orderProduct, setOrderProduct] = useState<Product | null>(null);
-  const [orderQuantity, setOrderQuantity] = useState(0);
   const [orderOpen, setOrderOpen] = useState(false);
+  const cartCount = cartItems.reduce((total, item) => total + item.quantity, 0);
 
   const selectTab = (tab: BottomTab) => {
     setActiveTab(tab);
     setMenuOpen(false);
+  };
+
+  const addToCart = (product: Product, quantity = 1) => {
+    setCartItems((current) => {
+      const existing = current.find((item) => item.product.name === product.name);
+      if (existing) {
+        return current.map((item) =>
+          item.product.name === product.name
+            ? { ...item, quantity: item.quantity + quantity }
+            : item,
+        );
+      }
+      return [...current, { product, quantity }];
+    });
+  };
+
+  const changeCartQuantity = (productName: string, change: number) => {
+    setCartItems((current) =>
+      current
+        .map((item) =>
+          item.product.name === productName
+            ? { ...item, quantity: item.quantity + change }
+            : item,
+        )
+        .filter((item) => item.quantity > 0),
+    );
   };
 
   return (
@@ -724,13 +750,12 @@ function HomePage() {
       <div className={`mazeta-page${menuOpen ? " is-covered" : ""}`}>
         {activeTab === "tienda" ? (
           <StorePage
-            onAddToCart={() => setCartCount((count) => count + 1)}
-            onOpenProduct={setSelectedProduct}
-            onOpenOrder={() => {
-              setOrderProduct(null);
-              setOrderQuantity(cartCount);
-              setOrderOpen(true);
+            onAddToCart={(product, quantity) => {
+              addToCart(product, quantity);
+              setCartOpen(true);
             }}
+            onOpenProduct={setSelectedProduct}
+            onOpenCart={() => setCartOpen(true)}
           />
         ) : (
         <>
@@ -859,7 +884,8 @@ function HomePage() {
                     aria-label={`Agregar ${product.name} al carrito`}
                     onClick={(event) => {
                       event.stopPropagation();
-                      setCartCount((count) => count + 1);
+                      addToCart(product);
+                      setCartOpen(true);
                     }}
                   >
                     <Plus aria-hidden="true" />
@@ -882,16 +908,14 @@ function HomePage() {
             <div className="mazeta-cart-icon"><ShoppingCart aria-hidden="true" /></div>
             <div>
               <span>MI CARRITO</span>
-              <p>{cartCount === 0 ? "Tu selección aparecerá aquí." : `${cartCount} producto${cartCount > 1 ? "s" : ""} agregado${cartCount > 1 ? "s" : ""}.`}</p>
+               <p>{cartCount === 0 ? "Tu selección aparecerá aquí." : `${cartCount} producto${cartCount > 1 ? "s" : ""} agregado${cartCount > 1 ? "s" : ""}.`}</p>
             </div>
           </div>
           <button
             type="button"
             className="mazeta-cart-button"
             onClick={() => {
-              setOrderProduct(null);
-              setOrderQuantity(cartCount);
-              setOrderOpen(true);
+             setCartOpen(true);
             }}
           >
             VER CARRITO
@@ -931,9 +955,7 @@ function HomePage() {
           className="store-floating-cart"
           aria-label={`Ver carrito${cartCount > 0 ? `, ${cartCount} productos` : ""}`}
           onClick={() => {
-            setOrderProduct(null);
-            setOrderQuantity(cartCount);
-            setOrderOpen(true);
+             setCartOpen(true);
           }}
         >
           <ShoppingCart aria-hidden="true" />
@@ -945,23 +967,35 @@ function HomePage() {
         <ProductDetailModal
           product={selectedProduct}
           onClose={() => setSelectedProduct(null)}
-          onAddToCart={(quantity) => setCartCount((count) => count + quantity)}
+          onAddToCart={(quantity) => {
+            addToCart(selectedProduct, quantity);
+            setCartOpen(true);
+          }}
           onBuy={(quantity) => {
-            setCartCount((count) => count + quantity);
-            setOrderProduct(selectedProduct);
-            setOrderQuantity(quantity);
-            setOrderOpen(true);
+            addToCart(selectedProduct, quantity);
             setSelectedProduct(null);
+            setCartOpen(true);
+          }}
+        />
+      )}
+
+      {cartOpen && (
+        <CartModal
+          items={cartItems}
+          onClose={() => setCartOpen(false)}
+          onQuantityChange={changeCartQuantity}
+          onClear={() => setCartItems([])}
+          onSendOrder={() => {
+            setCartOpen(false);
+            setOrderOpen(true);
           }}
         />
       )}
 
       {orderOpen && (
         <OrderFormModal
-          items={orderProduct ? [{ product: orderProduct, quantity: orderQuantity }] : []}
+          items={cartItems}
           onClose={() => {
-            setOrderProduct(null);
-            setOrderQuantity(0);
             setOrderOpen(false);
           }}
         />
