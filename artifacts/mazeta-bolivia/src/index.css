@@ -1674,16 +1674,19 @@ button:focus-visible {
   body,
   #root {
     width: 100%;
+    height: 100%;
     max-width: 100%;
     overflow-x: hidden;
+    overflow-y: hidden;
   }
 
   .mazeta-app {
     width: 100%;
     max-width: 100%;
+    height: 100%;
     min-width: 0;
     overflow-x: hidden;
-    overflow-y: visible;
+    overflow-y: hidden;
   }
 
   .mazeta-page,
@@ -1697,13 +1700,15 @@ button:focus-visible {
   }
 
   .mazeta-page {
-    min-height: 100dvh;
+    height: calc(100dvh - 133px);
+    min-height: 0;
+    overflow: hidden;
   }
 
   .mazeta-hero {
-    height: auto;
+    height: min(40vh, 260px);
     min-height: 0;
-    aspect-ratio: 1.08 / 1;
+    aspect-ratio: auto;
   }
 
   .mazeta-hero-image,
@@ -1719,7 +1724,8 @@ button:focus-visible {
   }
 
   .mazeta-hero-copy {
-    min-height: 100%;
+    min-height: 0;
+    padding: 26px 18px 42px;
   }
 
   .mazeta-category-grid {
@@ -1753,9 +1759,12 @@ button:focus-visible {
   }
 
   .store-page {
-    min-height: calc(100dvh - 66px);
+    height: 100%;
+    min-height: 0;
+    overflow: hidden;
     padding-right: 16px;
     padding-left: 16px;
+    padding-top: 11px;
   }
 
   .store-toolbar {
@@ -1773,9 +1782,9 @@ button:focus-visible {
   }
 
   .store-hero {
-    height: auto;
+    height: min(40vh, 172px);
     min-height: 0;
-    aspect-ratio: 2.5 / 1;
+    aspect-ratio: auto;
   }
 
   .store-category-row {
@@ -1840,56 +1849,102 @@ button:focus-visible {
     inset: 0 0 67px;
     display: block;
     overflow-x: hidden;
-    overflow-y: auto;
+    overflow: hidden;
     padding: 0;
   }
 
   .product-detail-panel {
+    display: flex;
+    height: 100%;
     min-height: 0;
-    height: auto;
-    overflow: visible;
+    flex-direction: column;
+    overflow: hidden;
   }
 
   .product-detail-media {
-    height: auto;
+    flex: 0 0 min(40vh, 250px);
+    height: min(40vh, 250px);
+    max-height: 40vh;
     min-height: 0;
-    aspect-ratio: 1.43 / 1;
+    aspect-ratio: auto;
   }
 
   .product-detail-content {
+    flex: 1 1 auto;
     min-height: 0;
-    padding: 20px clamp(16px, 6vw, 27px) 26px;
+    overflow: hidden;
+    padding: 10px clamp(14px, 5vw, 20px) 10px;
   }
 
   .product-detail-content h2 {
     width: 100%;
     max-width: 100%;
+    margin-top: 5px;
+    font-size: clamp(22px, 6.5vw, 30px);
     overflow-wrap: anywhere;
+  }
+
+  .product-detail-subtitle {
+    font-size: 11px;
+  }
+
+  .product-detail-price {
+    margin-top: 5px;
+    font-size: 18px;
+  }
+
+  .product-detail-divider {
+    margin: 7px 0;
   }
 
   .product-detail-options,
   .product-detail-stock-row {
     grid-template-columns: minmax(0, 1fr) minmax(0, 1.35fr);
-    gap: clamp(10px, 4vw, 22px);
+    gap: clamp(8px, 3vw, 16px);
+  }
+
+  .product-detail-label {
+    margin-bottom: 5px;
+    font-size: 8px;
   }
 
   .product-color-options {
     flex-wrap: wrap;
-    gap: 12px;
+    gap: 9px;
+  }
+
+  .product-color-swatch {
+    width: 26px;
+    height: 26px;
   }
 
   .product-size-options {
     min-width: 0;
     grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 5px;
+    gap: 4px;
   }
 
   .product-size-options button {
     width: 100%;
     min-width: 0;
     height: auto;
-    min-height: 36px;
+    min-height: 28px;
     padding: 0;
+    font-size: 10px;
+  }
+
+  .product-detail-stock-row {
+    margin-top: 8px;
+  }
+
+  .product-quantity {
+    height: 30px;
+    border-radius: 7px;
+  }
+
+  .product-quantity button svg {
+    width: 12px;
+    height: 12px;
   }
 
   .product-detail-availability p,
@@ -1897,21 +1952,49 @@ button:focus-visible {
     overflow-wrap: anywhere;
   }
 
+  .product-detail-availability p {
+    gap: 5px;
+    font-size: 11px;
+  }
+
+  .product-detail-availability p i {
+    width: 6px;
+    height: 6px;
+  }
+
+  .product-detail-availability small {
+    margin-top: 2px;
+    font-size: 9px;
+  }
+
   .product-add-main,
   .product-whatsapp-button {
     width: 100%;
     max-width: 100%;
-    min-height: 48px;
+    min-height: 38px;
     height: auto;
-    padding: 12px 8px;
+    padding: 8px;
+    border-radius: 7px;
+    font-size: 9px;
     text-align: center;
   }
 
+  .product-add-main {
+    margin-top: 9px;
+  }
+
+  .product-whatsapp-button {
+    margin-top: 5px;
+  }
+
+  .product-add-main svg,
+  .product-whatsapp-button svg {
+    width: 15px;
+    height: 15px;
+  }
+
   .product-detail-benefits {
-    width: 100%;
-    max-width: 100%;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 6px;
+    display: none;
   }
 
   .product-detail-benefits > div {
@@ -1922,5 +2005,45 @@ button:focus-visible {
   .mazeta-bottom-nav {
     width: 100%;
     max-width: 100%;
+  }
+}
+
+/* Compact mobile viewport: the first screen is intentionally self-contained. */
+@media (max-width: 699px) {
+  .store-section {
+    margin-top: 9px;
+  }
+
+  .store-offer,
+  .store-new-section,
+  .store-bottom-space,
+  .mazeta-collection-banner,
+  .mazeta-products,
+  .mazeta-cart-card,
+  .mazeta-mobile-spacer {
+    display: none;
+  }
+
+  .mazeta-section {
+    padding: 14px 12px 0;
+  }
+
+  .mazeta-section-heading {
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+
+  .mazeta-section h2 {
+    font-size: 20px;
+  }
+
+  .mazeta-category-card {
+    min-height: 82px;
+    padding: 8px;
+    border-radius: 7px;
+  }
+
+  .mazeta-category-card span {
+    font-size: 10px;
   }
 }
