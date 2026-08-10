@@ -7,4 +7,4 @@ The catalog and its secondary sections should retain normal vertical scrolling o
 
 **Why:** The user needs to browse the complete storefront, but expects the product selection flow to be immediately usable without a second scroll context.
 
-**How to apply:** Scope viewport-locking rules to the product detail overlay only; never apply `overflow: hidden` to the catalog/page shell on mobile. The preferred detail composition is a centered rounded card with a compact media header, two-column controls, full purchase actions, and visible benefit items.
+**How to apply:** Scope viewport-locking rules to the product detail overlay only; never apply `overflow: hidden` to the catalog/page shell on mobile. The preferred detail composition is a centered rounded card with a compact media header, two-column controls, full purchase actions, and visible benefit items. Keep order submission in a separate dynamic modal: Santa Cruz uses reference/order/message, while other departments use the full customer and delivery form.

@@ -66,6 +66,29 @@ type Product = {
   badge?: string;
 };
 
+const boliviaDepartments = [
+  "Chuquisaca",
+  "La Paz",
+  "Cochabamba",
+  "Oruro",
+  "Potosí",
+  "Tarija",
+  "Santa Cruz",
+  "Beni",
+  "Pando",
+];
+
+type OrderFormState = {
+  department: string;
+  reference: string;
+  name: string;
+  phone: string;
+  address: string;
+  city: string;
+  order: string;
+  message: string;
+};
+
 const bestSellers: Product[] = [
   {
     name: "Camiseta Dry Fit Elite",
@@ -115,11 +138,11 @@ const newProducts: Product[] = [
 function ProductDetailModal({
   product,
   onClose,
-  onAddToCart,
+  onBuy,
 }: {
   product: Product;
   onClose: () => void;
-  onAddToCart: (quantity: number) => void;
+  onBuy: (quantity: number) => void;
 }) {
   const [quantity, setQuantity] = useState(1);
   const [selectedSize, setSelectedSize] = useState("M");
@@ -203,12 +226,9 @@ function ProductDetailModal({
             </div>
           </div>
 
-          <button type="button" className="product-add-main" onClick={() => {
-            onAddToCart(quantity);
-            onClose();
-          }}>
+          <button type="button" className="product-add-main" onClick={() => onBuy(quantity)}>
             <ShoppingCart aria-hidden="true" />
-            AÑADIR AL CARRITO
+            COMPRAR
           </button>
           <button type="button" className="product-whatsapp-button">
             <MessageCircle aria-hidden="true" />
@@ -226,7 +246,199 @@ function ProductDetailModal({
   );
 }
 
-function StorePage({ onAddToCart, onOpenProduct }: { onAddToCart: () => void; onOpenProduct: (product: Product) => void }) {
+function OrderFormModal({
+  product,
+  quantity,
+  onClose,
+}: {
+  product: Product | null;
+  quantity: number;
+  onClose: () => void;
+}) {
+  const [form, setForm] = useState<OrderFormState>({
+    department: "",
+    reference: "",
+    name: "",
+    phone: "",
+    address: "",
+    city: "",
+    order: product ? `${product.name} · ${quantity} unidad${quantity > 1 ? "es" : ""}` : "",
+    message: "",
+  });
+  const [submitted, setSubmitted] = useState(false);
+
+  const updateField = (field: keyof OrderFormState, value: string) => {
+    setSubmitted(false);
+    setForm((current) => ({ ...current, [field]: value }));
+  };
+
+  const renderDepartmentFields = () => {
+    if (form.department === "Santa Cruz") {
+      return (
+        <div className="order-form-fields">
+          <label>
+            NÚMERO DE REFERENCIA
+            <input
+              required
+              value={form.reference}
+              onChange={(event) => updateField("reference", event.target.value)}
+              placeholder="Ej: Referencia de entrega"
+            />
+          </label>
+          <label>
+            PEDIDO
+            <textarea
+              required
+              value={form.order}
+              onChange={(event) => updateField("order", event.target.value)}
+              placeholder="Escribe tu pedido"
+              rows={3}
+            />
+          </label>
+          <label>
+            MENSAJE
+            <textarea
+              value={form.message}
+              onChange={(event) => updateField("message", event.target.value)}
+              placeholder="Detalles adicionales"
+              rows={3}
+            />
+          </label>
+        </div>
+      );
+    }
+
+    if (form.department) {
+      return (
+        <div className="order-form-fields">
+          <label>
+            NOMBRE
+            <input
+              required
+              value={form.name}
+              onChange={(event) => updateField("name", event.target.value)}
+              placeholder="Ej: Juan Pérez"
+            />
+          </label>
+          <label>
+            TELÉFONO
+            <input
+              required
+              type="tel"
+              value={form.phone}
+              onChange={(event) => updateField("phone", event.target.value)}
+              placeholder="Ej: 71234567"
+            />
+          </label>
+          <label>
+            DIRECCIÓN
+            <input
+              required
+              value={form.address}
+              onChange={(event) => updateField("address", event.target.value)}
+              placeholder="Ej: Av. principal, número de casa"
+            />
+          </label>
+          <label>
+            CIUDAD
+            <input
+              required
+              value={form.city}
+              onChange={(event) => updateField("city", event.target.value)}
+              placeholder="Ej: La Paz"
+            />
+          </label>
+          <label>
+            PEDIDO
+            <textarea
+              required
+              value={form.order}
+              onChange={(event) => updateField("order", event.target.value)}
+              placeholder="Escribe tu pedido"
+              rows={3}
+            />
+          </label>
+          <label>
+            MENSAJE
+            <textarea
+              value={form.message}
+              onChange={(event) => updateField("message", event.target.value)}
+              placeholder="Detalles adicionales"
+              rows={3}
+            />
+          </label>
+        </div>
+      );
+    }
+
+    return <p className="order-form-hint">Selecciona tu departamento para continuar.</p>;
+  };
+
+  return (
+    <div className="order-form-overlay" role="presentation" onMouseDown={(event) => {
+      if (event.target === event.currentTarget) onClose();
+    }}>
+      <section className="order-form-panel" role="dialog" aria-modal="true" aria-labelledby="order-form-title">
+        <header className="order-form-header">
+          <div>
+            <span className="order-form-eyebrow">DATOS DEL PEDIDO</span>
+            <h2 id="order-form-title">Enviar pedido</h2>
+            <p>Completa tus datos para coordinar la entrega en Bolivia.</p>
+          </div>
+          <button type="button" className="order-form-close" aria-label="Cerrar formulario" onClick={onClose}>
+            <X aria-hidden="true" />
+          </button>
+        </header>
+
+        {product && (
+          <div className="order-summary">
+            <span>PEDIDO SELECCIONADO</span>
+            <strong>{product.name}</strong>
+            <small>{quantity} unidad{quantity > 1 ? "es" : ""} · {product.price}</small>
+          </div>
+        )}
+
+        <form onSubmit={(event) => {
+          event.preventDefault();
+          setSubmitted(true);
+        }}>
+          <label className="order-department-field">
+            DEPARTAMENTO
+            <select
+              required
+              value={form.department}
+              onChange={(event) => updateField("department", event.target.value)}
+            >
+              <option value="">Seleccionar departamento</option>
+              {boliviaDepartments.map((department) => (
+                <option key={department} value={department}>{department}</option>
+              ))}
+            </select>
+          </label>
+
+          {renderDepartmentFields()}
+
+          {submitted && <p className="order-form-success" role="status">Tu pedido está listo para ser enviado.</p>}
+          <button type="submit" className="order-submit-button" disabled={submitted}>
+            <ShoppingCart aria-hidden="true" />
+            {submitted ? "PEDIDO PREPARADO" : "ENVIAR PEDIDO"}
+          </button>
+        </form>
+        <p className="order-form-footer">Tus datos se usarán únicamente para coordinar tu pedido.</p>
+      </section>
+    </div>
+  );
+}
+
+function StorePage({
+  onAddToCart,
+  onOpenProduct,
+  onOpenOrder,
+}: {
+  onAddToCart: () => void;
+  onOpenProduct: (product: Product) => void;
+  onOpenOrder: () => void;
+}) {
   const [favorites, setFavorites] = useState<string[]>([]);
 
   const toggleFavorite = (name: string) => {
@@ -355,6 +567,9 @@ function HomePage() {
   const [activeTab, setActiveTab] = useState<BottomTab>("tienda");
   const [cartCount, setCartCount] = useState(0);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const [orderProduct, setOrderProduct] = useState<Product | null>(null);
+  const [orderQuantity, setOrderQuantity] = useState(0);
+  const [orderOpen, setOrderOpen] = useState(false);
 
   const selectTab = (tab: BottomTab) => {
     setActiveTab(tab);
@@ -389,6 +604,11 @@ function HomePage() {
           <StorePage
             onAddToCart={() => setCartCount((count) => count + 1)}
             onOpenProduct={setSelectedProduct}
+            onOpenOrder={() => {
+              setOrderProduct(null);
+              setOrderQuantity(cartCount);
+              setOrderOpen(true);
+            }}
           />
         ) : (
         <>
@@ -543,7 +763,15 @@ function HomePage() {
               <p>{cartCount === 0 ? "Tu selección aparecerá aquí." : `${cartCount} producto${cartCount > 1 ? "s" : ""} agregado${cartCount > 1 ? "s" : ""}.`}</p>
             </div>
           </div>
-          <button type="button" className="mazeta-cart-button" onClick={() => setActiveTab("tienda")}>
+          <button
+            type="button"
+            className="mazeta-cart-button"
+            onClick={() => {
+              setOrderProduct(null);
+              setOrderQuantity(cartCount);
+              setOrderOpen(true);
+            }}
+          >
             VER CARRITO
             {cartCount > 0 && <b>{cartCount}</b>}
             <ChevronRight aria-hidden="true" />
@@ -580,7 +808,11 @@ function HomePage() {
           type="button"
           className="store-floating-cart"
           aria-label={`Ver carrito${cartCount > 0 ? `, ${cartCount} productos` : ""}`}
-          onClick={() => setActiveTab("tienda")}
+          onClick={() => {
+            setOrderProduct(null);
+            setOrderQuantity(cartCount);
+            setOrderOpen(true);
+          }}
         >
           <ShoppingCart aria-hidden="true" />
           <span>{cartCount > 99 ? "99+" : cartCount}</span>
@@ -591,7 +823,25 @@ function HomePage() {
         <ProductDetailModal
           product={selectedProduct}
           onClose={() => setSelectedProduct(null)}
-          onAddToCart={(quantity) => setCartCount((count) => count + quantity)}
+          onBuy={(quantity) => {
+            setCartCount((count) => count + quantity);
+            setOrderProduct(selectedProduct);
+            setOrderQuantity(quantity);
+            setOrderOpen(true);
+            setSelectedProduct(null);
+          }}
+        />
+      )}
+
+      {orderOpen && (
+        <OrderFormModal
+          product={orderProduct}
+          quantity={orderQuantity}
+          onClose={() => {
+            setOrderProduct(null);
+            setOrderQuantity(0);
+            setOrderOpen(false);
+          }}
         />
       )}
 
