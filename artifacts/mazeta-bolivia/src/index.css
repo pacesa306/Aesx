@@ -1406,6 +1406,319 @@ button:focus-visible {
   line-height: 1;
 }
 
+.social-page {
+  width: 100%;
+  max-width: 940px;
+  min-height: calc(100dvh - 98px);
+  margin: 0 auto;
+  padding: 34px 32px 0;
+  background:
+    radial-gradient(circle at 12% 12%, rgba(142, 45, 255, 0.16), transparent 26%),
+    radial-gradient(circle at 88% 26%, rgba(37, 211, 102, 0.08), transparent 24%),
+    #050505;
+}
+
+.social-intro {
+  padding: 7px 0 26px;
+  border-bottom: 1px solid #252525;
+}
+
+.social-eyebrow,
+.social-highlight-kicker {
+  display: block;
+  color: #a661ff;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.22em;
+}
+
+.social-intro h1 {
+  margin: 8px 0 7px;
+  color: #f8f8f8;
+  font-size: clamp(29px, 4vw, 48px);
+  font-weight: 900;
+  letter-spacing: -0.055em;
+  line-height: 0.96;
+}
+
+.social-intro p {
+  max-width: 430px;
+  margin: 0;
+  color: #a5a5a5;
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.social-highlight {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-top: 20px;
+  padding: 20px 22px;
+  overflow: hidden;
+  border: 1px solid #343434;
+  border-radius: 14px;
+  background:
+    linear-gradient(105deg, rgba(122, 54, 203, 0.32), rgba(20, 20, 20, 0.7) 52%, rgba(8, 8, 8, 0.9)),
+    #111;
+}
+
+.social-highlight::after {
+  position: absolute;
+  top: -90px;
+  right: -35px;
+  width: 230px;
+  height: 230px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 50%;
+  box-shadow:
+    0 0 0 22px rgba(255, 255, 255, 0.03),
+    0 0 0 44px rgba(255, 255, 255, 0.02);
+  content: "";
+}
+
+.social-highlight-mark {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  width: 58px;
+  height: 58px;
+  flex: 0 0 auto;
+  place-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.42);
+  border-radius: 50%;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 22px rgba(166, 97, 255, 0.35);
+}
+
+.social-highlight-mark span {
+  font-size: 25px;
+  font-weight: 900;
+  letter-spacing: -0.08em;
+}
+
+.social-highlight > div:nth-child(2) {
+  position: relative;
+  z-index: 1;
+}
+
+.social-highlight h2 {
+  margin: 6px 0 5px;
+  color: #fff;
+  font-size: 22px;
+  font-weight: 900;
+  letter-spacing: -0.04em;
+}
+
+.social-highlight p {
+  max-width: 430px;
+  margin: 0;
+  color: #bebebe;
+  font-size: 11px;
+  line-height: 1.45;
+}
+
+.social-highlight-line {
+  position: absolute;
+  right: 34px;
+  bottom: 20px;
+  z-index: 1;
+  width: 54px;
+  height: 2px;
+  background: #fff;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.75);
+  transform: rotate(-45deg);
+}
+
+.social-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 22px;
+}
+
+.social-card {
+  position: relative;
+  display: flex;
+  min-height: 250px;
+  flex-direction: column;
+  overflow: hidden;
+  padding: 17px;
+  border: 1px solid #2d2d2d;
+  border-radius: 13px;
+  background: #101010;
+  transition:
+    border-color 180ms ease,
+    transform 180ms ease,
+    background 180ms ease;
+}
+
+.social-card::before {
+  position: absolute;
+  top: -70px;
+  right: -65px;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background: var(--social-glow);
+  opacity: 0.25;
+  filter: blur(18px);
+  content: "";
+}
+
+.social-card:hover {
+  border-color: var(--social-color);
+  background: #151515;
+  transform: translateY(-4px);
+}
+
+.social-card-top,
+.social-card-copy,
+.social-card > a {
+  position: relative;
+  z-index: 1;
+}
+
+.social-card-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.social-icon {
+  display: grid;
+  width: 48px;
+  height: 48px;
+  place-items: center;
+  border: 1px solid var(--social-border);
+  border-radius: 13px;
+  color: var(--social-color);
+  background: var(--social-surface);
+  box-shadow: 0 0 21px var(--social-shadow);
+}
+
+.social-icon svg {
+  width: 24px;
+  height: 24px;
+}
+
+.social-card-spark {
+  color: var(--social-color);
+  font-size: 20px;
+  font-weight: 300;
+  line-height: 1;
+}
+
+.social-card-copy {
+  flex: 1;
+  padding-top: 21px;
+}
+
+.social-card-copy h2 {
+  margin: 0 0 4px;
+  color: #f5f5f5;
+  font-size: 19px;
+  font-weight: 850;
+  letter-spacing: -0.035em;
+}
+
+.social-card-copy strong {
+  display: block;
+  overflow: hidden;
+  color: var(--social-color);
+  font-size: 10px;
+  font-weight: 750;
+  letter-spacing: 0.06em;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.social-card-copy p {
+  margin: 14px 0 0;
+  color: #999;
+  font-size: 10px;
+  line-height: 1.45;
+}
+
+.social-card > a {
+  display: flex;
+  min-height: 34px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 0 11px;
+  border: 1px solid var(--social-border);
+  border-radius: 7px;
+  color: #f4f4f4;
+  font-size: 9px;
+  font-weight: 850;
+  letter-spacing: 0.12em;
+  text-decoration: none;
+  transition:
+    color 180ms ease,
+    background 180ms ease,
+    border-color 180ms ease;
+}
+
+.social-card > a:hover,
+.social-card > a:focus-visible {
+  border-color: var(--social-color);
+  color: #050505;
+  background: var(--social-color);
+}
+
+.social-card > a svg {
+  width: 14px;
+  height: 14px;
+}
+
+.social-instagram {
+  --social-color: #ff4bbd;
+  --social-glow: #c229ff;
+  --social-border: rgba(255, 75, 189, 0.42);
+  --social-surface: rgba(193, 38, 255, 0.12);
+  --social-shadow: rgba(255, 75, 189, 0.18);
+}
+
+.social-tiktok {
+  --social-color: #67f4ef;
+  --social-glow: #24c9dc;
+  --social-border: rgba(103, 244, 239, 0.42);
+  --social-surface: rgba(36, 201, 220, 0.1);
+  --social-shadow: rgba(103, 244, 239, 0.18);
+}
+
+.social-facebook {
+  --social-color: #5d8dff;
+  --social-glow: #2864e9;
+  --social-border: rgba(93, 141, 255, 0.42);
+  --social-surface: rgba(40, 100, 233, 0.12);
+  --social-shadow: rgba(93, 141, 255, 0.18);
+}
+
+.social-whatsapp {
+  --social-color: #48ea81;
+  --social-glow: #25d366;
+  --social-border: rgba(72, 234, 129, 0.42);
+  --social-surface: rgba(37, 211, 102, 0.1);
+  --social-shadow: rgba(72, 234, 129, 0.18);
+}
+
+.social-footer-note {
+  margin: 26px 0 0;
+  color: #686868;
+  font-size: 9px;
+  font-weight: 750;
+  letter-spacing: 0.2em;
+  text-align: center;
+}
+
+.social-bottom-space {
+  height: 86px;
+}
+
 .product-detail-overlay {
   position: fixed;
   z-index: 30;
@@ -3855,6 +4168,128 @@ button:focus-visible {
 
   .mazeta-home-content > .mazeta-cart-card {
     margin-top: 22px;
+  }
+}
+
+@media (max-width: 699px) {
+  .social-page {
+    min-height: calc(100dvh - 98px);
+    padding: 25px 14px 0;
+  }
+
+  .social-intro {
+    padding-bottom: 20px;
+  }
+
+  .social-eyebrow,
+  .social-highlight-kicker {
+    font-size: 8px;
+  }
+
+  .social-intro h1 {
+    margin-top: 7px;
+    font-size: 28px;
+  }
+
+  .social-intro p {
+    font-size: 11px;
+  }
+
+  .social-highlight {
+    gap: 12px;
+    margin-top: 15px;
+    padding: 15px 14px;
+    border-radius: 11px;
+  }
+
+  .social-highlight-mark {
+    width: 44px;
+    height: 44px;
+  }
+
+  .social-highlight-mark span {
+    font-size: 19px;
+  }
+
+  .social-highlight h2 {
+    margin-top: 4px;
+    font-size: 16px;
+  }
+
+  .social-highlight p {
+    max-width: 245px;
+    font-size: 9px;
+  }
+
+  .social-highlight-line {
+    right: 15px;
+    bottom: 15px;
+    width: 32px;
+  }
+
+  .social-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 9px;
+    margin-top: 15px;
+  }
+
+  .social-card {
+    min-height: 202px;
+    padding: 12px;
+    border-radius: 10px;
+  }
+
+  .social-icon {
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+  }
+
+  .social-icon svg {
+    width: 19px;
+    height: 19px;
+  }
+
+  .social-card-spark {
+    font-size: 16px;
+  }
+
+  .social-card-copy {
+    padding-top: 13px;
+  }
+
+  .social-card-copy h2 {
+    margin-bottom: 3px;
+    font-size: 15px;
+  }
+
+  .social-card-copy strong {
+    font-size: 8px;
+  }
+
+  .social-card-copy p {
+    margin-top: 9px;
+    font-size: 9px;
+  }
+
+  .social-card > a {
+    min-height: 30px;
+    padding: 0 8px;
+    font-size: 8px;
+  }
+
+  .social-card > a svg {
+    width: 12px;
+    height: 12px;
+  }
+
+  .social-footer-note {
+    margin-top: 18px;
+    font-size: 7px;
+  }
+
+  .social-bottom-space {
+    height: 76px;
   }
 }
 

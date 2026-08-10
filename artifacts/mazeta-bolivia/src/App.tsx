@@ -23,8 +23,9 @@ import {
   UserRound,
   X,
 } from "lucide-react";
+import { FaFacebookF, FaInstagram, FaTiktok, FaWhatsapp } from "react-icons/fa";
 
-type BottomTab = "inicio" | "tienda" | "inscribete" | "whatsapp";
+type BottomTab = "inicio" | "tienda" | "inscribete" | "redes" | "whatsapp";
 
 const bottomTabs: Array<{
   id: BottomTab;
@@ -44,10 +45,49 @@ const menuItems = [
   { label: "REGALOS" },
   { label: "PROMOCIONES" },
   { label: "¿QUIÉNES SOMOS?" },
-  { label: "REDES SOCIALES" },
+  { label: "REDES SOCIALES", tab: "redes" as BottomTab | undefined },
   { label: "BUZÓN DE SUGERENCIAS" },
    { label: "WHATSAPP" },
 ];
+
+const socialLinks = [
+  {
+    name: "Instagram",
+    handle: "@mazeta.bo",
+    description: "Novedades, lanzamientos y estilo Mazeta.",
+    href: "https://www.instagram.com/mazeta.bo?igsh=cm1waTdqZXlodnF2",
+    className: "social-instagram",
+    Icon: FaInstagram,
+    action: "SEGUIR",
+  },
+  {
+    name: "TikTok",
+    handle: "@mazeta.bo",
+    description: "Mira nuestros videos y sé parte del movimiento.",
+    href: "https://www.tiktok.com/@mazeta.bo?_r=1&_t=ZS-98lFLylS5uX",
+    className: "social-tiktok",
+    Icon: FaTiktok,
+    action: "SEGUIR",
+  },
+  {
+    name: "Facebook",
+    handle: "Mazeta Bolivia",
+    description: "Comunidad, promociones y toda la actualidad.",
+    href: "https://www.facebook.com/share/1PP7t6hznj/",
+    className: "social-facebook",
+    Icon: FaFacebookF,
+    action: "SEGUIR",
+  },
+  {
+    name: "WhatsApp",
+    handle: "785 24143",
+    description: "Escríbenos para consultar tallas y pedidos.",
+    href: "https://wa.me/59178524143",
+    className: "social-whatsapp",
+    Icon: FaWhatsapp,
+    action: "ESCRIBIR",
+  },
+] as const;
 
 const storeCategories = [
   { name: "HOMBRE", filterCategory: "TODOS", image: "/store-cat-men.png", icon: "shirt" },
@@ -969,6 +1009,51 @@ function StorePage({
   );
 }
 
+function SocialPage() {
+  return (
+    <div className="social-page">
+      <section className="social-intro" aria-labelledby="social-title">
+        <span className="social-eyebrow">CONECTA CON MAZETA</span>
+        <h1 id="social-title">REDES SOCIALES</h1>
+        <p>Sigue nuestra comunidad y no te pierdas ningún lanzamiento.</p>
+      </section>
+
+      <section className="social-highlight" aria-label="Comunidad Mazeta Bolivia">
+        <div className="social-highlight-mark"><span>M</span></div>
+        <div>
+          <span className="social-highlight-kicker">MAZETA BOLIVIA</span>
+          <h2>VISTE TU ACTITUD</h2>
+          <p>Comparte tu estilo, descubre nuevos drops y forma parte del equipo.</p>
+        </div>
+        <span className="social-highlight-line" aria-hidden="true" />
+      </section>
+
+      <section className="social-grid" aria-label="Perfiles sociales">
+        {socialLinks.map(({ name, handle, description, href, className, Icon, action }) => (
+          <article className={`social-card ${className}`} key={name}>
+            <div className="social-card-top">
+              <div className="social-icon" aria-hidden="true"><Icon /></div>
+              <span className="social-card-spark" aria-hidden="true">+</span>
+            </div>
+            <div className="social-card-copy">
+              <h2>{name}</h2>
+              <strong>{handle}</strong>
+              <p>{description}</p>
+            </div>
+            <a href={href} target="_blank" rel="noreferrer">
+              {action}
+              <ArrowRight aria-hidden="true" />
+            </a>
+          </article>
+        ))}
+      </section>
+
+      <p className="social-footer-note">#MAZETABOLIVIA · COMPARTE TU ESTILO</p>
+      <div className="social-bottom-space" />
+    </div>
+  );
+}
+
 function HomePage() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeTab, setActiveTab] = useState<BottomTab>("inicio");
@@ -1082,6 +1167,8 @@ function HomePage() {
             onOpenProduct={setSelectedProduct}
             onOpenCart={() => setCartOpen(true)}
           />
+        ) : activeTab === "redes" ? (
+          <SocialPage />
         ) : (
         <div className="mazeta-home-content">
         <section className="mazeta-hero" aria-label="Nueva colección">
@@ -1253,8 +1340,14 @@ function HomePage() {
                   type="button"
                   className={item.tab === activeTab ? "is-active" : ""}
                   onClick={() => {
-                    if (item.tab) selectTab(item.tab);
-                    else setMenuOpen(false);
+                    if (item.tab) {
+                      selectTab(item.tab);
+                    } else if (item.label === "WHATSAPP") {
+                      window.open("https://wa.me/59178524143", "_blank", "noopener,noreferrer");
+                      setMenuOpen(false);
+                    } else {
+                      setMenuOpen(false);
+                    }
                   }}
                 >
                   {item.label}
