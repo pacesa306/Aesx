@@ -3935,3 +3935,124 @@ button:focus-visible {
     transform: scale(1.07) translate(0.45px, 0);
   }
 }
+
+/* Product detail actions: focused yellow cart and neon green WhatsApp styles. */
+.product-add-main:not(:disabled) {
+  border-color: #ffd700;
+  color: #070707;
+  background: #ffd700;
+  animation: mazeta-cart-button-pulse 1.35s ease-in-out infinite;
+  box-shadow:
+    0 0 5px rgba(255, 215, 0, 0.45),
+    0 0 14px rgba(255, 215, 0, 0.2);
+}
+
+.product-add-main:not(:disabled):hover,
+.product-add-main:not(:disabled):focus-visible {
+  border-color: #ffe66b;
+  color: #050505;
+  background: #ffc300;
+  box-shadow:
+    0 0 8px rgba(255, 215, 0, 0.78),
+    0 0 20px rgba(255, 215, 0, 0.42),
+    0 0 34px rgba(255, 215, 0, 0.2);
+}
+
+.product-add-main:not(:disabled):active {
+  animation: none;
+  color: #050505;
+  background: #ffc300;
+  box-shadow:
+    0 0 10px rgba(255, 215, 0, 0.9),
+    0 0 24px rgba(255, 215, 0, 0.52);
+  transform: scale(0.98);
+}
+
+.product-add-main svg {
+  color: #070707;
+  filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.42));
+}
+
+.product-whatsapp-button:not(:disabled) {
+  border-color: #00ff7f;
+  color: #f4fff8;
+  background: #07150e;
+  animation: mazeta-whatsapp-button-pulse 1.25s ease-in-out infinite;
+  box-shadow:
+    0 0 6px rgba(0, 255, 127, 0.7),
+    0 0 16px rgba(0, 255, 127, 0.38),
+    inset 0 0 10px rgba(0, 255, 127, 0.08);
+}
+
+.product-whatsapp-button:not(:disabled):hover,
+.product-whatsapp-button:not(:disabled):focus-visible {
+  border-color: #7dffb6;
+  color: #fff;
+  background: #0b2417;
+  box-shadow:
+    0 0 9px rgba(0, 255, 127, 0.95),
+    0 0 24px rgba(0, 255, 127, 0.62),
+    0 0 42px rgba(0, 255, 127, 0.3),
+    inset 0 0 14px rgba(0, 255, 127, 0.12);
+}
+
+.product-whatsapp-button:not(:disabled):active {
+  animation: none;
+  background: #0c2d1a;
+  box-shadow:
+    0 0 12px rgba(0, 255, 127, 1),
+    0 0 30px rgba(0, 255, 127, 0.7);
+  transform: scale(0.98);
+}
+
+.product-whatsapp-button svg {
+  color: #00ff7f;
+  filter:
+    drop-shadow(0 0 3px rgba(0, 255, 127, 1))
+    drop-shadow(0 0 9px rgba(0, 255, 127, 0.8));
+}
+
+@keyframes mazeta-cart-button-pulse {
+  0%,
+  100% {
+    box-shadow:
+      0 0 5px rgba(255, 215, 0, 0.45),
+      0 0 14px rgba(255, 215, 0, 0.2);
+    transform: scale(1);
+  }
+
+  40% {
+    box-shadow:
+      0 0 8px rgba(255, 215, 0, 0.72),
+      0 0 19px rgba(255, 215, 0, 0.38);
+    transform: scale(1.012);
+  }
+
+  55% {
+    transform: scale(1.006);
+  }
+}
+
+@keyframes mazeta-whatsapp-button-pulse {
+  0%,
+  100% {
+    box-shadow:
+      0 0 6px rgba(0, 255, 127, 0.7),
+      0 0 16px rgba(0, 255, 127, 0.38),
+      inset 0 0 10px rgba(0, 255, 127, 0.08);
+    transform: scale(1);
+  }
+
+  40% {
+    box-shadow:
+      0 0 10px rgba(0, 255, 127, 1),
+      0 0 25px rgba(0, 255, 127, 0.68),
+      0 0 42px rgba(0, 255, 127, 0.28),
+      inset 0 0 14px rgba(0, 255, 127, 0.12);
+    transform: scale(1.018);
+  }
+
+  55% {
+    transform: scale(1.008);
+  }
+}
