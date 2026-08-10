@@ -131,6 +131,38 @@ const bestSellers: Product[] = [
     subtitle: "Negro · Sport Active",
     badge: "MÁS VENDIDO",
   },
+  {
+    name: "Camiseta Alas Nocturnas",
+    price: "Bs. 149",
+    image: "/mazeta-garment-1.jpg",
+    category: "CAMISETAS",
+    subtitle: "Negro · Alas Nocturnas",
+    badge: "NUEVO",
+  },
+  {
+    name: "Camiseta Alas Rojas",
+    price: "Bs. 149",
+    image: "/mazeta-garment-2.jpg",
+    category: "CAMISETAS",
+    subtitle: "Negro · Edición Roja",
+    badge: "NUEVO",
+  },
+  {
+    name: "Camiseta Alas Sombra",
+    price: "Bs. 149",
+    image: "/mazeta-garment-3.jpg",
+    category: "CAMISETAS",
+    subtitle: "Negro · Shadow Edition",
+    badge: "NUEVO",
+  },
+  {
+    name: "Camiseta Alas Plata",
+    price: "Bs. 149",
+    image: "/mazeta-garment-4.jpg",
+    category: "CAMISETAS",
+    subtitle: "Negro · Silver Edition",
+    badge: "NUEVO",
+  },
 ];
 
 const newProducts: Product[] = [
@@ -138,6 +170,138 @@ const newProducts: Product[] = [
   { name: "Motion Top", price: "Bs. 149", image: "/store-new-2.png", category: "MUJER", subtitle: "Negro · Motion" },
   { name: "Essential Hoodie", price: "Bs. 219", image: "/store-new-3.png", category: "POLERAS", subtitle: "Negro · Essential" },
   { name: "Run Cap", price: "Bs. 89", image: "/store-new-4.png", category: "ACCESORIOS", subtitle: "Negro · Run" },
+  {
+    name: "Short Calaveras Negro",
+    price: "Bs. 119",
+    image: "/mazeta-garment-5.jpg",
+    category: "SHORTS",
+    subtitle: "Negro · Calaveras",
+    badge: "NUEVO",
+  },
+  {
+    name: "Short Calaveras Blanco",
+    price: "Bs. 119",
+    image: "/mazeta-garment-6.jpg",
+    category: "SHORTS",
+    subtitle: "Blanco · Calaveras",
+    badge: "NUEVO",
+  },
+  {
+    name: "Camiseta Mesh Blanca",
+    price: "Bs. 139",
+    image: "/mazeta-garment-7.jpg",
+    category: "POLERAS",
+    subtitle: "Blanco · Mesh Lifting",
+    badge: "NUEVO",
+  },
+  {
+    name: "Camiseta Mesh Negra",
+    price: "Bs. 139",
+    image: "/mazeta-garment-8.jpg",
+    category: "POLERAS",
+    subtitle: "Negro · Mesh Lifting",
+    badge: "NUEVO",
+  },
+  {
+    name: "Tank Calaveras",
+    price: "Bs. 129",
+    image: "/mazeta-garment-9.jpg",
+    category: "POLERAS",
+    subtitle: "Negro · Tank Training",
+    badge: "NUEVO",
+  },
+  {
+    name: "Short Calaveras Edición Roja",
+    price: "Bs. 119",
+    image: "/mazeta-garment-10.jpg",
+    category: "SHORTS",
+    subtitle: "Negro · Calaveras Roja",
+    badge: "NUEVO",
+  },
+  {
+    name: "Camiseta Alas Roja",
+    price: "Bs. 149",
+    image: "/mazeta-garment-11.jpg",
+    category: "CAMISETAS",
+    subtitle: "Negro · Red Wing",
+    badge: "NUEVO",
+  },
+  {
+    name: "Camiseta Mesh Blanca Classic",
+    price: "Bs. 139",
+    image: "/mazeta-garment-12.jpg",
+    category: "POLERAS",
+    subtitle: "Blanco · Mesh Classic",
+    badge: "NUEVO",
+  },
+  {
+    name: "Pantalón Calaveras",
+    price: "Bs. 189",
+    image: "/mazeta-garment-13.jpg",
+    category: "PANTALONES",
+    subtitle: "Negro · Calaveras",
+    badge: "NUEVO",
+  },
+  {
+    name: "Tank Calaveras Classic",
+    price: "Bs. 129",
+    image: "/mazeta-garment-14.jpg",
+    category: "POLERAS",
+    subtitle: "Negro · Classic Tank",
+    badge: "NUEVO",
+  },
+  {
+    name: "Pantalón Calaveras Rojo",
+    price: "Bs. 189",
+    image: "/mazeta-garment-15.jpg",
+    category: "PANTALONES",
+    subtitle: "Negro · Red Detail",
+    badge: "NUEVO",
+  },
+  {
+    name: "Pantalón Calaveras Negro",
+    price: "Bs. 189",
+    image: "/mazeta-garment-16.jpg",
+    category: "PANTALONES",
+    subtitle: "Negro · Black Detail",
+    badge: "NUEVO",
+  },
+];
+
+const featuredProducts: Product[] = [
+  {
+    name: "Camiseta Alas Nocturnas",
+    price: "Bs. 149",
+    image: "/mazeta-garment-1.jpg",
+    category: "CAMISETAS",
+    subtitle: "Negro · Alas Nocturnas",
+    badge: "NUEVO",
+  },
+  {
+    name: "Hoodie Performance Pro",
+    price: "Bs. 199",
+    image: "/store-product-hoodie.png",
+    detailImage: "/store-product-hoodie.png",
+    category: "POLERAS",
+    subtitle: "Negro · Performance",
+    badge: "MÁS VENDIDO",
+  },
+  {
+    name: "Short Calaveras Negro",
+    price: "Bs. 119",
+    image: "/mazeta-garment-5.jpg",
+    category: "SHORTS",
+    subtitle: "Negro · Calaveras",
+    badge: "NUEVO",
+  },
+  {
+    name: "Pantalón Calaveras",
+    price: "Bs. 189",
+    image: "/mazeta-garment-13.jpg",
+    category: "PANTALONES",
+    subtitle: "Negro · Calaveras",
+    badge: "NUEVO",
+  },
 ];
 
 const heroSlides = [
@@ -1017,28 +1181,7 @@ function HomePage() {
             </button>
           </div>
           <div className="mazeta-product-row">
-            {[
-              {
-                name: "Essential Tee",
-                price: "Bs. 149",
-                image: "/store-product-tee.png",
-                detailImage: "/mazeta-category-shirt.png",
-                category: "CAMISETAS",
-                subtitle: "Negro · Dry Fit Premium",
-                badge: "MÁS VENDIDO",
-                tone: "product-black",
-              },
-              {
-                name: "Core Hoodie",
-                price: "Bs. 299",
-                image: "/store-product-hoodie.png",
-                detailImage: "/store-product-hoodie.png",
-                category: "POLERAS",
-                subtitle: "Negro · Performance",
-                badge: "NUEVO",
-                tone: "product-stone",
-              },
-            ].map((product) => (
+            {featuredProducts.map((product) => (
               <article
                 className="mazeta-product-card"
                 key={product.name}
@@ -1049,8 +1192,9 @@ function HomePage() {
                   if (event.key === "Enter" || event.key === " ") setSelectedProduct(product);
                 }}
               >
-                <div className={`mazeta-product-image ${product.tone}`}>
-                  <span className="mazeta-product-label">MAZETA</span>
+                <div className="mazeta-product-image">
+                  <img src={product.image} alt="" />
+                  <span className="mazeta-product-label">{product.badge ?? "MAZETA"}</span>
                   <button
                     type="button"
                     aria-label={`Agregar ${product.name} al carrito`}

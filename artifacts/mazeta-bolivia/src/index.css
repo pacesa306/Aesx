@@ -701,6 +701,15 @@ button:focus-visible {
   background-size: 250% auto;
 }
 
+.mazeta-product-image > img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
 .mazeta-product-image::after {
   position: absolute;
   inset: 0;
@@ -1191,7 +1200,8 @@ button:focus-visible {
 .store-product-image img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
+  object-position: center;
 }
 
 .store-favorite {
@@ -1429,8 +1439,8 @@ button:focus-visible {
 .product-detail-media > img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  object-position: center 28%;
+  object-fit: contain;
+  object-position: center;
   filter: contrast(1.04) saturate(0.78);
 }
 
@@ -2141,6 +2151,12 @@ button:focus-visible {
     width: 100%;
     max-width: 100%;
     object-fit: cover;
+  }
+
+  .store-product-image img,
+  .product-detail-media > img {
+    object-fit: contain;
+    object-position: center;
   }
 
   .mazeta-hero-copy {
