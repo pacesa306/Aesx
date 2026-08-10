@@ -1806,31 +1806,55 @@ button:focus-visible {
 .mazeta-bottom-tab {
   transition:
     color 220ms ease,
-    filter 220ms ease,
     transform 220ms ease;
 }
 
 .mazeta-bottom-tab.is-active {
-  animation: mazeta-white-vibrate-pulse 1.35s ease-in-out infinite;
+  animation: none;
+  filter: none;
+  box-shadow: none;
+}
+
+.mazeta-bottom-tab svg {
+  transform-origin: center;
+  animation: mazeta-icon-pulse 1.35s ease-in-out infinite;
   filter:
-    drop-shadow(0 0 4px rgba(255, 255, 255, 0.95))
-    drop-shadow(0 0 11px rgba(255, 255, 255, 0.5));
+    drop-shadow(0 0 3px rgba(255, 255, 255, 0.78))
+    drop-shadow(0 0 8px rgba(255, 255, 255, 0.34));
+  transition:
+    filter 220ms ease,
+    transform 220ms ease;
 }
 
 .mazeta-bottom-tab:hover,
 .mazeta-bottom-tab:focus-visible {
+  animation: none;
+  filter: none;
+  box-shadow: none;
+}
+
+.mazeta-bottom-tab:hover svg,
+.mazeta-bottom-tab:focus-visible svg,
+.mazeta-bottom-tab.is-active svg {
   animation-duration: 0.95s;
   filter:
-    drop-shadow(0 0 7px rgba(255, 255, 255, 1))
-    drop-shadow(0 0 17px rgba(255, 255, 255, 0.72));
+    drop-shadow(0 0 5px rgba(255, 255, 255, 1))
+    drop-shadow(0 0 14px rgba(255, 255, 255, 0.66));
 }
 
 .mazeta-bottom-tab:active {
   animation: none;
+  filter: none;
+  box-shadow: none;
+  transform: none;
+}
+
+.mazeta-bottom-tab:active svg {
+  animation: none;
   filter:
-    drop-shadow(0 0 9px rgba(255, 255, 255, 1))
-    drop-shadow(0 0 20px rgba(255, 255, 255, 0.8));
-  transform: scale(1.04) translate(1px, -1px);
+    drop-shadow(0 0 7px rgba(255, 255, 255, 1))
+    drop-shadow(0 0 18px rgba(255, 255, 255, 0.8));
+  transform: scale(1.12) translate(1px, -1px);
 }
 
 @media (min-width: 700px) {
@@ -3750,5 +3774,24 @@ button:focus-visible {
 
   65% {
     transform: scale(1.015) translate(0.5px, 0);
+  }
+}
+
+@keyframes mazeta-icon-pulse {
+  0%,
+  100% {
+    transform: scale(1) translate(0, 0);
+  }
+
+  35% {
+    transform: scale(1.08) translate(0.45px, -0.45px);
+  }
+
+  50% {
+    transform: scale(1.04) translate(-0.45px, 0.45px);
+  }
+
+  65% {
+    transform: scale(1.07) translate(0.45px, 0);
   }
 }

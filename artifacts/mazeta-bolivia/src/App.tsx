@@ -20,11 +20,10 @@ import {
   ShoppingCart,
   Trash2,
   Truck,
-  UserRoundPlus,
   X,
 } from "lucide-react";
 
-type BottomTab = "inicio" | "sucursales" | "tienda" | "inscribete";
+type BottomTab = "inicio" | "sucursales" | "tienda" | "whatsapp";
 
 const bottomTabs: Array<{
   id: BottomTab;
@@ -34,7 +33,7 @@ const bottomTabs: Array<{
   { id: "inicio", label: "INICIO", Icon: Home },
   { id: "sucursales", label: "SUCURSALES", Icon: MapPin },
   { id: "tienda", label: "TIENDA", Icon: ShoppingBag },
-  { id: "inscribete", label: "INSCRÍBETE", Icon: UserRoundPlus },
+  { id: "whatsapp", label: "WHATSAPP", Icon: MessageCircle },
 ];
 
 const menuItems = [
@@ -46,7 +45,7 @@ const menuItems = [
   { label: "¿QUIÉNES SOMOS?" },
   { label: "REDES SOCIALES" },
   { label: "BUZÓN DE SUGERENCIAS" },
-  { label: "INSCRÍBETE", tab: "inscribete" as BottomTab | undefined },
+   { label: "WHATSAPP" },
 ];
 
 const storeCategories = [
@@ -1075,7 +1074,13 @@ function HomePage() {
             type="button"
             className={`mazeta-bottom-tab${activeTab === id ? " is-active" : ""}`}
             aria-current={activeTab === id ? "page" : undefined}
-            onClick={() => selectTab(id)}
+            onClick={() => {
+              if (id === "whatsapp") {
+                window.open("https://wa.me/59178524143", "_blank", "noopener,noreferrer");
+                return;
+              }
+              selectTab(id);
+            }}
           >
             <Icon aria-hidden="true" />
             <span>{label}</span>
