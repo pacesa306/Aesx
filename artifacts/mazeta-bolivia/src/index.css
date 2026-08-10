@@ -4056,3 +4056,38 @@ button:focus-visible {
     transform: scale(1.008);
   }
 }
+
+/* Store product cards: white add-to-cart action with black contrast. */
+.store-add-button:not(:disabled) {
+  border-color: #fff;
+  color: #050505;
+  background: #fff;
+  box-shadow:
+    0 0 4px rgba(255, 255, 255, 0.55),
+    0 0 12px rgba(255, 255, 255, 0.18);
+}
+
+.store-add-button:not(:disabled) svg {
+  color: #050505;
+}
+
+.store-add-button:not(:disabled):hover,
+.store-add-button:not(:disabled):focus-visible {
+  border-color: #fff;
+  color: #000;
+  background: #f1f1f1;
+  box-shadow:
+    0 0 8px rgba(255, 255, 255, 0.9),
+    0 0 18px rgba(255, 255, 255, 0.36);
+}
+
+.store-add-button:not(:disabled):active {
+  animation: none;
+  border-color: #d8d8d8;
+  color: #000;
+  background: #e8e8e8;
+  box-shadow:
+    0 0 9px rgba(255, 255, 255, 0.86),
+    0 0 20px rgba(255, 255, 255, 0.3);
+  transform: scale(0.97);
+}
