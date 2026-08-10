@@ -142,6 +142,8 @@ const newProducts: Product[] = [
 ];
 
 const heroSlides = [
+  "/mazeta-hero-instagram-1.jpg",
+  "/mazeta-hero-instagram-2.jpg",
   "/mazeta-hero-anuncio-1.jpg",
   "/mazeta-hero-anuncio-2.jpg",
   "/mazeta-hero-anuncio-3.jpg",
