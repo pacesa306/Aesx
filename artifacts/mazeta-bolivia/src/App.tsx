@@ -3,14 +3,18 @@ import {
   ArrowRight,
   BadgeCheck,
   ChevronRight,
+  ChevronLeft,
   Heart,
   Home,
   LockKeyhole,
   MapPin,
   Menu,
+  MessageCircle,
+  Minus,
   Plus,
   RefreshCcw,
   Search,
+  ShieldCheck,
   SlidersHorizontal,
   ShoppingBag,
   ShoppingCart,
@@ -52,21 +56,177 @@ const storeCategories = [
   { name: "ACCESORIOS", image: "/store-cat-accessories.png", icon: "bag" },
 ];
 
-const bestSellers = [
-  { name: "Camiseta Dry Fit Elite", price: "Bs. 129", image: "/store-product-tee.png" },
-  { name: "Hoodie Performance Pro", price: "Bs. 199", image: "/store-product-hoodie.png" },
-  { name: "Pantalón Jogger Training", price: "Bs. 179", image: "/store-product-jogger.png" },
-  { name: "Short Sport Active", price: "Bs. 99", image: "/store-product-short.png" },
+type Product = {
+  name: string;
+  price: string;
+  image: string;
+  detailImage?: string;
+  category?: string;
+  subtitle?: string;
+  badge?: string;
+};
+
+const bestSellers: Product[] = [
+  {
+    name: "Camiseta Dry Fit Elite",
+    price: "Bs. 129",
+    image: "/store-product-tee.png",
+    detailImage: "/mazeta-category-shirt.png",
+    category: "CAMISETAS",
+    subtitle: "Negro · Dry Fit Premium",
+    badge: "MÁS VENDIDO",
+  },
+  {
+    name: "Hoodie Performance Pro",
+    price: "Bs. 199",
+    image: "/store-product-hoodie.png",
+    detailImage: "/store-product-hoodie.png",
+    category: "POLERAS",
+    subtitle: "Negro · Performance",
+    badge: "MÁS VENDIDO",
+  },
+  {
+    name: "Pantalón Jogger Training",
+    price: "Bs. 179",
+    image: "/store-product-jogger.png",
+    detailImage: "/store-product-jogger.png",
+    category: "PANTALONES",
+    subtitle: "Negro · Training",
+    badge: "MÁS VENDIDO",
+  },
+  {
+    name: "Short Sport Active",
+    price: "Bs. 99",
+    image: "/store-product-short.png",
+    detailImage: "/store-product-short.png",
+    category: "SHORTS",
+    subtitle: "Negro · Sport Active",
+    badge: "MÁS VENDIDO",
+  },
 ];
 
-const newProducts = [
-  { name: "Training Tee", price: "Bs. 139", image: "/store-new-1.png" },
-  { name: "Motion Top", price: "Bs. 149", image: "/store-new-2.png" },
-  { name: "Essential Hoodie", price: "Bs. 219", image: "/store-new-3.png" },
-  { name: "Run Cap", price: "Bs. 89", image: "/store-new-4.png" },
+const newProducts: Product[] = [
+  { name: "Training Tee", price: "Bs. 139", image: "/store-new-1.png", category: "CAMISETAS", subtitle: "Negro · Training" },
+  { name: "Motion Top", price: "Bs. 149", image: "/store-new-2.png", category: "MUJER", subtitle: "Negro · Motion" },
+  { name: "Essential Hoodie", price: "Bs. 219", image: "/store-new-3.png", category: "POLERAS", subtitle: "Negro · Essential" },
+  { name: "Run Cap", price: "Bs. 89", image: "/store-new-4.png", category: "ACCESORIOS", subtitle: "Negro · Run" },
 ];
 
-function StorePage({ onAddToCart }: { onAddToCart: () => void }) {
+function ProductDetailModal({
+  product,
+  onClose,
+  onAddToCart,
+}: {
+  product: Product;
+  onClose: () => void;
+  onAddToCart: (quantity: number) => void;
+}) {
+  const [quantity, setQuantity] = useState(1);
+  const [selectedSize, setSelectedSize] = useState("M");
+  const [selectedColor, setSelectedColor] = useState(1);
+
+  return (
+    <div className="product-detail-overlay" role="presentation" onMouseDown={(event) => {
+      if (event.target === event.currentTarget) onClose();
+    }}>
+      <section className="product-detail-panel" role="dialog" aria-modal="true" aria-labelledby="product-detail-title">
+        <div className="product-detail-media">
+          <img src={product.detailImage ?? product.image} alt={product.name} />
+          <div className="product-detail-media-shade" />
+          <span className="product-detail-badge">☆ &nbsp; {product.badge ?? "NUEVO"}</span>
+          <button type="button" className="product-detail-close" aria-label="Cerrar detalle" onClick={onClose}>
+            <X aria-hidden="true" />
+          </button>
+          <button type="button" className="product-detail-arrow product-detail-arrow-left" aria-label="Producto anterior">
+            <ChevronLeft aria-hidden="true" />
+          </button>
+          <button type="button" className="product-detail-arrow product-detail-arrow-right" aria-label="Producto siguiente">
+            <ChevronRight aria-hidden="true" />
+          </button>
+          <div className="product-detail-dots"><span className="is-active" /><span /><span /><span /><span /><span /></div>
+        </div>
+
+        <div className="product-detail-content">
+          <span className="product-detail-category"><i />{product.category ?? "COLECCIÓN MAZETA"}</span>
+          <h2 id="product-detail-title">{product.name}</h2>
+          <p className="product-detail-subtitle">{product.subtitle ?? "Negro · Calidad premium"}</p>
+          <strong className="product-detail-price">{product.price}</strong>
+
+          <div className="product-detail-divider" />
+
+          <div className="product-detail-options">
+            <div>
+              <span className="product-detail-label">COLOR</span>
+              <div className="product-color-options">
+                {["#050505", "#494b4d", "#f4f4f4"].map((color, index) => (
+                  <button
+                    key={color}
+                    type="button"
+                    aria-label={`Color ${index + 1}`}
+                    className={`product-color-swatch${selectedColor === index ? " is-selected" : ""}`}
+                    style={{ backgroundColor: color }}
+                    onClick={() => setSelectedColor(index)}
+                  />
+                ))}
+              </div>
+            </div>
+            <div>
+              <span className="product-detail-label">TALLA</span>
+              <div className="product-size-options">
+                {["S", "M", "L", "XL"].map((size) => (
+                  <button
+                    key={size}
+                    type="button"
+                    className={selectedSize === size ? "is-selected" : ""}
+                    onClick={() => setSelectedSize(size)}
+                  >
+                    {size}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <div className="product-detail-stock-row">
+            <div>
+              <span className="product-detail-label">CANTIDAD</span>
+              <div className="product-quantity">
+                <button type="button" aria-label="Reducir cantidad" onClick={() => setQuantity((value) => Math.max(1, value - 1))}><Minus aria-hidden="true" /></button>
+                <strong>{quantity}</strong>
+                <button type="button" aria-label="Aumentar cantidad" onClick={() => setQuantity((value) => value + 1)}><Plus aria-hidden="true" /></button>
+              </div>
+            </div>
+            <div className="product-detail-availability">
+              <span className="product-detail-label">DISPONIBILIDAD</span>
+              <p><i />En stock</p>
+              <small>Listo para enviar</small>
+            </div>
+          </div>
+
+          <button type="button" className="product-add-main" onClick={() => {
+            onAddToCart(quantity);
+            onClose();
+          }}>
+            <ShoppingCart aria-hidden="true" />
+            AÑADIR AL CARRITO
+          </button>
+          <button type="button" className="product-whatsapp-button">
+            <MessageCircle aria-hidden="true" />
+            CONSULTAR POR WHATSAPP
+          </button>
+
+          <div className="product-detail-benefits">
+            <div><ShieldCheck aria-hidden="true" /><span>PAGO SEGURO<small>Protegemos tus datos</small></span></div>
+            <div><Truck aria-hidden="true" /><span>ENVÍOS A TODO<small>Bolivia</small></span></div>
+            <div><RefreshCcw aria-hidden="true" /><span>CAMBIOS FÁCILES<small>Sin complicaciones</small></span></div>
+          </div>
+        </div>
+      </section>
+    </div>
+  );
+}
+
+function StorePage({ onAddToCart, onOpenProduct }: { onAddToCart: () => void; onOpenProduct: (product: Product) => void }) {
   const [favorites, setFavorites] = useState<string[]>([]);
 
   const toggleFavorite = (name: string) => {
@@ -75,15 +235,26 @@ function StorePage({ onAddToCart }: { onAddToCart: () => void }) {
     );
   };
 
-  const ProductCard = ({ product }: { product: (typeof bestSellers)[number] }) => (
-    <article className="store-product-card">
+  const ProductCard = ({ product }: { product: Product }) => (
+    <article
+      className="store-product-card"
+      role="button"
+      tabIndex={0}
+      onClick={() => onOpenProduct(product)}
+      onKeyDown={(event) => {
+        if (event.key === "Enter" || event.key === " ") onOpenProduct(product);
+      }}
+    >
       <div className="store-product-image">
         <img src={product.image} alt="" />
         <button
           type="button"
           className={`store-favorite${favorites.includes(product.name) ? " is-favorite" : ""}`}
           aria-label={`${favorites.includes(product.name) ? "Quitar de" : "Agregar a"} favoritos ${product.name}`}
-          onClick={() => toggleFavorite(product.name)}
+          onClick={(event) => {
+            event.stopPropagation();
+            toggleFavorite(product.name);
+          }}
         >
           <Heart aria-hidden="true" fill={favorites.includes(product.name) ? "currentColor" : "none"} />
         </button>
@@ -91,7 +262,10 @@ function StorePage({ onAddToCart }: { onAddToCart: () => void }) {
       <div className="store-product-details">
         <h3>{product.name}</h3>
         <strong>{product.price}</strong>
-        <button type="button" className="store-add-button" onClick={onAddToCart}>
+        <button type="button" className="store-add-button" onClick={(event) => {
+          event.stopPropagation();
+          onAddToCart();
+        }}>
           AGREGAR <ShoppingCart aria-hidden="true" />
         </button>
       </div>
@@ -180,6 +354,7 @@ function HomePage() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeTab, setActiveTab] = useState<BottomTab>("tienda");
   const [cartCount, setCartCount] = useState(0);
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
 
   const selectTab = (tab: BottomTab) => {
     setActiveTab(tab);
@@ -210,7 +385,12 @@ function HomePage() {
       </header>
 
       <div className={`mazeta-page${menuOpen ? " is-covered" : ""}`}>
-        {activeTab === "tienda" ? <StorePage onAddToCart={() => setCartCount((count) => count + 1)} /> : (
+        {activeTab === "tienda" ? (
+          <StorePage
+            onAddToCart={() => setCartCount((count) => count + 1)}
+            onOpenProduct={setSelectedProduct}
+          />
+        ) : (
         <>
         <section className="mazeta-hero" aria-label="Nueva colección">
           <img
@@ -299,13 +479,47 @@ function HomePage() {
           </div>
           <div className="mazeta-product-row">
             {[
-              { name: "Essential Tee", price: "Bs. 149", tone: "product-black" },
-              { name: "Core Hoodie", price: "Bs. 299", tone: "product-stone" },
+              {
+                name: "Essential Tee",
+                price: "Bs. 149",
+                image: "/store-product-tee.png",
+                detailImage: "/mazeta-category-shirt.png",
+                category: "CAMISETAS",
+                subtitle: "Negro · Dry Fit Premium",
+                badge: "MÁS VENDIDO",
+                tone: "product-black",
+              },
+              {
+                name: "Core Hoodie",
+                price: "Bs. 299",
+                image: "/store-product-hoodie.png",
+                detailImage: "/store-product-hoodie.png",
+                category: "POLERAS",
+                subtitle: "Negro · Performance",
+                badge: "NUEVO",
+                tone: "product-stone",
+              },
             ].map((product) => (
-              <article className="mazeta-product-card" key={product.name}>
+              <article
+                className="mazeta-product-card"
+                key={product.name}
+                role="button"
+                tabIndex={0}
+                onClick={() => setSelectedProduct(product)}
+                onKeyDown={(event) => {
+                  if (event.key === "Enter" || event.key === " ") setSelectedProduct(product);
+                }}
+              >
                 <div className={`mazeta-product-image ${product.tone}`}>
                   <span className="mazeta-product-label">MAZETA</span>
-                  <button type="button" aria-label={`Agregar ${product.name} al carrito`} onClick={() => setCartCount((count) => count + 1)}>
+                  <button
+                    type="button"
+                    aria-label={`Agregar ${product.name} al carrito`}
+                    onClick={(event) => {
+                      event.stopPropagation();
+                      setCartCount((count) => count + 1);
+                    }}
+                  >
                     <Plus aria-hidden="true" />
                   </button>
                 </div>
@@ -371,6 +585,14 @@ function HomePage() {
           <ShoppingCart aria-hidden="true" />
           <span>{cartCount > 99 ? "99+" : cartCount}</span>
         </button>
+      )}
+
+      {selectedProduct && (
+        <ProductDetailModal
+          product={selectedProduct}
+          onClose={() => setSelectedProduct(null)}
+          onAddToCart={(quantity) => setCartCount((count) => count + quantity)}
+        />
       )}
 
       <nav className="mazeta-bottom-nav" aria-label="Navegación inferior">
