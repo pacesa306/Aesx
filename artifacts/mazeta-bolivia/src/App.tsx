@@ -762,7 +762,7 @@ function HomePage() {
         <span className="mazeta-announcement-viewport" aria-hidden="true">
           <span className="mazeta-announcement-track">
             <span className="mazeta-announcement-message">
-              <b>MAZETA WORLD ONLINE</b>
+              <b>MAZETA WORLD <em>ONLINE</em></b>
               <i />
               <strong>ENVÍOS A TODA BOLIVIA</strong>
               <span className="mazeta-announcement-flag">🇧🇴</span>
@@ -771,7 +771,7 @@ function HomePage() {
               <i />
             </span>
             <span className="mazeta-announcement-message" aria-hidden="true">
-              <b>MAZETA WORLD ONLINE</b>
+              <b>MAZETA WORLD <em>ONLINE</em></b>
               <i />
               <strong>ENVÍOS A TODA BOLIVIA</strong>
               <span className="mazeta-announcement-flag">🇧🇴</span>
