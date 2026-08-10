@@ -919,9 +919,46 @@ button:focus-visible {
   letter-spacing: 0.05em;
 }
 
+.store-filter-button.is-active {
+  border-color: #fff;
+  color: #080808;
+  background: #fff;
+}
+
 .store-filter-button svg {
   width: 13px;
   height: 13px;
+}
+
+.store-filter-menu {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+  padding: 8px;
+  border: 1px solid #2b2b2b;
+  border-radius: 7px;
+  background: #0c0c0c;
+}
+
+.store-filter-menu button {
+  min-height: 25px;
+  padding: 0 9px;
+  border: 1px solid #343434;
+  border-radius: 4px;
+  color: #aaa;
+  background: #151515;
+  cursor: pointer;
+  font-size: 8px;
+  font-weight: 750;
+  letter-spacing: 0.06em;
+}
+
+.store-filter-menu button:hover,
+.store-filter-menu button.is-active {
+  border-color: #fff;
+  color: #050505;
+  background: #fff;
 }
 
 .store-hero {
@@ -1113,6 +1150,21 @@ button:focus-visible {
 
 .store-category-card:hover {
   border-color: #fff;
+}
+
+.store-category-card.is-active {
+  border-color: #fff;
+  box-shadow: 0 0 0 1px #fff;
+}
+
+.store-no-results {
+  margin: 0;
+  padding: 24px 12px;
+  border: 1px dashed #343434;
+  border-radius: 7px;
+  color: #999;
+  font-size: 10px;
+  text-align: center;
 }
 
 .store-product-row {

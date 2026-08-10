@@ -49,10 +49,10 @@ const menuItems = [
 ];
 
 const storeCategories = [
-  { name: "HOMBRE", image: "/store-cat-men.png", icon: "shirt" },
-  { name: "POLERAS", image: "/store-cat-polos.png", icon: "hanger" },
-  { name: "SHORTS", image: "/store-cat-shorts.png", icon: "shorts" },
-  { name: "JOGGERS", image: "/store-product-jogger.png", icon: "pants" },
+  { name: "HOMBRE", filterCategory: "TODOS", image: "/store-cat-men.png", icon: "shirt" },
+  { name: "POLERAS", filterCategory: "POLERAS", image: "/store-cat-polos.png", icon: "hanger" },
+  { name: "SHORTS", filterCategory: "SHORTS", image: "/store-cat-shorts.png", icon: "shorts" },
+  { name: "JOGGERS", filterCategory: "PANTALONES", image: "/store-product-jogger.png", icon: "pants" },
 ];
 
 type Product = {
@@ -259,7 +259,14 @@ function ProductDetailModal({
             <ShoppingBag aria-hidden="true" />
             COMPRAR
           </button>
-          <button type="button" className="product-whatsapp-button">
+          <button
+            type="button"
+            className="product-whatsapp-button"
+            onClick={() => {
+              const text = `Hola Mazeta Bolivia, quiero consultar por ${product.name} (${product.price}).`;
+              window.open(`https://wa.me/59178524143?text=${encodeURIComponent(text)}`, "_blank", "noopener,noreferrer");
+            }}
+          >
             <MessageCircle aria-hidden="true" />
             CONSULTAR POR WHATSAPP
           </button>
@@ -406,6 +413,32 @@ function OrderFormModal({
     setForm((current) => ({ ...current, [field]: value }));
   };
 
+  const sendOrderToWhatsApp = () => {
+    const lines = [
+      "Hola Mazeta Bolivia, quiero realizar este pedido:",
+      "",
+      form.order,
+      "",
+      `Departamento: ${form.department}`,
+      ...(form.department === "Santa Cruz"
+        ? [`Referencia: ${form.reference}`]
+        : [
+            `Nombre: ${form.name}`,
+            `Teléfono: ${form.phone}`,
+            `Dirección: ${form.address}`,
+            `Ciudad: ${form.city}`,
+          ]),
+      ...(form.message ? ["", `Mensaje: ${form.message}`] : []),
+    ];
+
+    window.open(
+      `https://wa.me/59178524143?text=${encodeURIComponent(lines.join("\n"))}`,
+      "_blank",
+      "noopener,noreferrer",
+    );
+    setSubmitted(true);
+  };
+
   const renderDepartmentFields = () => {
     if (form.department === "Santa Cruz") {
       return (
@@ -536,7 +569,7 @@ function OrderFormModal({
 
         <form onSubmit={(event) => {
           event.preventDefault();
-          setSubmitted(true);
+          sendOrderToWhatsApp();
         }}>
           <label className="order-department-field">
             DEPARTAMENTO
@@ -576,11 +609,42 @@ function StorePage({
   onOpenCart: () => void;
 }) {
   const [favorites, setFavorites] = useState<string[]>([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [activeCategory, setActiveCategory] = useState("TODOS");
+  const [filtersOpen, setFiltersOpen] = useState(false);
 
   const toggleFavorite = (name: string) => {
     setFavorites((current) =>
       current.includes(name) ? current.filter((item) => item !== name) : [...current, name],
     );
+  };
+
+  const allProducts = [...bestSellers, ...newProducts];
+  const normalizedSearch = searchTerm.trim().toLocaleLowerCase();
+  const matchesProduct = (product: Product) => {
+    const matchesCategory = activeCategory === "TODOS" || product.category === activeCategory;
+    const matchesSearch =
+      !normalizedSearch ||
+      [product.name, product.category, product.subtitle]
+        .filter(Boolean)
+        .some((value) => value!.toLocaleLowerCase().includes(normalizedSearch));
+    return matchesCategory && matchesSearch;
+  };
+  const filteredBestSellers = bestSellers.filter(matchesProduct);
+  const filteredNewProducts = newProducts.filter(matchesProduct);
+  const filteredProducts = allProducts.filter(matchesProduct);
+  const hasActiveFilter = activeCategory !== "TODOS" || Boolean(normalizedSearch);
+
+  const scrollToProducts = () => {
+    window.setTimeout(() => {
+      document.getElementById("bestsellers-title")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 0);
+  };
+
+  const chooseCategory = (category: string) => {
+    setActiveCategory(category);
+    setFiltersOpen(false);
+    scrollToProducts();
   };
 
   const ProductCard = ({ product }: { product: Product }) => (
@@ -628,13 +692,38 @@ function StorePage({
         <div className="store-toolbar">
           <label className="store-search">
             <Search aria-hidden="true" />
-            <input type="search" placeholder="Buscar productos..." aria-label="Buscar productos" />
+            <input
+              type="search"
+              value={searchTerm}
+              onChange={(event) => setSearchTerm(event.target.value)}
+              placeholder="Buscar productos..."
+              aria-label="Buscar productos"
+            />
           </label>
-          <button type="button" className="store-filter-button">
+          <button
+            type="button"
+            className={`store-filter-button${filtersOpen ? " is-active" : ""}`}
+            aria-expanded={filtersOpen}
+            onClick={() => setFiltersOpen((open) => !open)}
+          >
             <SlidersHorizontal aria-hidden="true" />
             FILTROS
           </button>
         </div>
+        {filtersOpen && (
+          <div className="store-filter-menu" aria-label="Filtrar por categoría">
+            {["TODOS", ...Array.from(new Set(allProducts.map((product) => product.category).filter(Boolean) as string[]))].map((category) => (
+              <button
+                type="button"
+                key={category}
+                className={activeCategory === category ? "is-active" : ""}
+                onClick={() => chooseCategory(category)}
+              >
+                {category}
+              </button>
+            ))}
+          </div>
+        )}
       </section>
 
       <section className="store-hero" aria-label="Rendimiento sin límites">
@@ -643,7 +732,7 @@ function StorePage({
         <div className="store-hero-copy">
           <h2>RENDIMIENTO<br />SIN LÍMITES</h2>
           <p>Nueva colección deportiva<br />ya disponible.</p>
-          <button type="button" onClick={() => onOpenCart()}>VER COLECCIÓN</button>
+          <button type="button" onClick={scrollToProducts}>VER COLECCIÓN</button>
         </div>
         <div className="store-dots"><span className="is-active" /><span /><span /></div>
       </section>
@@ -651,11 +740,16 @@ function StorePage({
       <section className="store-section" aria-labelledby="store-categories-title">
         <div className="store-section-heading">
           <h2 id="store-categories-title">CATEGORÍAS</h2>
-          <button type="button">Ver todas <ChevronRight aria-hidden="true" /></button>
+           <button type="button" onClick={() => chooseCategory("TODOS")}>Ver todas <ChevronRight aria-hidden="true" /></button>
         </div>
         <div className="store-category-row">
           {storeCategories.map((category) => (
-            <button type="button" className="store-category-card" key={category.name}>
+             <button
+               type="button"
+               className={`store-category-card${activeCategory === category.filterCategory ? " is-active" : ""}`}
+               key={category.name}
+               onClick={() => chooseCategory(category.filterCategory)}
+             >
               <img src={category.image} alt="" />
               <span>{category.name}</span>
             </button>
@@ -665,12 +759,22 @@ function StorePage({
 
       <section className="store-section" aria-labelledby="bestsellers-title">
         <div className="store-section-heading">
-          <h2 id="bestsellers-title">MÁS VENDIDOS</h2>
-          <button type="button">Ver todos <ChevronRight aria-hidden="true" /></button>
+          <h2 id="bestsellers-title">{hasActiveFilter ? "RESULTADOS" : "MÁS VENDIDOS"}</h2>
+          <button type="button" onClick={() => chooseCategory("TODOS")}>Ver todos <ChevronRight aria-hidden="true" /></button>
         </div>
-        <div className="store-product-row">
-          {bestSellers.map((product) => <ProductCard key={product.name} product={product} />)}
-        </div>
+        {hasActiveFilter ? (
+          filteredProducts.length > 0 ? (
+            <div className="store-product-row">
+              {filteredProducts.map((product) => <ProductCard key={product.name} product={product} />)}
+            </div>
+          ) : (
+            <p className="store-no-results">No encontramos productos con esa búsqueda.</p>
+          )
+        ) : (
+          <div className="store-product-row">
+            {filteredBestSellers.map((product) => <ProductCard key={product.name} product={product} />)}
+          </div>
+        )}
       </section>
 
       <section className="store-offer" aria-label="Oferta de hoodies">
@@ -679,7 +783,7 @@ function StorePage({
         <div className="store-offer-copy">
           <h2>20% OFF<br />EN HOODIES</h2>
           <p>Por tiempo limitado.<br />No te lo pierdas.</p>
-          <button type="button" onClick={() => onOpenCart()}>VER OFERTAS</button>
+          <button type="button" onClick={() => chooseCategory("POLERAS")}>VER OFERTAS</button>
         </div>
         <div className="store-discount">20%<br /><span>OFF</span></div>
       </section>
@@ -687,11 +791,13 @@ function StorePage({
       <section className="store-section store-new-section" aria-labelledby="new-title">
         <div className="store-section-heading">
           <h2 id="new-title">NUEVOS PRODUCTOS</h2>
-          <button type="button">Ver todos <ChevronRight aria-hidden="true" /></button>
+          <button type="button" onClick={() => chooseCategory("TODOS")}>Ver todos <ChevronRight aria-hidden="true" /></button>
         </div>
-        <div className="store-product-row">
-          {newProducts.map((product) => <ProductCard key={product.name} product={product} />)}
-        </div>
+        {!hasActiveFilter && (
+          <div className="store-product-row">
+            {filteredNewProducts.map((product) => <ProductCard key={product.name} product={product} />)}
+          </div>
+        )}
       </section>
       <div className="store-bottom-space" />
     </div>
