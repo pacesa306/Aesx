@@ -361,6 +361,18 @@ function HomePage() {
         </nav>
       )}
 
+      {activeTab === "tienda" && (
+        <button
+          type="button"
+          className="store-floating-cart"
+          aria-label={`Ver carrito${cartCount > 0 ? `, ${cartCount} productos` : ""}`}
+          onClick={() => setActiveTab("tienda")}
+        >
+          <ShoppingCart aria-hidden="true" />
+          <span>{cartCount > 99 ? "99+" : cartCount}</span>
+        </button>
+      )}
+
       <nav className="mazeta-bottom-nav" aria-label="Navegación inferior">
         {bottomTabs.map(({ id, label, Icon }) => (
           <button
