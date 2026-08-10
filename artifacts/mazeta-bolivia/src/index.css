@@ -59,6 +59,7 @@ button:focus-visible {
   cursor: pointer;
   text-align: left;
   touch-action: manipulation;
+  animation: mazeta-white-vibrate-pulse 1.35s ease-in-out infinite;
 }
 
 .mazeta-announcement-bar:hover {
@@ -86,6 +87,10 @@ button:focus-visible {
 }
 
 .mazeta-announcement-bar.is-paused .mazeta-announcement-track {
+  animation-play-state: paused;
+}
+
+.mazeta-announcement-bar.is-paused {
   animation-play-state: paused;
 }
 
@@ -1796,6 +1801,36 @@ button:focus-visible {
   height: 1px;
   background: #f4f4f4;
   content: "";
+}
+
+.mazeta-bottom-tab {
+  transition:
+    color 220ms ease,
+    filter 220ms ease,
+    transform 220ms ease;
+}
+
+.mazeta-bottom-tab.is-active {
+  animation: mazeta-white-vibrate-pulse 1.35s ease-in-out infinite;
+  filter:
+    drop-shadow(0 0 4px rgba(255, 255, 255, 0.95))
+    drop-shadow(0 0 11px rgba(255, 255, 255, 0.5));
+}
+
+.mazeta-bottom-tab:hover,
+.mazeta-bottom-tab:focus-visible {
+  animation-duration: 0.95s;
+  filter:
+    drop-shadow(0 0 7px rgba(255, 255, 255, 1))
+    drop-shadow(0 0 17px rgba(255, 255, 255, 0.72));
+}
+
+.mazeta-bottom-tab:active {
+  animation: none;
+  filter:
+    drop-shadow(0 0 9px rgba(255, 255, 255, 1))
+    drop-shadow(0 0 20px rgba(255, 255, 255, 0.8));
+  transform: scale(1.04) translate(1px, -1px);
 }
 
 @media (min-width: 700px) {
@@ -3689,5 +3724,31 @@ button:focus-visible {
 
   66% {
     transform: scale(1.04) translate(0.5px, 0);
+  }
+}
+
+@keyframes mazeta-white-vibrate-pulse {
+  0%,
+  100% {
+    box-shadow:
+      0 0 4px rgba(255, 255, 255, 0.38),
+      0 0 12px rgba(255, 255, 255, 0.14);
+    transform: scale(1) translate(0, 0);
+  }
+
+  35% {
+    box-shadow:
+      0 0 8px rgba(255, 255, 255, 0.9),
+      0 0 20px rgba(255, 255, 255, 0.46),
+      0 0 32px rgba(255, 255, 255, 0.2);
+    transform: scale(1.018) translate(0.5px, -0.5px);
+  }
+
+  50% {
+    transform: scale(1.01) translate(-0.5px, 0.5px);
+  }
+
+  65% {
+    transform: scale(1.015) translate(0.5px, 0);
   }
 }
