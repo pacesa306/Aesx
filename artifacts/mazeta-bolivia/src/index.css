@@ -2010,18 +2010,52 @@ button:focus-visible {
 
 /* Compact mobile viewport: the first screen is intentionally self-contained. */
 @media (max-width: 699px) {
+  /* The catalog itself remains a normal, scrollable page. */
+  html,
+  body,
+  #root,
+  .mazeta-app {
+    height: auto;
+    min-height: 100%;
+    overflow-y: auto;
+  }
+
+  .mazeta-page {
+    height: auto;
+    min-height: calc(100dvh - 133px);
+    overflow: visible;
+  }
+
+  .store-page {
+    height: auto;
+    min-height: calc(100dvh - 66px);
+    overflow: visible;
+  }
+
   .store-section {
     margin-top: 9px;
   }
 
   .store-offer,
-  .store-new-section,
-  .store-bottom-space,
-  .mazeta-collection-banner,
+  .store-new-section {
+    display: block;
+  }
+
+  .mazeta-collection-banner {
+    display: flex;
+  }
+
   .mazeta-products,
-  .mazeta-cart-card,
+  .mazeta-cart-card {
+    display: block;
+  }
+
+  .mazeta-cart-card {
+    display: flex;
+  }
+
   .mazeta-mobile-spacer {
-    display: none;
+    display: block;
   }
 
   .mazeta-section {
@@ -2045,5 +2079,16 @@ button:focus-visible {
 
   .mazeta-category-card span {
     font-size: 10px;
+  }
+
+  /* Product detail is a contained, one-screen surface with no inner scroll. */
+  .product-detail-overlay {
+    overflow: hidden;
+  }
+
+  .product-detail-media {
+    flex-basis: min(34vh, 220px);
+    height: min(34vh, 220px);
+    max-height: 34vh;
   }
 }
