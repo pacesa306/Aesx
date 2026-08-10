@@ -20,10 +20,11 @@ import {
   ShoppingCart,
   Trash2,
   Truck,
+  UserRound,
   X,
 } from "lucide-react";
 
-type BottomTab = "inicio" | "sucursales" | "tienda" | "whatsapp";
+type BottomTab = "inicio" | "tienda" | "inscribete" | "whatsapp";
 
 const bottomTabs: Array<{
   id: BottomTab;
@@ -31,14 +32,14 @@ const bottomTabs: Array<{
   Icon: typeof Home;
 }> = [
   { id: "inicio", label: "INICIO", Icon: Home },
-  { id: "sucursales", label: "SUCURSALES", Icon: MapPin },
   { id: "tienda", label: "TIENDA", Icon: ShoppingBag },
+  { id: "inscribete", label: "INSCRÍBETE", Icon: UserRound },
   { id: "whatsapp", label: "WHATSAPP", Icon: MessageCircle },
 ];
 
 const menuItems = [
   { label: "INICIO", tab: "inicio" as BottomTab | undefined },
-  { label: "SUCURSALES", tab: "sucursales" as BottomTab | undefined },
+  { label: "SUCURSALES" },
   { label: "TIENDA", tab: "tienda" as BottomTab | undefined },
   { label: "REGALOS" },
   { label: "PROMOCIONES" },
