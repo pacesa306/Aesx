@@ -1443,6 +1443,7 @@ button:focus-visible {
 }
 
 .product-add-main,
+.product-buy-main,
 .product-whatsapp-button {
   display: flex;
   width: 100%;
@@ -1464,6 +1465,18 @@ button:focus-visible {
   background: #fff;
 }
 
+.product-buy-main {
+  margin-top: 10px;
+  border: 1px solid #5b5b5b;
+  color: #fff;
+  background: #171717;
+}
+
+.product-buy-main:hover {
+  border-color: #fff;
+  background: #252525;
+}
+
 .product-add-main:hover {
   color: #fff;
   background: transparent;
@@ -1472,6 +1485,12 @@ button:focus-visible {
 .product-add-main svg {
   width: 20px;
   height: 20px;
+  stroke-width: 1.4;
+}
+
+.product-buy-main svg {
+  width: 19px;
+  height: 19px;
   stroke-width: 1.4;
 }
 
@@ -1968,6 +1987,7 @@ button:focus-visible {
   }
 
   .product-add-main,
+  .product-buy-main,
   .product-whatsapp-button {
     width: 100%;
     max-width: 100%;
@@ -1983,11 +2003,16 @@ button:focus-visible {
     margin-top: 9px;
   }
 
+  .product-buy-main {
+    margin-top: 5px;
+  }
+
   .product-whatsapp-button {
     margin-top: 5px;
   }
 
   .product-add-main svg,
+  .product-buy-main svg,
   .product-whatsapp-button svg {
     width: 15px;
     height: 15px;
@@ -2320,12 +2345,17 @@ button:focus-visible {
   }
 
   .product-add-main,
+  .product-buy-main,
   .product-whatsapp-button {
     min-height: 36px;
     margin-top: 7px;
   }
 
   .product-whatsapp-button {
+    margin-top: 4px;
+  }
+
+  .product-buy-main {
     margin-top: 4px;
   }
 

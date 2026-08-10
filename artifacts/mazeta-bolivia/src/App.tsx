@@ -138,10 +138,12 @@ const newProducts: Product[] = [
 function ProductDetailModal({
   product,
   onClose,
+  onAddToCart,
   onBuy,
 }: {
   product: Product;
   onClose: () => void;
+  onAddToCart: (quantity: number) => void;
   onBuy: (quantity: number) => void;
 }) {
   const [quantity, setQuantity] = useState(1);
@@ -226,8 +228,15 @@ function ProductDetailModal({
             </div>
           </div>
 
-          <button type="button" className="product-add-main" onClick={() => onBuy(quantity)}>
+          <button type="button" className="product-add-main" onClick={() => {
+            onAddToCart(quantity);
+            onClose();
+          }}>
             <ShoppingCart aria-hidden="true" />
+            AÑADIR AL CARRITO
+          </button>
+          <button type="button" className="product-buy-main" onClick={() => onBuy(quantity)}>
+            <ShoppingBag aria-hidden="true" />
             COMPRAR
           </button>
           <button type="button" className="product-whatsapp-button">
@@ -823,6 +832,7 @@ function HomePage() {
         <ProductDetailModal
           product={selectedProduct}
           onClose={() => setSelectedProduct(null)}
+          onAddToCart={(quantity) => setCartCount((count) => count + quantity)}
           onBuy={(quantity) => {
             setCartCount((count) => count + quantity);
             setOrderProduct(selectedProduct);
