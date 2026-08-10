@@ -1804,6 +1804,7 @@ button:focus-visible {
 }
 
 .mazeta-bottom-tab {
+  color: #f4f4f4;
   transition:
     color 220ms ease,
     transform 220ms ease;
@@ -1819,8 +1820,9 @@ button:focus-visible {
   transform-origin: center;
   animation: mazeta-icon-pulse 1.35s ease-in-out infinite;
   filter:
-    drop-shadow(0 0 3px rgba(255, 255, 255, 0.78))
-    drop-shadow(0 0 8px rgba(255, 255, 255, 0.34));
+    brightness(1.25)
+    drop-shadow(0 0 5px rgba(255, 255, 255, 1))
+    drop-shadow(0 0 12px rgba(255, 255, 255, 0.68));
   transition:
     filter 220ms ease,
     transform 220ms ease;
@@ -1838,8 +1840,9 @@ button:focus-visible {
 .mazeta-bottom-tab.is-active svg {
   animation-duration: 0.95s;
   filter:
-    drop-shadow(0 0 5px rgba(255, 255, 255, 1))
-    drop-shadow(0 0 14px rgba(255, 255, 255, 0.66));
+    brightness(1.45)
+    drop-shadow(0 0 8px rgba(255, 255, 255, 1))
+    drop-shadow(0 0 20px rgba(255, 255, 255, 0.84));
 }
 
 .mazeta-bottom-tab:active {
@@ -1852,8 +1855,9 @@ button:focus-visible {
 .mazeta-bottom-tab:active svg {
   animation: none;
   filter:
-    drop-shadow(0 0 7px rgba(255, 255, 255, 1))
-    drop-shadow(0 0 18px rgba(255, 255, 255, 0.8));
+    brightness(1.6)
+    drop-shadow(0 0 10px rgba(255, 255, 255, 1))
+    drop-shadow(0 0 26px rgba(255, 255, 255, 0.95));
   transform: scale(1.12) translate(1px, -1px);
 }
 
@@ -3703,9 +3707,9 @@ button:focus-visible {
   animation-duration: 0.9s;
   border-color: #fff;
   box-shadow:
-    0 0 8px rgba(255, 255, 255, 0.95),
-    0 0 20px rgba(255, 255, 255, 0.62),
-    0 0 38px rgba(255, 255, 255, 0.28);
+    0 0 10px rgba(255, 255, 255, 1),
+    0 0 25px rgba(255, 255, 255, 0.82),
+    0 0 46px rgba(255, 255, 255, 0.48);
 }
 
 .mazeta-primary-button:not(:disabled):active,
@@ -3719,9 +3723,9 @@ button:focus-visible {
 .order-submit-button:not(:disabled):active {
   animation: none;
   box-shadow:
-    0 0 11px rgba(255, 255, 255, 1),
-    0 0 28px rgba(255, 255, 255, 0.72),
-    0 0 48px rgba(255, 255, 255, 0.34);
+    0 0 14px rgba(255, 255, 255, 1),
+    0 0 34px rgba(255, 255, 255, 0.9),
+    0 0 58px rgba(255, 255, 255, 0.56);
   transform: scale(0.98) translate(1px, -1px);
 }
 
@@ -3736,9 +3740,9 @@ button:focus-visible {
 
   38% {
     box-shadow:
-      0 0 7px rgba(255, 255, 255, 0.72),
-      0 0 18px rgba(255, 255, 255, 0.28),
-      0 0 28px rgba(255, 255, 255, 0.12);
+      0 0 10px rgba(255, 255, 255, 0.95),
+      0 0 24px rgba(255, 255, 255, 0.62),
+      0 0 38px rgba(255, 255, 255, 0.3);
     transform: scale(1.05) translate(0.5px, -0.5px);
   }
 
