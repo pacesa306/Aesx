@@ -1220,28 +1220,30 @@ function HomePage() {
           ))}
         </section>
 
-        <section className="mazeta-section mazeta-categories" aria-labelledby="categories-title">
+        <section className="mazeta-section mazeta-about" aria-labelledby="about-title">
           <div className="mazeta-section-heading">
             <div>
-              <span className="mazeta-section-kicker">DESCUBRE TU ESTILO</span>
-              <h2 id="categories-title">Categorías</h2>
+              <span className="mazeta-section-kicker">CONOCE NUESTRA HISTORIA</span>
+              <h2 id="about-title">¿Quiénes somos?</h2>
             </div>
-            <button type="button" className="mazeta-text-button" onClick={() => setActiveTab("tienda")}>
-              VER TODO <ChevronRight aria-hidden="true" />
-            </button>
           </div>
-          <div className="mazeta-category-grid">
-            {[
-              { name: "Camisetas", imagePosition: "category-shirt" },
-              { name: "Hoodies", imagePosition: "category-hoodie" },
-              { name: "Pantalones", imagePosition: "category-pants" },
-              { name: "Accesorios", imagePosition: "category-cap" },
-            ].map(({ name, imagePosition }) => (
-              <button type="button" className={`mazeta-category-card ${imagePosition}`} key={name} onClick={() => setActiveTab("tienda")}>
-                <span>{name}</span>
-                <ChevronRight aria-hidden="true" />
+          <div className="mazeta-about-card">
+            <div className="mazeta-about-image">
+              <img src="/mazeta-hero-model.png" alt="Modelo usando ropa Mazeta Bolivia" />
+              <span>DESDE<br />BOLIVIA</span>
+            </div>
+            <div className="mazeta-about-copy">
+              <span className="mazeta-about-mark">MZ / BOLIVIA</span>
+              <h3>Ropa que representa tu forma de vivir.</h3>
+              <p>
+                Somos una empresa de ropa deportiva con los mejores diseños para acompañar tus
+                entrenamientos con estilo y moda.
+              </p>
+              <button type="button" className="mazeta-primary-button" onClick={() => setActiveTab("tienda")}>
+                CONOCE LA COLECCIÓN
+                <ArrowRight aria-hidden="true" />
               </button>
-            ))}
+            </div>
           </div>
         </section>
 
