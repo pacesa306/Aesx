@@ -115,18 +115,30 @@ button:focus-visible {
   overflow: hidden;
   isolation: isolate;
   border-bottom: 1px solid #292929;
+  background: #111;
+}
+
+.mazeta-hero-slides {
+  position: absolute;
+  z-index: -2;
+  inset: 0;
+  background: #111;
 }
 
 .mazeta-hero-image {
   position: absolute;
-  z-index: -2;
   inset: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  object-position: 72% 17%;
-  filter: saturate(0.82) contrast(1.1);
-  transform: scale(1.13);
+  object-fit: contain;
+  object-position: center;
+  opacity: 0;
+  filter: saturate(0.82) contrast(1.08);
+  transition: opacity 520ms ease;
+}
+
+.mazeta-hero-image.is-active {
+  opacity: 1;
 }
 
 .mazeta-hero-shade {
@@ -224,7 +236,26 @@ button:focus-visible {
   border-radius: 50%;
 }
 
-.mazeta-slider-dots span.is-active {
+.mazeta-slider-dots button {
+  width: 18px;
+  height: 18px;
+  padding: 5px;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+}
+
+.mazeta-slider-dots button::before {
+  display: block;
+  width: 7px;
+  height: 7px;
+  border: 1px solid #bcbcbc;
+  border-radius: 50%;
+  content: "";
+}
+
+.mazeta-slider-dots button.is-active::before {
   border-color: #fff;
   background: #fff;
 }
@@ -3338,7 +3369,7 @@ button:focus-visible {
   }
 
   .mazeta-home-content .mazeta-hero-image {
-    object-position: 70% 18%;
+    object-position: center;
   }
 
   .mazeta-home-content .mazeta-hero-copy {

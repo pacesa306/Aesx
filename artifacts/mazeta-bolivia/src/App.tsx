@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   ArrowRight,
   BadgeCheck,
@@ -139,6 +139,13 @@ const newProducts: Product[] = [
   { name: "Motion Top", price: "Bs. 149", image: "/store-new-2.png", category: "MUJER", subtitle: "Negro · Motion" },
   { name: "Essential Hoodie", price: "Bs. 219", image: "/store-new-3.png", category: "POLERAS", subtitle: "Negro · Essential" },
   { name: "Run Cap", price: "Bs. 89", image: "/store-new-4.png", category: "ACCESORIOS", subtitle: "Negro · Run" },
+];
+
+const heroSlides = [
+  "/mazeta-hero-drop-1.jpg",
+  "/mazeta-hero-drop-2.jpg",
+  "/mazeta-hero-drop-3.jpg",
+  "/mazeta-hero-drop-4.jpg",
 ];
 
 function ProductDetailModal({
@@ -687,11 +694,20 @@ function StorePage({
 function HomePage() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeTab, setActiveTab] = useState<BottomTab>("inicio");
+  const [activeHeroSlide, setActiveHeroSlide] = useState(0);
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [cartOpen, setCartOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [orderOpen, setOrderOpen] = useState(false);
   const cartCount = cartItems.reduce((total, item) => total + item.quantity, 0);
+
+  useEffect(() => {
+    const interval = window.setInterval(() => {
+      setActiveHeroSlide((slide) => (slide + 1) % heroSlides.length);
+    }, 2000);
+
+    return () => window.clearInterval(interval);
+  }, []);
 
   const selectTab = (tab: BottomTab) => {
     setActiveTab(tab);
@@ -760,11 +776,16 @@ function HomePage() {
         ) : (
         <div className="mazeta-home-content">
         <section className="mazeta-hero" aria-label="Nueva colección">
-          <img
-            className="mazeta-hero-image"
-            src="/mazeta-hero-model.png"
-            alt="Modelo con gorra y sudadera de Mazeta Bolivia"
-          />
+          <div className="mazeta-hero-slides" aria-hidden="true">
+            {heroSlides.map((image, index) => (
+              <img
+                className={`mazeta-hero-image${activeHeroSlide === index ? " is-active" : ""}`}
+                key={image}
+                src={image}
+                alt=""
+              />
+            ))}
+          </div>
           <div className="mazeta-hero-shade" />
           <div className="mazeta-hero-copy">
             <span className="mazeta-eyebrow">NUEVA COLECCIÓN</span>
@@ -777,9 +798,15 @@ function HomePage() {
             </button>
           </div>
           <div className="mazeta-slider-dots" aria-label="Slide actual">
-            <span className="is-active" />
-            <span />
-            <span />
+            {heroSlides.map((image, index) => (
+              <button
+                type="button"
+                className={activeHeroSlide === index ? "is-active" : ""}
+                key={image}
+                aria-label={`Ver imagen ${index + 1}`}
+                onClick={() => setActiveHeroSlide(index)}
+              />
+            ))}
           </div>
         </section>
 
