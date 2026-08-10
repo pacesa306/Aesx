@@ -686,7 +686,7 @@ function StorePage({
 
 function HomePage() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [activeTab, setActiveTab] = useState<BottomTab>("tienda");
+  const [activeTab, setActiveTab] = useState<BottomTab>("inicio");
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [cartOpen, setCartOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
@@ -758,7 +758,7 @@ function HomePage() {
             onOpenCart={() => setCartOpen(true)}
           />
         ) : (
-        <>
+        <div className="mazeta-home-content">
         <section className="mazeta-hero" aria-label="Nueva colección">
           <img
             className="mazeta-hero-image"
@@ -924,7 +924,7 @@ function HomePage() {
           </button>
         </section>
         <div className="mazeta-mobile-spacer" />
-        </>
+        </div>
         )}
       </div>
 

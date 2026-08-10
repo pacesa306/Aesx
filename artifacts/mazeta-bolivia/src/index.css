@@ -3240,3 +3240,203 @@ button:focus-visible {
     max-height: calc(100dvh - 16px);
   }
 }
+
+/* Home page structure */
+.mazeta-home-content {
+  width: 100%;
+  max-width: 940px;
+  margin: 0 auto;
+}
+
+.mazeta-home-content > .mazeta-section,
+.mazeta-home-content > .mazeta-collection-banner,
+.mazeta-home-content > .mazeta-cart-card {
+  width: calc(100% - 32px);
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.mazeta-home-content > .mazeta-collection-banner {
+  margin-top: 28px;
+}
+
+.mazeta-home-content > .mazeta-section {
+  padding-right: 0;
+  padding-left: 0;
+}
+
+.mazeta-home-content .mazeta-section-heading {
+  min-height: 47px;
+  align-items: center;
+  padding-bottom: 11px;
+  border-bottom: 1px solid #242424;
+}
+
+.mazeta-home-content .mazeta-section-heading > div {
+  min-width: 0;
+}
+
+.mazeta-home-content .mazeta-section h2 {
+  font-size: 28px;
+}
+
+.mazeta-home-content .mazeta-category-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.mazeta-home-content .mazeta-category-card {
+  min-height: 175px;
+  border-radius: 12px;
+}
+
+.mazeta-home-content .mazeta-products {
+  padding-top: 34px;
+}
+
+.mazeta-home-content .mazeta-product-row {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.mazeta-home-content .mazeta-product-image {
+  height: 265px;
+  border-radius: 12px;
+}
+
+.mazeta-home-content .mazeta-product-info {
+  padding-top: 12px;
+}
+
+.mazeta-home-content .mazeta-product-info h3 {
+  font-size: 14px;
+}
+
+.mazeta-home-content .mazeta-product-info span {
+  font-size: 13px;
+}
+
+.mazeta-home-content .mazeta-cart-card {
+  margin-top: 32px;
+  border-radius: 12px;
+}
+
+@media (max-width: 699px) {
+  .mazeta-home-content {
+    width: 100%;
+  }
+
+  .mazeta-home-content > .mazeta-section,
+  .mazeta-home-content > .mazeta-collection-banner,
+  .mazeta-home-content > .mazeta-cart-card {
+    width: calc(100% - 28px);
+  }
+
+  .mazeta-home-content .mazeta-hero {
+    min-height: 0;
+    height: clamp(284px, 56svh, 370px);
+  }
+
+  .mazeta-home-content .mazeta-hero-image {
+    object-position: 70% 18%;
+  }
+
+  .mazeta-home-content .mazeta-hero-copy {
+    min-height: 0;
+    justify-content: flex-end;
+    padding: 34px 20px 58px;
+  }
+
+  .mazeta-home-content .mazeta-hero h1 {
+    font-size: clamp(35px, 10vw, 46px);
+  }
+
+  .mazeta-home-content .mazeta-hero p {
+    max-width: 230px;
+    margin-top: 14px;
+    font-size: 12px;
+  }
+
+  .mazeta-home-content .mazeta-primary-button {
+    min-height: 46px;
+    padding: 0 17px;
+  }
+
+  .mazeta-home-content .mazeta-benefits {
+    width: calc(100% - 28px);
+    margin: 14px auto 0;
+    border: 1px solid #242424;
+    border-radius: 11px;
+    overflow: hidden;
+  }
+
+  .mazeta-home-content > .mazeta-section {
+    padding-top: 27px;
+  }
+
+  .mazeta-home-content .mazeta-section-heading {
+    min-height: 43px;
+    margin-bottom: 13px;
+    padding-bottom: 9px;
+  }
+
+  .mazeta-home-content .mazeta-section h2 {
+    font-size: 22px;
+  }
+
+  .mazeta-home-content .mazeta-section-kicker {
+    margin-bottom: 5px;
+    font-size: 8px;
+  }
+
+  .mazeta-home-content .mazeta-category-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 9px;
+  }
+
+  .mazeta-home-content .mazeta-category-card {
+    min-height: 124px;
+    padding: 11px;
+    border-radius: 9px;
+  }
+
+  .mazeta-home-content .mazeta-category-card span {
+    font-size: 11px;
+  }
+
+  .mazeta-home-content > .mazeta-collection-banner {
+    margin-top: 22px;
+  }
+
+  .mazeta-home-content .mazeta-products {
+    padding-top: 25px;
+  }
+
+  .mazeta-home-content .mazeta-product-row {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .mazeta-home-content .mazeta-product-image {
+    height: auto;
+    aspect-ratio: 0.86 / 1;
+    border-radius: 10px;
+  }
+
+  .mazeta-home-content .mazeta-product-info {
+    min-height: 57px;
+    padding: 10px 3px 0;
+  }
+
+  .mazeta-home-content .mazeta-product-info h3 {
+    font-size: 12px;
+  }
+
+  .mazeta-home-content .mazeta-product-info span {
+    font-size: 11px;
+  }
+
+  .mazeta-home-content > .mazeta-cart-card {
+    margin-top: 22px;
+  }
+}
