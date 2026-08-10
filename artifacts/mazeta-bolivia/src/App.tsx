@@ -1143,7 +1143,7 @@ function HomePage() {
           aria-label="Inicio"
           onClick={() => selectTab("inicio")}
         >
-          <span>MAZETA</span> <strong>BOLIVIA</strong>
+          <span>MAZETA</span> <strong>BOLIVIA 🇧🇴.com</strong>
         </button>
 
         <button
@@ -1156,7 +1156,6 @@ function HomePage() {
           {menuOpen ? <X aria-hidden="true" /> : <Menu aria-hidden="true" />}
         </button>
       </header>
-
       <div className={`mazeta-page${menuOpen ? " is-covered" : ""}`}>
         {activeTab === "tienda" ? (
           <StorePage
@@ -1330,7 +1329,6 @@ function HomePage() {
         </div>
         )}
       </div>
-
       {menuOpen && (
         <nav className="mazeta-menu" aria-label="Menú principal">
           <ul>
@@ -1357,7 +1355,6 @@ function HomePage() {
           </ul>
         </nav>
       )}
-
       {activeTab === "tienda" && (
         <button
           type="button"
@@ -1371,7 +1368,6 @@ function HomePage() {
           <span>{cartCount > 99 ? "99+" : cartCount}</span>
         </button>
       )}
-
       {selectedProduct && (
         <ProductDetailModal
           product={selectedProduct}
@@ -1387,7 +1383,6 @@ function HomePage() {
           }}
         />
       )}
-
       {cartOpen && (
         <CartModal
           items={cartItems}
@@ -1400,7 +1395,6 @@ function HomePage() {
           }}
         />
       )}
-
       {orderOpen && (
         <OrderFormModal
           items={cartItems}
@@ -1409,7 +1403,6 @@ function HomePage() {
           }}
         />
       )}
-
       <nav className="mazeta-bottom-nav" aria-label="Navegación inferior">
         {bottomTabs.map(({ id, label, Icon }) => (
           <button
