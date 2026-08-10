@@ -1143,7 +1143,7 @@ function HomePage() {
           aria-label="Inicio"
           onClick={() => selectTab("inicio")}
         >
-          <span>MAZETA</span> <strong>BOLIVIA 🇧🇴.com</strong>
+          <span>MAZETA</span> <strong>BOLIVIA 🇧🇴 . COM</strong>
         </button>
 
         <button
