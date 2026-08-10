@@ -18,6 +18,7 @@ import {
   SlidersHorizontal,
   ShoppingBag,
   ShoppingCart,
+  Trash2,
   Truck,
   UserRoundPlus,
   X,
@@ -64,6 +65,11 @@ type Product = {
   category?: string;
   subtitle?: string;
   badge?: string;
+};
+
+type CartItem = {
+  product: Product;
+  quantity: number;
 };
 
 const boliviaDepartments = [
@@ -255,15 +261,120 @@ function ProductDetailModal({
   );
 }
 
+function CartModal({
+  items,
+  onClose,
+  onQuantityChange,
+  onClear,
+  onSendOrder,
+}: {
+  items: CartItem[];
+  onClose: () => void;
+  onQuantityChange: (productName: string, change: number) => void;
+  onClear: () => void;
+  onSendOrder: () => void;
+}) {
+  const totalQuantity = items.reduce((total, item) => total + item.quantity, 0);
+
+  return (
+    <div
+      className="cart-overlay"
+      role="presentation"
+      onMouseDown={(event) => {
+        if (event.target === event.currentTarget) onClose();
+      }}
+    >
+      <section className="cart-panel" role="dialog" aria-modal="true" aria-labelledby="cart-title">
+        <header className="cart-panel-header">
+          <div className="cart-panel-title">
+            <div className="cart-panel-icon"><ShoppingCart aria-hidden="true" /></div>
+            <h2 id="cart-title">MI PEDIDO</h2>
+            <span>{totalQuantity}</span>
+          </div>
+          <button type="button" className="cart-panel-close" aria-label="Cerrar carrito" onClick={onClose}>
+            <X aria-hidden="true" />
+          </button>
+        </header>
+
+        <div className="cart-items">
+          {items.length === 0 ? (
+            <div className="cart-empty">
+              <ShoppingCart aria-hidden="true" />
+              <strong>Tu pedido está vacío</strong>
+              <p>Agrega productos para verlos aquí.</p>
+            </div>
+          ) : (
+            items.map(({ product, quantity }) => (
+              <article className="cart-item" key={product.name}>
+                <div className="cart-item-image">
+                  <img src={product.image} alt="" />
+                </div>
+                <div className="cart-item-info">
+                  <h3 title={product.name}>{product.name}</h3>
+                  <strong>{product.price}</strong>
+                  <div className="cart-item-quantity" aria-label={`Cantidad de ${product.name}`}>
+                    <button
+                      type="button"
+                      aria-label={`Reducir ${product.name}`}
+                      onClick={() => onQuantityChange(product.name, -1)}
+                    >
+                      <Minus aria-hidden="true" />
+                    </button>
+                    <b>{quantity}</b>
+                    <button
+                      type="button"
+                      aria-label={`Aumentar ${product.name}`}
+                      onClick={() => onQuantityChange(product.name, 1)}
+                    >
+                      <Plus aria-hidden="true" />
+                    </button>
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  className="cart-item-remove"
+                  aria-label={`Eliminar ${product.name}`}
+                  onClick={() => onQuantityChange(product.name, -quantity)}
+                >
+                  <Trash2 aria-hidden="true" />
+                </button>
+              </article>
+            ))
+          )}
+        </div>
+
+        <footer className="cart-panel-footer">
+          <div className="cart-panel-summary">
+            <strong>{totalQuantity} PRODUCTO{totalQuantity === 1 ? "" : "S"}</strong>
+            <button type="button" onClick={onClear} disabled={items.length === 0}>VACIAR</button>
+          </div>
+          <button
+            type="button"
+            className="cart-send-button"
+            onClick={onSendOrder}
+            disabled={items.length === 0}
+          >
+            <MessageCircle aria-hidden="true" />
+            ENVIAR PEDIDO
+          </button>
+          <p>Te contactaremos para confirmar disponibilidad y entrega.</p>
+        </footer>
+      </section>
+    </div>
+  );
+}
+
 function OrderFormModal({
-  product,
-  quantity,
+  items,
   onClose,
 }: {
-  product: Product | null;
-  quantity: number;
+  items: CartItem[];
   onClose: () => void;
 }) {
+  const totalQuantity = items.reduce((total, item) => total + item.quantity, 0);
+  const orderText = items
+    .map(({ product, quantity }) => `${product.name} · ${quantity} unidad${quantity > 1 ? "es" : ""}`)
+    .join("\n");
   const [form, setForm] = useState<OrderFormState>({
     department: "",
     reference: "",
@@ -271,7 +382,7 @@ function OrderFormModal({
     phone: "",
     address: "",
     city: "",
-    order: product ? `${product.name} · ${quantity} unidad${quantity > 1 ? "es" : ""}` : "",
+    order: orderText,
     message: "",
   });
   const [submitted, setSubmitted] = useState(false);
@@ -399,11 +510,13 @@ function OrderFormModal({
           </button>
         </header>
 
-        {product && (
+        {items.length > 0 && (
           <div className="order-summary">
             <span>PEDIDO SELECCIONADO</span>
-            <strong>{product.name}</strong>
-            <small>{quantity} unidad{quantity > 1 ? "es" : ""} · {product.price}</small>
+            {items.map(({ product, quantity }) => (
+              <strong key={product.name}>{product.name} · {quantity} unidad{quantity > 1 ? "es" : ""}</strong>
+            ))}
+            <small>{totalQuantity} producto{totalQuantity > 1 ? "s" : ""} en total</small>
           </div>
         )}
 
@@ -845,8 +958,7 @@ function HomePage() {
 
       {orderOpen && (
         <OrderFormModal
-          product={orderProduct}
-          quantity={orderQuantity}
+          items={orderProduct ? [{ product: orderProduct, quantity: orderQuantity }] : []}
           onClose={() => {
             setOrderProduct(null);
             setOrderQuantity(0);
