@@ -3590,3 +3590,104 @@ button:focus-visible {
     margin-top: 22px;
   }
 }
+
+/* Action buttons: restrained pulse, white neon glow, and tactile feedback. */
+.mazeta-primary-button,
+.store-hero-copy button,
+.store-offer-copy button,
+.store-add-button,
+.product-add-main,
+.product-buy-main,
+.product-whatsapp-button,
+.cart-send-button,
+.order-submit-button {
+  position: relative;
+  overflow: hidden;
+  transition:
+    background 220ms ease,
+    border-color 220ms ease,
+    color 220ms ease,
+    box-shadow 220ms ease,
+    transform 220ms ease;
+}
+
+.mazeta-primary-button:not(:disabled),
+.store-hero-copy button:not(:disabled),
+.store-offer-copy button:not(:disabled),
+.store-add-button:not(:disabled),
+.product-add-main:not(:disabled),
+.product-buy-main:not(:disabled),
+.product-whatsapp-button:not(:disabled),
+.cart-send-button:not(:disabled),
+.order-submit-button:not(:disabled) {
+  animation: mazeta-button-pulse 1.25s ease-in-out infinite;
+}
+
+.mazeta-primary-button:not(:disabled):hover,
+.store-hero-copy button:not(:disabled):hover,
+.store-offer-copy button:not(:disabled):hover,
+.store-add-button:not(:disabled):hover,
+.product-add-main:not(:disabled):hover,
+.product-buy-main:not(:disabled):hover,
+.product-whatsapp-button:not(:disabled):hover,
+.cart-send-button:not(:disabled):hover,
+.order-submit-button:not(:disabled):hover,
+.mazeta-primary-button:not(:disabled):focus-visible,
+.store-hero-copy button:not(:disabled):focus-visible,
+.store-offer-copy button:not(:disabled):focus-visible,
+.store-add-button:not(:disabled):focus-visible,
+.product-add-main:not(:disabled):focus-visible,
+.product-buy-main:not(:disabled):focus-visible,
+.product-whatsapp-button:not(:disabled):focus-visible,
+.cart-send-button:not(:disabled):focus-visible,
+.order-submit-button:not(:disabled):focus-visible {
+  animation-duration: 0.9s;
+  border-color: #fff;
+  box-shadow:
+    0 0 8px rgba(255, 255, 255, 0.95),
+    0 0 20px rgba(255, 255, 255, 0.62),
+    0 0 38px rgba(255, 255, 255, 0.28);
+}
+
+.mazeta-primary-button:not(:disabled):active,
+.store-hero-copy button:not(:disabled):active,
+.store-offer-copy button:not(:disabled):active,
+.store-add-button:not(:disabled):active,
+.product-add-main:not(:disabled):active,
+.product-buy-main:not(:disabled):active,
+.product-whatsapp-button:not(:disabled):active,
+.cart-send-button:not(:disabled):active,
+.order-submit-button:not(:disabled):active {
+  animation: none;
+  box-shadow:
+    0 0 11px rgba(255, 255, 255, 1),
+    0 0 28px rgba(255, 255, 255, 0.72),
+    0 0 48px rgba(255, 255, 255, 0.34);
+  transform: scale(0.98) translate(1px, -1px);
+}
+
+@keyframes mazeta-button-pulse {
+  0%,
+  100% {
+    box-shadow:
+      0 0 3px rgba(255, 255, 255, 0.34),
+      0 0 10px rgba(255, 255, 255, 0.12);
+    transform: scale(1) translate(0, 0);
+  }
+
+  38% {
+    box-shadow:
+      0 0 7px rgba(255, 255, 255, 0.72),
+      0 0 18px rgba(255, 255, 255, 0.28),
+      0 0 28px rgba(255, 255, 255, 0.12);
+    transform: scale(1.05) translate(0.5px, -0.5px);
+  }
+
+  52% {
+    transform: scale(1.025) translate(-0.5px, 0.5px);
+  }
+
+  66% {
+    transform: scale(1.04) translate(0.5px, 0);
+  }
+}
