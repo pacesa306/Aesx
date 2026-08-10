@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Mazeta Bolivia"
+description = "Sitio web responsive para Mazeta Bolivia con navegación principal, menú móvil, sucursales, tienda e inscripción, inspirado en la identidad monocromática de la referencia."
+version = "1.0.0"
+id = "artifacts/mazeta-bolivia"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 19153
+
+[services.development]
+run = "pnpm --filter @workspace/mazeta-bolivia run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/mazeta-bolivia", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/mazeta-bolivia/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "19153"
+BASE_PATH = "/"
