@@ -50,10 +50,9 @@ const menuItems = [
 
 const storeCategories = [
   { name: "HOMBRE", image: "/store-cat-men.png", icon: "shirt" },
-  { name: "MUJER", image: "/store-cat-women.png", icon: "top" },
   { name: "POLERAS", image: "/store-cat-polos.png", icon: "hanger" },
   { name: "SHORTS", image: "/store-cat-shorts.png", icon: "shorts" },
-  { name: "ACCESORIOS", image: "/store-cat-accessories.png", icon: "bag" },
+  { name: "JOGGERS", image: "/store-product-jogger.png", icon: "pants" },
 ];
 
 type Product = {

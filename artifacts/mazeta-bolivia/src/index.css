@@ -2159,7 +2159,7 @@ button:focus-visible {
     width: 100%;
     max-width: 100%;
     min-width: 0;
-    grid-template-columns: repeat(5, minmax(0, 1fr));
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     grid-auto-flow: row;
     overflow: visible;
   }
