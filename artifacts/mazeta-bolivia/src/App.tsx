@@ -3,12 +3,15 @@ import {
   ArrowRight,
   BadgeCheck,
   ChevronRight,
+  Heart,
   Home,
   LockKeyhole,
   MapPin,
   Menu,
   Plus,
   RefreshCcw,
+  Search,
+  SlidersHorizontal,
   ShoppingBag,
   ShoppingCart,
   Truck,
@@ -41,9 +44,141 @@ const menuItems = [
   { label: "INSCRÍBETE", tab: "inscribete" as BottomTab | undefined },
 ];
 
+const storeCategories = [
+  { name: "HOMBRE", image: "/store-cat-men.png", icon: "shirt" },
+  { name: "MUJER", image: "/store-cat-women.png", icon: "top" },
+  { name: "POLERAS", image: "/store-cat-polos.png", icon: "hanger" },
+  { name: "SHORTS", image: "/store-cat-shorts.png", icon: "shorts" },
+  { name: "ACCESORIOS", image: "/store-cat-accessories.png", icon: "bag" },
+];
+
+const bestSellers = [
+  { name: "Camiseta Dry Fit Elite", price: "Bs. 129", image: "/store-product-tee.png" },
+  { name: "Hoodie Performance Pro", price: "Bs. 199", image: "/store-product-hoodie.png" },
+  { name: "Pantalón Jogger Training", price: "Bs. 179", image: "/store-product-jogger.png" },
+  { name: "Short Sport Active", price: "Bs. 99", image: "/store-product-short.png" },
+];
+
+const newProducts = [
+  { name: "Training Tee", price: "Bs. 139", image: "/store-new-1.png" },
+  { name: "Motion Top", price: "Bs. 149", image: "/store-new-2.png" },
+  { name: "Essential Hoodie", price: "Bs. 219", image: "/store-new-3.png" },
+  { name: "Run Cap", price: "Bs. 89", image: "/store-new-4.png" },
+];
+
+function StorePage({ onAddToCart }: { onAddToCart: () => void }) {
+  const [favorites, setFavorites] = useState<string[]>([]);
+
+  const toggleFavorite = (name: string) => {
+    setFavorites((current) =>
+      current.includes(name) ? current.filter((item) => item !== name) : [...current, name],
+    );
+  };
+
+  const ProductCard = ({ product }: { product: (typeof bestSellers)[number] }) => (
+    <article className="store-product-card">
+      <div className="store-product-image">
+        <img src={product.image} alt="" />
+        <button
+          type="button"
+          className={`store-favorite${favorites.includes(product.name) ? " is-favorite" : ""}`}
+          aria-label={`${favorites.includes(product.name) ? "Quitar de" : "Agregar a"} favoritos ${product.name}`}
+          onClick={() => toggleFavorite(product.name)}
+        >
+          <Heart aria-hidden="true" fill={favorites.includes(product.name) ? "currentColor" : "none"} />
+        </button>
+      </div>
+      <div className="store-product-details">
+        <h3>{product.name}</h3>
+        <strong>{product.price}</strong>
+        <button type="button" className="store-add-button" onClick={onAddToCart}>
+          AGREGAR <ShoppingCart aria-hidden="true" />
+        </button>
+      </div>
+    </article>
+  );
+
+  return (
+    <div className="store-page">
+      <section className="store-intro" aria-labelledby="store-title">
+        <h1 id="store-title">TIENDA</h1>
+        <p>Ropa deportiva para cada entrenamiento.</p>
+        <div className="store-toolbar">
+          <label className="store-search">
+            <Search aria-hidden="true" />
+            <input type="search" placeholder="Buscar productos..." aria-label="Buscar productos" />
+          </label>
+          <button type="button" className="store-filter-button">
+            <SlidersHorizontal aria-hidden="true" />
+            FILTROS
+          </button>
+        </div>
+      </section>
+
+      <section className="store-hero" aria-label="Rendimiento sin límites">
+        <img src="/store-hero.png" alt="Atleta usando ropa deportiva Mazeta" />
+        <div className="store-hero-overlay" />
+        <div className="store-hero-copy">
+          <h2>RENDIMIENTO<br />SIN LÍMITES</h2>
+          <p>Nueva colección deportiva<br />ya disponible.</p>
+          <button type="button" onClick={onAddToCart}>VER COLECCIÓN</button>
+        </div>
+        <div className="store-dots"><span className="is-active" /><span /><span /></div>
+      </section>
+
+      <section className="store-section" aria-labelledby="store-categories-title">
+        <div className="store-section-heading">
+          <h2 id="store-categories-title">CATEGORÍAS</h2>
+          <button type="button">Ver todas <ChevronRight aria-hidden="true" /></button>
+        </div>
+        <div className="store-category-row">
+          {storeCategories.map((category) => (
+            <button type="button" className="store-category-card" key={category.name}>
+              <img src={category.image} alt="" />
+              <span>{category.name}</span>
+            </button>
+          ))}
+        </div>
+      </section>
+
+      <section className="store-section" aria-labelledby="bestsellers-title">
+        <div className="store-section-heading">
+          <h2 id="bestsellers-title">MÁS VENDIDOS</h2>
+          <button type="button">Ver todos <ChevronRight aria-hidden="true" /></button>
+        </div>
+        <div className="store-product-row">
+          {bestSellers.map((product) => <ProductCard key={product.name} product={product} />)}
+        </div>
+      </section>
+
+      <section className="store-offer" aria-label="Oferta de hoodies">
+        <img src="/store-offer-hoodie.png" alt="" />
+        <div className="store-offer-shade" />
+        <div className="store-offer-copy">
+          <h2>20% OFF<br />EN HOODIES</h2>
+          <p>Por tiempo limitado.<br />No te lo pierdas.</p>
+          <button type="button" onClick={onAddToCart}>VER OFERTAS</button>
+        </div>
+        <div className="store-discount">20%<br /><span>OFF</span></div>
+      </section>
+
+      <section className="store-section store-new-section" aria-labelledby="new-title">
+        <div className="store-section-heading">
+          <h2 id="new-title">NUEVOS PRODUCTOS</h2>
+          <button type="button">Ver todos <ChevronRight aria-hidden="true" /></button>
+        </div>
+        <div className="store-product-row">
+          {newProducts.map((product) => <ProductCard key={product.name} product={product} />)}
+        </div>
+      </section>
+      <div className="store-bottom-space" />
+    </div>
+  );
+}
+
 function HomePage() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [activeTab, setActiveTab] = useState<BottomTab>("inicio");
+  const [activeTab, setActiveTab] = useState<BottomTab>("tienda");
   const [cartCount, setCartCount] = useState(0);
 
   const selectTab = (tab: BottomTab) => {
@@ -75,6 +210,8 @@ function HomePage() {
       </header>
 
       <div className={`mazeta-page${menuOpen ? " is-covered" : ""}`}>
+        {activeTab === "tienda" ? <StorePage onAddToCart={() => setCartCount((count) => count + 1)} /> : (
+        <>
         <section className="mazeta-hero" aria-label="Nueva colección">
           <img
             className="mazeta-hero-image"
@@ -199,6 +336,8 @@ function HomePage() {
           </button>
         </section>
         <div className="mazeta-mobile-spacer" />
+        </>
+        )}
       </div>
 
       {menuOpen && (
