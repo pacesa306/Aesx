@@ -146,6 +146,8 @@ const heroSlides = [
   "/mazeta-hero-drop-2.jpg",
   "/mazeta-hero-drop-3.jpg",
   "/mazeta-hero-drop-4.jpg",
+  "/mazeta-hero-drop-5.jpg",
+  "/mazeta-hero-drop-6.jpg",
 ];
 
 function ProductDetailModal({
