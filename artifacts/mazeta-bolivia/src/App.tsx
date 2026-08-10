@@ -1072,7 +1072,7 @@ function HomePage() {
           <button
             key={id}
             type="button"
-            className={`mazeta-bottom-tab${activeTab === id ? " is-active" : ""}`}
+            className={`mazeta-bottom-tab${activeTab === id ? " is-active" : ""}${id === "whatsapp" ? " is-whatsapp" : ""}`}
             aria-current={activeTab === id ? "page" : undefined}
             onClick={() => {
               if (id === "whatsapp") {
