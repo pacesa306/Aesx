@@ -1030,22 +1030,33 @@ button:focus-visible {
 
 .store-filter-menu {
   display: flex;
+  align-items: center;
   flex-wrap: wrap;
   gap: 6px;
   margin-top: 8px;
   padding: 8px;
-  border: 1px solid #2b2b2b;
+  border: 1px solid rgba(215, 170, 80, 0.35);
   border-radius: 7px;
-  background: #0c0c0c;
+  background: linear-gradient(180deg, rgba(22, 18, 11, 0.9), rgba(10, 10, 10, 0.96));
+}
+
+.store-filter-heading {
+  flex: 0 0 auto;
+  margin-right: 2px;
+  color: #d7aa50;
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
 }
 
 .store-filter-menu button {
+  flex: 0 0 auto;
   min-height: 25px;
   padding: 0 9px;
-  border: 1px solid #343434;
+  border: 1px solid rgba(215, 170, 80, 0.3);
   border-radius: 4px;
-  color: #aaa;
-  background: #151515;
+  color: #bbb4a8;
+  background: rgba(5, 5, 5, 0.72);
   cursor: pointer;
   font-size: 8px;
   font-weight: 750;
@@ -1054,9 +1065,9 @@ button:focus-visible {
 
 .store-filter-menu button:hover,
 .store-filter-menu button.is-active {
-  border-color: #fff;
-  color: #050505;
-  background: #fff;
+  border-color: #d7aa50;
+  color: #080706;
+  background: linear-gradient(135deg, #d3a344, #f0c96c);
 }
 
 .store-hero {

@@ -19,7 +19,6 @@ import {
   Rocket,
   Search,
   ShieldCheck,
-  SlidersHorizontal,
   ShoppingBag,
   ShoppingCart,
   Trash2,
@@ -105,6 +104,8 @@ const storeCategories = [
   { name: "SHORTS", filterCategory: "SHORTS", image: "/store-cat-shorts.png", icon: "shorts" },
   { name: "JOGGERS", filterCategory: "PANTALONES", image: "/store-product-jogger.png", icon: "pants" },
 ];
+
+const storeFilterCategories = ["TODOS", "CAMISETAS", "POLERAS", "SHORTS"];
 
 type Product = {
   name: string;
@@ -758,7 +759,6 @@ function StorePage({
   const [favorites, setFavorites] = useState<string[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [activeCategory, setActiveCategory] = useState("TODOS");
-  const [filtersOpen, setFiltersOpen] = useState(false);
 
   const toggleFavorite = (name: string) => {
     setFavorites((current) =>
@@ -790,7 +790,6 @@ function StorePage({
 
   const chooseCategory = (category: string) => {
     setActiveCategory(category);
-    setFiltersOpen(false);
     scrollToProducts();
   };
 
@@ -847,30 +846,20 @@ function StorePage({
               aria-label="Buscar productos"
             />
           </label>
-          <button
-            type="button"
-            className={`store-filter-button${filtersOpen ? " is-active" : ""}`}
-            aria-expanded={filtersOpen}
-            onClick={() => setFiltersOpen((open) => !open)}
-          >
-            <SlidersHorizontal aria-hidden="true" />
-            FILTROS
-          </button>
         </div>
-        {filtersOpen && (
-          <div className="store-filter-menu" aria-label="Filtrar por categoría">
-            {["TODOS", ...Array.from(new Set(allProducts.map((product) => product.category).filter(Boolean) as string[]))].map((category) => (
-              <button
-                type="button"
-                key={category}
-                className={activeCategory === category ? "is-active" : ""}
-                onClick={() => chooseCategory(category)}
-              >
-                {category}
-              </button>
-            ))}
-          </div>
-        )}
+        <div className="store-filter-menu" aria-label="Filtrar por categoría">
+          <span className="store-filter-heading">FILTRAR POR</span>
+          {storeFilterCategories.map((category) => (
+            <button
+              type="button"
+              key={category}
+              className={activeCategory === category ? "is-active" : ""}
+              onClick={() => chooseCategory(category)}
+            >
+              {category}
+            </button>
+          ))}
+        </div>
       </section>
 
       <section className="store-hero" aria-label="Rendimiento sin límites">
