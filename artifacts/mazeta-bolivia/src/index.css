@@ -2455,15 +2455,25 @@ body.product-detail-open .mazeta-bottom-nav {
   flex: 1;
 }
 
+.mazeta-menu button.has-badge .mazeta-menu-item-label {
+  padding-right: 40px;
+  overflow-wrap: anywhere;
+}
+
 .mazeta-menu button small {
-  flex: 0 0 auto;
-  padding: 5px 8px;
+  position: absolute;
+  top: 7px;
+  right: 29px;
+  z-index: 1;
+  padding: 3px 5px;
   border: 1px solid rgba(255, 255, 255, 0.52);
   border-radius: 4px;
   color: #fff;
-  font-size: 8px;
+  background: #050505;
+  font-size: 7px;
   font-weight: 750;
   letter-spacing: 0.08em;
+  line-height: 1;
 }
 
 .mazeta-menu-item-arrow {
