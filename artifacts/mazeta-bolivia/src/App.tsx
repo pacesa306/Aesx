@@ -999,7 +999,7 @@ function HomePage() {
   useEffect(() => {
     const interval = window.setInterval(() => {
       setActiveHeroSlide((slide) => (slide + 1) % heroSlides.length);
-    }, 2000);
+    }, 1000);
 
     return () => window.clearInterval(interval);
   }, []);
