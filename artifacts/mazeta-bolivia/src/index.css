@@ -2383,22 +2383,38 @@ body.product-detail-open .mazeta-bottom-nav {
   bottom: 67px;
   left: 0;
   display: flex;
-  align-items: flex-start;
+  flex-direction: column;
+  align-items: stretch;
   justify-content: center;
   overflow-y: auto;
-  border-top: 1px solid rgba(213, 170, 80, 0.7);
-  border-bottom: 1px solid rgba(213, 170, 80, 0.35);
-  background:
-    radial-gradient(circle at 50% 0%, rgba(213, 170, 80, 0.08), transparent 34%),
-    linear-gradient(180deg, rgba(12, 12, 12, 0.99), rgba(4, 4, 4, 0.99));
+  border-top: 1px solid rgba(255, 255, 255, 0.42);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.24);
+  background: linear-gradient(180deg, rgba(12, 12, 12, 0.99), rgba(2, 2, 2, 0.99));
+}
+
+.mazeta-header.is-menu-open .mazeta-menu-button {
+  color: #fff;
+}
+
+.mazeta-header.is-menu-open .mazeta-menu-button svg {
+  filter:
+    drop-shadow(0 0 3px rgba(255, 255, 255, 0.82))
+    drop-shadow(0 0 9px rgba(255, 255, 255, 0.38));
 }
 
 .mazeta-menu ul {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 18px;
   width: 100%;
   margin: 0;
-  padding: 8px 40px 0;
+  padding: 8px 24px 0;
   list-style: none;
   text-align: left;
+}
+
+.mazeta-menu li {
+  min-width: 0;
 }
 
 .mazeta-menu button {
@@ -2406,14 +2422,14 @@ body.product-detail-open .mazeta-bottom-nav {
   width: 100%;
   display: flex;
   align-items: center;
-  gap: 16px;
-  min-height: 68px;
-  padding: 11px 0;
+  gap: 9px;
+  min-height: 62px;
+  padding: 10px 0;
   border-bottom: 1px solid rgba(255, 255, 255, 0.13);
-  color: #f2f0eb;
-  font-size: 14px;
+  color: #fff;
+  font-size: 10px;
   font-weight: 650;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.08em;
   line-height: 1.2;
   text-align: left;
 }
@@ -2424,14 +2440,14 @@ body.product-detail-open .mazeta-bottom-nav {
   height: 24px;
   flex: 0 0 24px;
   place-items: center;
-  color: #d7aa50;
+  color: #fff;
 }
 
 .mazeta-menu-item-icon svg {
   width: 23px;
   height: 23px;
   stroke-width: 1.7;
-  filter: drop-shadow(0 0 6px rgba(215, 170, 80, 0.25));
+  filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.28));
 }
 
 .mazeta-menu-item-label {
@@ -2442,9 +2458,9 @@ body.product-detail-open .mazeta-bottom-nav {
 .mazeta-menu button small {
   flex: 0 0 auto;
   padding: 5px 8px;
-  border: 1px solid rgba(215, 170, 80, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.52);
   border-radius: 4px;
-  color: #e2b657;
+  color: #fff;
   font-size: 8px;
   font-weight: 750;
   letter-spacing: 0.08em;
@@ -2454,7 +2470,7 @@ body.product-detail-open .mazeta-bottom-nav {
   width: 21px;
   height: 21px;
   flex: 0 0 21px;
-  color: #d7aa50;
+  color: #fff;
   stroke-width: 2.3;
   transition: transform 180ms ease;
 }
@@ -2468,7 +2484,7 @@ body.product-detail-open .mazeta-bottom-nav {
 .mazeta-menu button.is-active .mazeta-menu-item-icon,
 .mazeta-menu button:hover .mazeta-menu-item-icon,
 .mazeta-menu button:focus-visible .mazeta-menu-item-icon {
-  color: #f0c866;
+  color: #fff;
 }
 
 .mazeta-menu button:hover .mazeta-menu-item-arrow,
@@ -2485,8 +2501,8 @@ body.product-detail-open .mazeta-bottom-nav {
   width: 2px;
   height: 30px;
   transform: translateY(-50%);
-  background: #d7aa50;
-  box-shadow: 0 0 10px rgba(215, 170, 80, 0.55);
+  background: #fff;
+  box-shadow: 0 0 9px rgba(255, 255, 255, 0.62);
   content: "";
 }
 
@@ -2497,8 +2513,8 @@ body.product-detail-open .mazeta-bottom-nav {
   gap: 12px;
   margin-top: 2px;
   padding: 17px 40px 24px;
-  border-top: 1px solid rgba(215, 170, 80, 0.55);
-  background: linear-gradient(180deg, rgba(20, 17, 12, 0.95), rgba(6, 6, 6, 0.95));
+  border-top: 1px solid rgba(255, 255, 255, 0.34);
+  background: #060606;
 }
 
 .mazeta-menu-footer-mark {
@@ -2506,7 +2522,7 @@ body.product-detail-open .mazeta-bottom-nav {
   width: 42px;
   height: 42px;
   place-items: center;
-  color: #bb8b35;
+  color: #fff;
   opacity: 0.85;
 }
 
@@ -2522,7 +2538,7 @@ body.product-detail-open .mazeta-bottom-nav {
 
 .mazeta-menu-footer-copy strong {
   display: block;
-  color: #d7aa50;
+  color: #fff;
   font-size: 10px;
   font-weight: 800;
   letter-spacing: 0.08em;
@@ -2541,9 +2557,9 @@ body.product-detail-open .mazeta-bottom-nav {
   min-height: 0;
   gap: 5px;
   padding: 10px 12px;
-  border: 1px solid rgba(215, 170, 80, 0.65);
+  border: 1px solid rgba(255, 255, 255, 0.68);
   border-radius: 6px;
-  color: #e7bb61;
+  color: #fff;
   font-size: 9px;
   letter-spacing: 0.05em;
   white-space: nowrap;
@@ -2555,7 +2571,8 @@ body.product-detail-open .mazeta-bottom-nav {
 }
 
 .mazeta-menu-footer > button:hover {
-  background: rgba(215, 170, 80, 0.12);
+  color: #000;
+  background: #fff;
 }
 
 .mazeta-menu-footer > button::after {
