@@ -217,12 +217,7 @@ const userProducts: Product[] = [
 
 const bestSellers: Product[] = userProducts.slice(0, 4);
 const newProducts: Product[] = userProducts.slice(4);
-const featuredProducts: Product[] = [
-  userProducts[0],
-  userProducts[3],
-  userProducts[5],
-  userProducts[6],
-];
+const featuredProductSlots = Array.from({ length: 4 }, (_, index) => index);
 
 const heroSlides = [
   "/mazeta-hero-instagram-1.jpg",
@@ -1209,47 +1204,22 @@ function HomePage() {
         <section className="mazeta-section mazeta-products" aria-labelledby="products-title">
           <div className="mazeta-section-heading">
             <div>
-              <span className="mazeta-section-kicker">LO MÁS BUSCADO</span>
-              <h2 id="products-title">Favoritos</h2>
+              <span className="mazeta-section-kicker">PRÓXIMAMENTE</span>
+              <h2 id="products-title">PRE-LANZAMIENTOS SEPTIEMBRE</h2>
             </div>
             <button type="button" className="mazeta-text-button" onClick={() => setActiveTab("tienda")}>
               TIENDA <ChevronRight aria-hidden="true" />
             </button>
           </div>
           <div className="mazeta-product-row">
-            {featuredProducts.map((product) => (
+            {featuredProductSlots.map((slot) => (
               <article
-                className="mazeta-product-card"
-                key={product.name}
-                role="button"
-                tabIndex={0}
-                onClick={() => setSelectedProduct(product)}
-                onKeyDown={(event) => {
-                  if (event.key === "Enter" || event.key === " ") setSelectedProduct(product);
-                }}
+                className="mazeta-product-card mazeta-product-card-empty"
+                key={slot}
+                aria-hidden="true"
               >
-                <div className="mazeta-product-image">
-                  <img src={product.image} alt="" />
-                  <span className="mazeta-product-label">{product.badge ?? "MAZETA"}</span>
-                  <button
-                    type="button"
-                    aria-label={`Agregar ${product.name} al carrito`}
-                    onClick={(event) => {
-                      event.stopPropagation();
-                      addToCart(product);
-                      setCartOpen(true);
-                    }}
-                  >
-                    <Plus aria-hidden="true" />
-                  </button>
-                </div>
-                <div className="mazeta-product-info">
-                  <div>
-                    <h3>{product.name}</h3>
-                    <span>{product.price}</span>
-                  </div>
-                  <ShoppingCart aria-hidden="true" />
-                </div>
+                <div className="mazeta-product-image" />
+                <div className="mazeta-product-info" />
               </article>
             ))}
           </div>

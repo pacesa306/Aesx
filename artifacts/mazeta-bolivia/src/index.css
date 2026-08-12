@@ -777,6 +777,21 @@ button:focus-visible {
   min-width: 0;
 }
 
+.mazeta-product-card-empty .mazeta-product-image {
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.035), transparent 42%),
+    #0d0d0d;
+}
+
+.mazeta-product-card-empty .mazeta-product-image::after {
+  display: none;
+}
+
+.mazeta-product-card-empty .mazeta-product-info {
+  min-height: 46px;
+}
+
 .mazeta-product-image {
   position: relative;
   display: flex;
