@@ -1,14 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 import {
   ArrowRight,
-  BadgeCheck,
   ChevronRight,
   ChevronLeft,
   Gift,
   Heart,
   Home,
   Instagram,
-  LockKeyhole,
   MapPin,
   Menu,
   MessageCircle,
@@ -1168,21 +1166,6 @@ function HomePage() {
               />
             ))}
           </div>
-        </section>
-
-        <section className="mazeta-benefits" aria-label="Beneficios de compra">
-          {[
-            { Icon: Truck, title: "ENVÍOS A TODO BOLIVIA", body: "Rápidos y seguros" },
-            { Icon: BadgeCheck, title: "CALIDAD PREMIUM", body: "Materiales seleccionados" },
-            { Icon: LockKeyhole, title: "COMPRA SEGURA", body: "Protegemos tus datos" },
-            { Icon: RefreshCcw, title: "CAMBIOS FÁCILES", body: "Sin complicaciones" },
-          ].map(({ Icon, title, body }) => (
-            <div className="mazeta-benefit" key={title}>
-              <Icon aria-hidden="true" />
-              <strong>{title}</strong>
-              <span>{body}</span>
-            </div>
-          ))}
         </section>
 
         <section className="mazeta-section mazeta-about" aria-labelledby="about-title">
