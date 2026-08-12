@@ -4,15 +4,19 @@ import {
   BadgeCheck,
   ChevronRight,
   ChevronLeft,
+  Gift,
   Heart,
   Home,
+  Instagram,
   LockKeyhole,
   MapPin,
   Menu,
   MessageCircle,
+  MessageSquare,
   Minus,
   Plus,
   RefreshCcw,
+  Rocket,
   Search,
   ShieldCheck,
   SlidersHorizontal,
@@ -21,6 +25,7 @@ import {
   Trash2,
   Truck,
   UserRound,
+  Users,
   X,
 } from "lucide-react";
 import { FaFacebookF, FaInstagram, FaTiktok, FaWhatsapp } from "react-icons/fa";
@@ -38,16 +43,21 @@ const bottomTabs: Array<{
   { id: "whatsapp", label: "WHATSAPP", Icon: MessageCircle },
 ];
 
-const menuItems = [
-  { label: "INICIO", tab: "inicio" as BottomTab | undefined },
-  { label: "SUCURSALES" },
-  { label: "TIENDA", tab: "tienda" as BottomTab | undefined },
-  { label: "REGALOS" },
-  { label: "PROMOCIONES" },
-  { label: "¿QUIÉNES SOMOS?" },
-  { label: "REDES SOCIALES", tab: "redes" as BottomTab | undefined },
-  { label: "BUZÓN DE SUGERENCIAS" },
-   { label: "WHATSAPP" },
+const menuItems: Array<{
+  label: string;
+  Icon: typeof Home;
+  tab?: BottomTab;
+  badge?: string;
+}> = [
+  { label: "INICIO", Icon: Home, tab: "inicio" },
+  { label: "SUCURSALES", Icon: MapPin },
+  { label: "TIENDA", Icon: ShoppingBag, tab: "tienda", badge: "NUEVO" },
+  { label: "REGALOS", Icon: Gift },
+  { label: "PRÓXIMOS LANZAMIENTOS", Icon: Rocket, badge: "PRÓXIMO" },
+  { label: "¿QUIÉNES SOMOS?", Icon: Users },
+  { label: "REDES SOCIALES", Icon: Instagram, tab: "redes" },
+  { label: "BUZÓN DE SUGERENCIAS", Icon: MessageSquare },
+  { label: "WHATSAPP", Icon: MessageCircle },
 ];
 
 const socialLinks = [
@@ -103,6 +113,7 @@ type Product = {
   detailImage?: string;
   galleryImages?: string[];
   category?: string;
+  collection?: string;
   subtitle?: string;
   badge?: string;
 };
@@ -141,6 +152,7 @@ const userProducts: Product[] = [
     price: "Bs. 139",
     image: "/mazeta-camiseta-lifting-blanca.jpg",
     category: "CAMISETAS",
+    collection: "COMPRESIÓN",
     subtitle: "Blanco · Mesh Lifting",
     badge: "NUEVO",
   },
@@ -149,6 +161,7 @@ const userProducts: Product[] = [
     price: "Bs. 149",
     image: "/mazeta-camiseta-alas-rojas.jpg",
     category: "CAMISETAS",
+    collection: "OVERSIZE",
     subtitle: "Negro · Edición Roja",
     badge: "NUEVO",
   },
@@ -157,6 +170,7 @@ const userProducts: Product[] = [
     price: "Bs. 149",
     image: "/mazeta-camiseta-alas-plata.jpg",
     category: "CAMISETAS",
+    collection: "OVERSIZE",
     subtitle: "Negro · Edición Plata",
     badge: "NUEVO",
   },
@@ -165,6 +179,7 @@ const userProducts: Product[] = [
     price: "Bs. 210",
     image: "/mazeta-short-calaveras-negro.jpg",
     category: "SHORTS",
+    collection: "SHORTS",
     subtitle: "Negro · Calaveras",
     badge: "NUEVO",
   },
@@ -173,6 +188,7 @@ const userProducts: Product[] = [
     price: "Bs. 210",
     image: "/mazeta-short-calaveras-blanco.jpg",
     category: "SHORTS",
+    collection: "SHORTS",
     subtitle: "Blanco · Calaveras",
     badge: "NUEVO",
   },
@@ -181,6 +197,7 @@ const userProducts: Product[] = [
     price: "Bs. 210",
     image: "/mazeta-short-jujutsu-kaisen.jpg",
     category: "SHORTS",
+    collection: "SHORTS",
     subtitle: "Negro · Jujutsu Kaisen",
     badge: "NUEVO",
   },
@@ -193,6 +210,7 @@ const userProducts: Product[] = [
       "/mazeta-solera-calaveras-guia.jpg",
     ],
     category: "POLERAS",
+    collection: "COMPRESIÓN",
     subtitle: "Negro · Solera deportiva",
     badge: "NUEVO",
   },
@@ -1092,7 +1110,7 @@ function HomePage() {
           </span>
         </span>
       </button>
-      <header className="mazeta-header">
+      <header className={`mazeta-header${menuOpen ? " is-menu-open" : ""}`}>
         <button
           className="mazeta-wordmark"
           type="button"
@@ -1308,11 +1326,29 @@ function HomePage() {
                     }
                   }}
                 >
-                  {item.label}
+                  <span className="mazeta-menu-item-icon">
+                    <item.Icon aria-hidden="true" />
+                  </span>
+                  <span className="mazeta-menu-item-label">{item.label}</span>
+                  {item.badge && <small>{item.badge}</small>}
+                  <ChevronRight className="mazeta-menu-item-arrow" aria-hidden="true" />
                 </button>
               </li>
             ))}
           </ul>
+          <div className="mazeta-menu-footer">
+            <div className="mazeta-menu-footer-mark" aria-hidden="true">
+              <Gift />
+            </div>
+            <div className="mazeta-menu-footer-copy">
+              <strong>ÚNETE A LA COMUNIDAD MAZETA</strong>
+              <p>Calidad, disciplina y estilo de vida.<br />#MAZETAWORLD</p>
+            </div>
+            <button type="button" onClick={() => selectTab("tienda")}>
+              VER TIENDA
+              <ChevronRight aria-hidden="true" />
+            </button>
+          </div>
         </nav>
       )}
       {activeTab === "tienda" && (
