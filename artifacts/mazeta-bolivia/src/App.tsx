@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   ArrowRight,
   BadgeCheck,
@@ -101,6 +101,7 @@ type Product = {
   price: string;
   image: string;
   detailImage?: string;
+  galleryImages?: string[];
   category?: string;
   subtitle?: string;
   badge?: string;
@@ -360,6 +361,13 @@ const heroSlides = [
   "/mazeta-hero-drop-6.jpg",
 ];
 
+const categoryGalleryImages: Record<string, string[]> = {
+  CAMISETAS: ["/mazeta-garment-1.jpg", "/mazeta-garment-2.jpg", "/mazeta-garment-4.jpg"],
+  POLERAS: ["/mazeta-garment-7.jpg", "/mazeta-garment-8.jpg", "/mazeta-garment-12.jpg"],
+  SHORTS: ["/mazeta-garment-3.jpg", "/mazeta-garment-5.jpg", "/mazeta-garment-9.jpg"],
+  PANTALONES: ["/mazeta-garment-6.jpg", "/mazeta-garment-13.jpg", "/mazeta-garment-16.jpg"],
+};
+
 function ProductDetailModal({
   product,
   onClose,
@@ -374,6 +382,23 @@ function ProductDetailModal({
   const [quantity, setQuantity] = useState(1);
   const [selectedSize, setSelectedSize] = useState("M");
   const [selectedColor, setSelectedColor] = useState(1);
+  const [activeImage, setActiveImage] = useState(0);
+  const galleryRef = useRef<HTMLDivElement>(null);
+  const galleryImages = Array.from(new Set([
+    product.detailImage ?? product.image,
+    product.image,
+    ...(product.galleryImages ?? []),
+    ...(categoryGalleryImages[product.category ?? ""] ?? []),
+  ]));
+
+  const moveGallery = (direction: number) => {
+    const nextImage = (activeImage + direction + galleryImages.length) % galleryImages.length;
+    galleryRef.current?.scrollTo({
+      left: nextImage * galleryRef.current.clientWidth,
+      behavior: "smooth",
+    });
+    setActiveImage(nextImage);
+  };
 
   return (
     <div className="product-detail-overlay" role="presentation" onMouseDown={(event) => {
@@ -381,19 +406,44 @@ function ProductDetailModal({
     }}>
       <section className="product-detail-panel" role="dialog" aria-modal="true" aria-labelledby="product-detail-title">
         <div className="product-detail-media">
-          <img src={product.detailImage ?? product.image} alt={product.name} />
+          <div
+            className="product-detail-gallery"
+            ref={galleryRef}
+            onScroll={(event) => {
+              const gallery = event.currentTarget;
+              const nextImage = Math.round(gallery.scrollLeft / gallery.clientWidth);
+              setActiveImage(Math.min(nextImage, galleryImages.length - 1));
+            }}
+          >
+            {galleryImages.map((image, index) => (
+              <div className="product-detail-gallery-slide" key={`${image}-${index}`}>
+                <img src={image} alt={`${product.name}, imagen ${index + 1}`} />
+              </div>
+            ))}
+          </div>
           <div className="product-detail-media-shade" />
           <span className="product-detail-badge">☆ &nbsp; {product.badge ?? "NUEVO"}</span>
           <button type="button" className="product-detail-close" aria-label="Cerrar detalle" onClick={onClose}>
             <X aria-hidden="true" />
           </button>
-          <button type="button" className="product-detail-arrow product-detail-arrow-left" aria-label="Producto anterior">
+          <button type="button" className="product-detail-arrow product-detail-arrow-left" aria-label="Imagen anterior" onClick={() => moveGallery(-1)}>
             <ChevronLeft aria-hidden="true" />
           </button>
-          <button type="button" className="product-detail-arrow product-detail-arrow-right" aria-label="Producto siguiente">
+          <button type="button" className="product-detail-arrow product-detail-arrow-right" aria-label="Imagen siguiente" onClick={() => moveGallery(1)}>
             <ChevronRight aria-hidden="true" />
           </button>
-          <div className="product-detail-dots"><span className="is-active" /><span /><span /><span /><span /><span /></div>
+          <div className="product-detail-dots" aria-label="Seleccionar imagen">
+            {galleryImages.map((image, index) => (
+              <button
+                key={`${image}-dot`}
+                type="button"
+                className={activeImage === index ? "is-active" : ""}
+                aria-label={`Ver imagen ${index + 1}`}
+                aria-current={activeImage === index}
+                onClick={() => moveGallery(index - activeImage)}
+              />
+            ))}
+          </div>
         </div>
 
         <div className="product-detail-content">
@@ -1143,7 +1193,9 @@ function HomePage() {
           aria-label="Inicio"
           onClick={() => selectTab("inicio")}
         >
-          <span>MAZETA</span> <strong>BOLIVIA 🇧🇴 . COM</strong>
+          <span>MAZETA</span> <strong>BOLIVIA 🇧🇴 
+
+</strong>
         </button>
 
         <button
@@ -1183,7 +1235,7 @@ function HomePage() {
           </div>
           <div className="mazeta-hero-shade" />
           <div className="mazeta-hero-copy">
-            <span className="mazeta-eyebrow">NUEVA COLECCIÓN</span>
+            <span className="mazeta-eyebrow">LAS MEJORES COLECCIÓNES</span>
             <span className="mazeta-eyebrow-line" />
             <h1>ESTILO QUE<br />TE DEFINE</h1>
             <p>Ropa urbana de alta calidad<br />para quienes marcan la diferencia.</p>
@@ -1237,7 +1289,7 @@ function HomePage() {
               <h3>Ropa que representa tu forma de vivir.</h3>
               <p>
                 Somos una empresa de ropa deportiva con los mejores diseños para acompañar tus
-                entrenamientos con estilo y moda.
+                entrenamientos con estilo y moda.🌐
               </p>
               <button type="button" className="mazeta-primary-button" onClick={() => setActiveTab("tienda")}>
                 CONOCE LA COLECCIÓN
