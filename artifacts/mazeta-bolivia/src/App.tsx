@@ -260,6 +260,18 @@ const newProducts: Product[] = [
     badge: "NUEVO",
   },
   {
+    name: "Solera Calaveras",
+    price: "Bs. 180",
+    image: "/mazeta-solera-calaveras-frente.jpg",
+    galleryImages: [
+      "/mazeta-solera-calaveras-frente-alt.jpg",
+      "/mazeta-solera-calaveras-guia.jpg",
+    ],
+    category: "POLERAS",
+    subtitle: "Negro · Solera deportiva",
+    badge: "NUEVO",
+  },
+  {
     name: "Camiseta Alas Roja",
     price: "Bs. 149",
     image: "/mazeta-garment-11.jpg",
