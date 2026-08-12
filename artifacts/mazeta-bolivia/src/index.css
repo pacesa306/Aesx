@@ -916,10 +916,75 @@ button:focus-visible {
   height: auto;
   gap: 4px;
   padding: 8px 0 8px 8px;
+  border: 1px solid #ff3434;
+  border-radius: 6px;
+  color: #ff5b5b;
+  background: rgba(92, 0, 0, 0.2);
+  box-shadow:
+    0 0 5px rgba(255, 34, 34, 0.92),
+    0 0 15px rgba(255, 34, 34, 0.48),
+    inset 0 0 8px rgba(255, 34, 34, 0.18);
   font-size: 9px;
   font-weight: 800;
   letter-spacing: 0.08em;
   white-space: nowrap;
+  animation: mazeta-cart-button-vibrate 1.25s ease-in-out infinite;
+  transition:
+    color 180ms ease,
+    background 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.mazeta-cart-button:hover,
+.mazeta-cart-button:focus-visible {
+  color: #fff;
+  background: rgba(120, 0, 0, 0.38);
+  box-shadow:
+    0 0 7px rgba(255, 44, 44, 1),
+    0 0 22px rgba(255, 34, 34, 0.72),
+    inset 0 0 11px rgba(255, 34, 34, 0.26);
+}
+
+@keyframes mazeta-cart-button-vibrate {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+    box-shadow:
+      0 0 5px rgba(255, 34, 34, 0.92),
+      0 0 15px rgba(255, 34, 34, 0.48),
+      inset 0 0 8px rgba(255, 34, 34, 0.18);
+  }
+
+  8% {
+    transform: translate3d(-1px, 0, 0);
+  }
+
+  16% {
+    transform: translate3d(1px, 0, 0);
+  }
+
+  24% {
+    transform: translate3d(-1px, 0, 0);
+  }
+
+  32% {
+    transform: translate3d(1px, 0, 0);
+  }
+
+  42%,
+  58% {
+    transform: translate3d(0, 0, 0) scale(1.015);
+    box-shadow:
+      0 0 8px rgba(255, 44, 44, 1),
+      0 0 23px rgba(255, 34, 34, 0.72),
+      inset 0 0 11px rgba(255, 34, 34, 0.28);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mazeta-cart-button {
+    animation: none;
+  }
 }
 
 .mazeta-cart-button b {
