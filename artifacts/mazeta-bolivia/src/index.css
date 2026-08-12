@@ -1035,6 +1035,13 @@ button:focus-visible {
   letter-spacing: -0.035em;
 }
 
+.store-intro h1 span {
+  color: #d7aa50;
+  font-size: 0.62em;
+  letter-spacing: 0.1em;
+  vertical-align: 0.12em;
+}
+
 .store-intro > p {
   margin: 3px 0 12px;
   color: #9a9a9a;

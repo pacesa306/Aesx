@@ -826,7 +826,7 @@ function StorePage({
   return (
     <div className="store-page">
       <section className="store-intro" aria-labelledby="store-title">
-        <h1 id="store-title">TIENDA</h1>
+        <h1 id="store-title">TIENDA <span>VIRTUAL</span></h1>
         <p>Ropa deportiva para cada entrenamiento.</p>
         <div className="store-toolbar">
           <label className="store-search">
