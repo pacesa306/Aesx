@@ -361,13 +361,6 @@ const heroSlides = [
   "/mazeta-hero-drop-6.jpg",
 ];
 
-const categoryGalleryImages: Record<string, string[]> = {
-  CAMISETAS: ["/mazeta-garment-1.jpg", "/mazeta-garment-2.jpg", "/mazeta-garment-4.jpg"],
-  POLERAS: ["/mazeta-garment-7.jpg", "/mazeta-garment-8.jpg", "/mazeta-garment-12.jpg"],
-  SHORTS: ["/mazeta-garment-3.jpg", "/mazeta-garment-5.jpg", "/mazeta-garment-9.jpg"],
-  PANTALONES: ["/mazeta-garment-6.jpg", "/mazeta-garment-13.jpg", "/mazeta-garment-16.jpg"],
-};
-
 function ProductDetailModal({
   product,
   onClose,
@@ -384,11 +377,11 @@ function ProductDetailModal({
   const [selectedColor, setSelectedColor] = useState(1);
   const [activeImage, setActiveImage] = useState(0);
   const galleryRef = useRef<HTMLDivElement>(null);
+  const backdropPointerStart = useRef<{ x: number; y: number } | null>(null);
   const galleryImages = Array.from(new Set([
     product.detailImage ?? product.image,
     product.image,
     ...(product.galleryImages ?? []),
-    ...(categoryGalleryImages[product.category ?? ""] ?? []),
   ]));
 
   const moveGallery = (direction: number) => {
@@ -401,9 +394,28 @@ function ProductDetailModal({
   };
 
   return (
-    <div className="product-detail-overlay" role="presentation" onMouseDown={(event) => {
-      if (event.target === event.currentTarget) onClose();
-    }}>
+    <div
+      className="product-detail-overlay"
+      role="presentation"
+      onPointerDown={(event) => {
+        if (event.target === event.currentTarget) {
+          backdropPointerStart.current = { x: event.clientX, y: event.clientY };
+        } else {
+          backdropPointerStart.current = null;
+        }
+      }}
+      onClick={(event) => {
+        const start = backdropPointerStart.current;
+        backdropPointerStart.current = null;
+        if (
+          event.target === event.currentTarget &&
+          start &&
+          Math.hypot(event.clientX - start.x, event.clientY - start.y) < 10
+        ) {
+          onClose();
+        }
+      }}
+    >
       <section className="product-detail-panel" role="dialog" aria-modal="true" aria-labelledby="product-detail-title">
         <div className="product-detail-media">
           <div
@@ -1122,6 +1134,38 @@ function HomePage() {
 
     return () => window.clearInterval(interval);
   }, []);
+
+  useEffect(() => {
+    if (!selectedProduct) return;
+
+    const scrollY = window.scrollY;
+    const bodyStyle = document.body.style;
+    const documentStyle = document.documentElement.style;
+    const previousBodyStyles = {
+      position: bodyStyle.position,
+      top: bodyStyle.top,
+      width: bodyStyle.width,
+      overflow: bodyStyle.overflow,
+    };
+    const previousDocumentOverflow = documentStyle.overflow;
+
+    document.body.classList.add("product-detail-open");
+    bodyStyle.position = "fixed";
+    bodyStyle.top = `-${scrollY}px`;
+    bodyStyle.width = "100%";
+    bodyStyle.overflow = "hidden";
+    documentStyle.overflow = "hidden";
+
+    return () => {
+      bodyStyle.position = previousBodyStyles.position;
+      bodyStyle.top = previousBodyStyles.top;
+      bodyStyle.width = previousBodyStyles.width;
+      bodyStyle.overflow = previousBodyStyles.overflow;
+      documentStyle.overflow = previousDocumentOverflow;
+      document.body.classList.remove("product-detail-open");
+      window.scrollTo(0, scrollY);
+    };
+  }, [selectedProduct]);
 
   const selectTab = (tab: BottomTab) => {
     setActiveTab(tab);
