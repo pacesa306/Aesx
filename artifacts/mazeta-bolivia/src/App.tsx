@@ -1256,7 +1256,7 @@ function HomePage() {
               <li key={item.label}>
                 <button
                   type="button"
-                  className={`${item.tab === activeTab ? "is-active" : ""}${item.badge ? " has-badge" : ""}`}
+                  className={item.tab === activeTab ? "is-active" : ""}
                   onClick={() => {
                     if (item.tab) {
                       selectTab(item.tab);
