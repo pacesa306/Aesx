@@ -1036,7 +1036,7 @@ const communityPages = {
       {
         title: "CREA CON NOSOTROS",
         copy: "Producciones, contenido y colaboraciones para proyectos que quieren destacar.",
-        image: "/mazeta-hero-model.png",
+        image: "/mazeta-estudios-hero-1.png",
         tag: "COLABORACIONES",
       },
       {
