@@ -762,6 +762,8 @@ function StorePage({
     return matchesCategory && matchesSearch;
   };
   const filteredProducts = allProducts.filter(matchesProduct);
+  const compressionProducts = filteredProducts.filter((product) => product.collection === "COMPRESIÓN");
+  const otherProducts = filteredProducts.filter((product) => product.collection !== "COMPRESIÓN");
   const hasActiveFilter = activeCategory !== "TODOS" || Boolean(normalizedSearch);
 
   const scrollToProducts = () => {
@@ -855,14 +857,27 @@ function StorePage({
         <div className="store-dots"><span className="is-active" /><span /><span /></div>
       </section>
 
-      <section className="store-section" aria-labelledby="bestsellers-title">
+      {!hasActiveFilter && compressionProducts.length > 0 && (
+        <section className="store-section" aria-labelledby="bestsellers-title">
+          <div className="store-section-heading">
+            <h2 id="bestsellers-title">POLERAS DE COMPRESIÓN</h2>
+          </div>
+          <div className="store-product-row">
+            {compressionProducts.map((product) => <ProductCard key={product.name} product={product} />)}
+          </div>
+        </section>
+      )}
+
+      <section className="store-section" aria-labelledby="other-products-title">
         <div className="store-section-heading">
-          <h2 id="bestsellers-title">{hasActiveFilter ? "RESULTADOS" : "TODAS LAS PRENDAS"}</h2>
+          <h2 id="other-products-title">{hasActiveFilter ? "RESULTADOS" : "OTRAS PRENDAS"}</h2>
           <button type="button" onClick={() => chooseCategory("TODOS")}>Ver todos <ChevronRight aria-hidden="true" /></button>
         </div>
-        {filteredProducts.length > 0 ? (
+        {(hasActiveFilter ? filteredProducts : otherProducts).length > 0 ? (
           <div className="store-product-row">
-            {filteredProducts.map((product) => <ProductCard key={product.name} product={product} />)}
+            {(hasActiveFilter ? filteredProducts : otherProducts).map((product) => (
+              <ProductCard key={product.name} product={product} />
+            ))}
           </div>
         ) : (
           <p className="store-no-results">No encontramos productos con esa búsqueda.</p>
