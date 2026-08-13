@@ -96,13 +96,6 @@ const socialLinks = [
   },
 ] as const;
 
-const storeCategories = [
-  { name: "HOMBRE", filterCategory: "TODOS", image: "/store-cat-men.png", icon: "shirt" },
-  { name: "POLERAS", filterCategory: "POLERAS", image: "/store-cat-polos.png", icon: "hanger" },
-  { name: "SHORTS", filterCategory: "SHORTS", image: "/store-cat-shorts.png", icon: "shorts" },
-  { name: "JOGGERS", filterCategory: "PANTALONES", image: "/store-product-jogger.png", icon: "pants" },
-];
-
 const storeFilterCategories = ["TODOS", "CAMISETAS", "POLERAS", "SHORTS"];
 
 type Product = {
@@ -215,8 +208,6 @@ const userProducts: Product[] = [
   },
 ];
 
-const bestSellers: Product[] = userProducts.slice(0, 4);
-const newProducts: Product[] = userProducts.slice(4);
 const featuredProductSlots = Array.from({ length: 4 }, (_, index) => index);
 
 const heroSlides = [
@@ -759,7 +750,7 @@ function StorePage({
     );
   };
 
-  const allProducts = [...bestSellers, ...newProducts];
+  const allProducts = userProducts;
   const normalizedSearch = searchTerm.trim().toLocaleLowerCase();
   const matchesProduct = (product: Product) => {
     const matchesCategory = activeCategory === "TODOS" || product.category === activeCategory;
@@ -770,8 +761,6 @@ function StorePage({
         .some((value) => value!.toLocaleLowerCase().includes(normalizedSearch));
     return matchesCategory && matchesSearch;
   };
-  const filteredBestSellers = bestSellers.filter(matchesProduct);
-  const filteredNewProducts = newProducts.filter(matchesProduct);
   const filteredProducts = allProducts.filter(matchesProduct);
   const hasActiveFilter = activeCategory !== "TODOS" || Boolean(normalizedSearch);
 
@@ -866,66 +855,17 @@ function StorePage({
         <div className="store-dots"><span className="is-active" /><span /><span /></div>
       </section>
 
-      <section className="store-section" aria-labelledby="store-categories-title">
-        <div className="store-section-heading">
-          <h2 id="store-categories-title">CATEGORÍAS</h2>
-           <button type="button" onClick={() => chooseCategory("TODOS")}>Ver todas <ChevronRight aria-hidden="true" /></button>
-        </div>
-        <div className="store-category-row">
-          {storeCategories.map((category) => (
-             <button
-               type="button"
-               className={`store-category-card${activeCategory === category.filterCategory ? " is-active" : ""}`}
-               key={category.name}
-               onClick={() => chooseCategory(category.filterCategory)}
-             >
-              <img src={category.image} alt="" />
-              <span>{category.name}</span>
-            </button>
-          ))}
-        </div>
-      </section>
-
       <section className="store-section" aria-labelledby="bestsellers-title">
         <div className="store-section-heading">
-          <h2 id="bestsellers-title">{hasActiveFilter ? "RESULTADOS" : "MÁS VENDIDOS"}</h2>
+          <h2 id="bestsellers-title">{hasActiveFilter ? "RESULTADOS" : "TODAS LAS PRENDAS"}</h2>
           <button type="button" onClick={() => chooseCategory("TODOS")}>Ver todos <ChevronRight aria-hidden="true" /></button>
         </div>
-        {hasActiveFilter ? (
-          filteredProducts.length > 0 ? (
-            <div className="store-product-row">
-              {filteredProducts.map((product) => <ProductCard key={product.name} product={product} />)}
-            </div>
-          ) : (
-            <p className="store-no-results">No encontramos productos con esa búsqueda.</p>
-          )
+        {filteredProducts.length > 0 ? (
+          <div className="store-product-row">
+            {filteredProducts.map((product) => <ProductCard key={product.name} product={product} />)}
+          </div>
         ) : (
-          <div className="store-product-row">
-            {filteredBestSellers.map((product) => <ProductCard key={product.name} product={product} />)}
-          </div>
-        )}
-      </section>
-
-      <section className="store-offer" aria-label="Oferta de hoodies">
-        <img src="/store-offer-hoodie.png" alt="" />
-        <div className="store-offer-shade" />
-        <div className="store-offer-copy">
-          <h2>20% OFF<br />EN HOODIES</h2>
-          <p>Por tiempo limitado.<br />No te lo pierdas.</p>
-          <button type="button" onClick={() => chooseCategory("POLERAS")}>VER OFERTAS</button>
-        </div>
-        <div className="store-discount">20%<br /><span>OFF</span></div>
-      </section>
-
-      <section className="store-section store-new-section" aria-labelledby="new-title">
-        <div className="store-section-heading">
-          <h2 id="new-title">NUEVOS PRODUCTOS</h2>
-          <button type="button" onClick={() => chooseCategory("TODOS")}>Ver todos <ChevronRight aria-hidden="true" /></button>
-        </div>
-        {!hasActiveFilter && (
-          <div className="store-product-row">
-            {filteredNewProducts.map((product) => <ProductCard key={product.name} product={product} />)}
-          </div>
+          <p className="store-no-results">No encontramos productos con esa búsqueda.</p>
         )}
       </section>
       <div className="store-bottom-space" />
