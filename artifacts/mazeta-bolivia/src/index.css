@@ -4974,6 +4974,154 @@ body.product-detail-open .mazeta-bottom-nav {
 }
 
 /* Community pages: Atletas and Mazeta Estudios. */
+.community-hero {
+  margin: -2px 0 22px;
+}
+
+.community-hero-viewport {
+  position: relative;
+  aspect-ratio: 16 / 5;
+  min-height: 170px;
+  max-height: 285px;
+  overflow: hidden;
+  border: 1px solid #343434;
+  border-radius: 14px;
+  background:
+    radial-gradient(circle at 50% 48%, rgba(215, 170, 80, 0.08), transparent 43%),
+    #050505;
+  box-shadow: 0 16px 34px rgba(0, 0, 0, 0.28);
+}
+
+.community-hero-slide {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  padding: 0;
+  border: 0;
+  background-color: #050505;
+  background-position: center;
+  background-size: cover;
+  cursor: zoom-in;
+  opacity: 0;
+  transition: opacity 420ms ease;
+}
+
+.community-hero-slide::before {
+  position: absolute;
+  z-index: -1;
+  inset: -18px;
+  background-image: inherit;
+  background-position: center;
+  background-size: cover;
+  content: "";
+  filter: blur(18px);
+  opacity: 0.22;
+  transform: scale(1.08);
+}
+
+.community-hero-slide.is-active {
+  opacity: 1;
+}
+
+.community-hero-slide img {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  filter: contrast(1.04);
+}
+
+.community-hero-shade {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, rgba(0, 0, 0, 0.2), transparent 26%, transparent 74%, rgba(0, 0, 0, 0.2)),
+    linear-gradient(0deg, rgba(0, 0, 0, 0.26), transparent 35%);
+}
+
+.community-hero-dots {
+  position: absolute;
+  right: 0;
+  bottom: 12px;
+  left: 0;
+  z-index: 3;
+  display: flex;
+  justify-content: center;
+  gap: 7px;
+}
+
+.community-hero-dots button {
+  width: 6px;
+  height: 6px;
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: transform 180ms ease, background 180ms ease, opacity 180ms ease;
+}
+
+.community-hero-dots button.is-active {
+  border-color: #fff;
+  background: #fff;
+  opacity: 1;
+  transform: scale(1.2);
+}
+
+.community-lightbox {
+  position: fixed;
+  z-index: 60;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: rgba(0, 0, 0, 0.94);
+  backdrop-filter: blur(10px);
+}
+
+.community-lightbox img {
+  display: block;
+  width: auto;
+  max-width: min(100%, 1024px);
+  height: auto;
+  max-height: calc(100dvh - 48px);
+  object-fit: contain;
+  border: 1px solid #303030;
+  border-radius: 8px;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.58);
+}
+
+.community-lightbox-close {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  display: grid;
+  width: 40px;
+  height: 40px;
+  place-items: center;
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 50%;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.58);
+  cursor: pointer;
+}
+
+.community-lightbox-close svg {
+  width: 20px;
+  height: 20px;
+}
+
 .community-page {
   width: 100%;
   max-width: 940px;
@@ -5294,6 +5442,42 @@ body.product-detail-open .mazeta-bottom-nav {
 }
 
 @media (max-width: 699px) {
+  .community-hero {
+    margin: -8px 0 15px;
+  }
+
+  .community-hero-viewport {
+    aspect-ratio: 16 / 7;
+    min-height: 145px;
+    border-radius: 11px;
+  }
+
+  .community-hero-dots {
+    bottom: 9px;
+    gap: 6px;
+  }
+
+  .community-hero-dots button {
+    width: 5px;
+    height: 5px;
+  }
+
+  .community-lightbox {
+    padding: 14px;
+  }
+
+  .community-lightbox img {
+    max-height: calc(100dvh - 28px);
+    border-radius: 6px;
+  }
+
+  .community-lightbox-close {
+    top: 11px;
+    right: 11px;
+    width: 36px;
+    height: 36px;
+  }
+
   .community-page {
     min-height: calc(100dvh - 98px);
     padding: 25px 14px 0;

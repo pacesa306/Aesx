@@ -997,6 +997,13 @@ const communityActions = [
   },
 ] as const;
 
+const studiesHeroSlides = [
+  {
+    image: "/mazeta-estudios-hero-1.png",
+    alt: "Mazeta Estudios: crea tu marca, nosotros desarrollamos el resto.",
+  },
+] as const;
+
 const communityPages = {
   atletas: {
     eyebrow: "COMUNIDAD MAZETA",
@@ -1042,11 +1049,101 @@ const communityPages = {
   },
 } as const;
 
+function CommunityHeroCarousel({
+  slides,
+}: {
+  slides: readonly { image: string; alt: string }[];
+}) {
+  const [activeSlide, setActiveSlide] = useState(0);
+  const [expandedSlide, setExpandedSlide] = useState<number | null>(null);
+
+  useEffect(() => {
+    if (slides.length < 2) return;
+
+    const interval = window.setInterval(() => {
+      setActiveSlide((current) => (current + 1) % slides.length);
+    }, 1000);
+
+    return () => window.clearInterval(interval);
+  }, [slides.length]);
+
+  useEffect(() => {
+    if (expandedSlide === null) return;
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setExpandedSlide(null);
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [expandedSlide]);
+
+  if (slides.length === 0) return null;
+
+  return (
+    <>
+      <section className="community-hero" aria-label="Anuncios de Mazeta Estudios">
+        <div className="community-hero-viewport">
+          {slides.map((slide, index) => (
+            <button
+              className={`community-hero-slide${activeSlide === index ? " is-active" : ""}`}
+              type="button"
+              key={slide.image}
+              style={{ backgroundImage: `url("${slide.image}")` }}
+              tabIndex={activeSlide === index ? 0 : -1}
+              aria-label={`Abrir anuncio ${index + 1}`}
+              onClick={() => setExpandedSlide(index)}
+            >
+              <img src={slide.image} alt={slide.alt} />
+            </button>
+          ))}
+          <div className="community-hero-shade" aria-hidden="true" />
+          <div className="community-hero-dots" aria-label="Seleccionar anuncio">
+            {slides.map((slide, index) => (
+              <button
+                type="button"
+                className={activeSlide === index ? "is-active" : ""}
+                key={`${slide.image}-dot`}
+                aria-label={`Mostrar anuncio ${index + 1}`}
+                aria-current={activeSlide === index}
+                onClick={() => setActiveSlide(index)}
+              />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {expandedSlide !== null && (
+        <div
+          className="community-lightbox"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Anuncio ampliado"
+          onMouseDown={(event) => {
+            if (event.target === event.currentTarget) setExpandedSlide(null);
+          }}
+        >
+          <button
+            type="button"
+            className="community-lightbox-close"
+            aria-label="Cerrar anuncio ampliado"
+            onClick={() => setExpandedSlide(null)}
+          >
+            <X aria-hidden="true" />
+          </button>
+          <img src={slides[expandedSlide].image} alt={slides[expandedSlide].alt} />
+        </div>
+      )}
+    </>
+  );
+}
+
 function CommunityPage({ page }: { page: keyof typeof communityPages }) {
   const content = communityPages[page];
 
   return (
     <div className="community-page">
+      {page === "estudios" && <CommunityHeroCarousel slides={studiesHeroSlides} />}
       <section className="community-intro" aria-labelledby={`${page}-title`}>
         <span className="community-eyebrow">{content.eyebrow}</span>
         <h1 id={`${page}-title`}>{content.title}</h1>
