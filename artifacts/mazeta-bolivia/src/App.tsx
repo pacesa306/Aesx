@@ -1223,16 +1223,21 @@ function CommunityPage({ page }: { page: keyof typeof communityPages }) {
 
 function MazetaIntro({ onFinish }: { onFinish: () => void }) {
   const [isExiting, setIsExiting] = useState(false);
+  const onFinishRef = useRef(onFinish);
+
+  useEffect(() => {
+    onFinishRef.current = onFinish;
+  }, [onFinish]);
 
   useEffect(() => {
     const exitTimer = window.setTimeout(() => setIsExiting(true), 2050);
-    const finishTimer = window.setTimeout(onFinish, 2570);
+    const finishTimer = window.setTimeout(() => onFinishRef.current(), 2570);
 
     return () => {
       window.clearTimeout(exitTimer);
       window.clearTimeout(finishTimer);
     };
-  }, [onFinish]);
+  }, []);
 
   return (
     <div className={`mazeta-intro${isExiting ? " is-exiting" : ""}`} role="dialog" aria-modal="true" aria-label="Intro de Mazeta">
