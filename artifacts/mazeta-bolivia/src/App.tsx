@@ -1223,11 +1223,6 @@ function CommunityPage({ page }: { page: keyof typeof communityPages }) {
 
 function MazetaIntro({ onFinish }: { onFinish: () => void }) {
   const [isExiting, setIsExiting] = useState(false);
-  const finishIntro = () => {
-    if (isExiting) return;
-    setIsExiting(true);
-    window.setTimeout(onFinish, 520);
-  };
 
   useEffect(() => {
     const exitTimer = window.setTimeout(() => setIsExiting(true), 2050);
@@ -1241,34 +1236,20 @@ function MazetaIntro({ onFinish }: { onFinish: () => void }) {
 
   return (
     <div className={`mazeta-intro${isExiting ? " is-exiting" : ""}`} role="dialog" aria-modal="true" aria-label="Intro de Mazeta">
-      <div className="mazeta-intro-grid" aria-hidden="true" />
-      <div className="mazeta-intro-orbit mazeta-intro-orbit-one" aria-hidden="true" />
-      <div className="mazeta-intro-orbit mazeta-intro-orbit-two" aria-hidden="true" />
       <div className="mazeta-intro-content">
-        <p className="mazeta-intro-kicker">
-          <span aria-hidden="true" />
-          MAZETA WORLD FITNESS
-        </p>
-        <div className="mazeta-intro-monogram" aria-hidden="true">MZ</div>
-        <p className="mazeta-intro-wordmark">MAZETA <span>BOLIVIA</span></p>
-        <h1>
-          MUÉVETE
-          <span>A TU MANERA</span>
-        </h1>
-        <div className="mazeta-intro-meta">
-          <span>PERFORMANCE</span>
-          <i aria-hidden="true" />
-          <span>STREETWEAR</span>
-          <i aria-hidden="true" />
-          <span>ACTITUD</span>
+        <div className="mazeta-intro-icon-wrap">
+          <div className="mazeta-intro-rays" aria-hidden="true">
+            {Array.from({ length: 10 }, (_, index) => (
+              <span key={index} style={{ "--ray-index": index } as React.CSSProperties} />
+            ))}
+          </div>
+          <div className="mazeta-intro-monogram" aria-hidden="true">MZ</div>
         </div>
+        <p className="mazeta-intro-wordmark">MAZETA FITNESS <span>BOLIVIA</span></p>
         <div className="mazeta-intro-loader" aria-hidden="true">
           <span />
         </div>
       </div>
-      <button className="mazeta-intro-skip" type="button" onClick={finishIntro}>
-        SALTAR INTRO
-      </button>
     </div>
   );
 }

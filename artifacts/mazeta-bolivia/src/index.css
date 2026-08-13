@@ -176,9 +176,7 @@ button:focus-visible {
   place-items: center;
   overflow: hidden;
   color: #f6f6f3;
-  background:
-    radial-gradient(circle at 50% 48%, rgba(215, 170, 80, 0.1), transparent 25%),
-    #050505;
+  background: #050505;
   opacity: 1;
   transition: opacity 520ms cubic-bezier(0.76, 0, 0.24, 1);
 }
@@ -186,62 +184,6 @@ button:focus-visible {
 .mazeta-intro.is-exiting {
   pointer-events: none;
   opacity: 0;
-}
-
-.mazeta-intro-grid {
-  position: absolute;
-  inset: 0;
-  opacity: 0.2;
-  background-image:
-    linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
-  background-size: 58px 58px;
-  mask-image: radial-gradient(ellipse at center, black, transparent 72%);
-  animation: mazeta-intro-grid-drift 8s linear infinite;
-}
-
-.mazeta-intro-orbit {
-  position: absolute;
-  width: min(64vw, 720px);
-  aspect-ratio: 1;
-  border: 1px solid rgba(215, 170, 80, 0.2);
-  border-radius: 50%;
-  transform: rotate(-24deg) scaleY(0.32);
-  animation: mazeta-intro-orbit-in 1.3s cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-
-.mazeta-intro-orbit::after {
-  position: absolute;
-  top: -3px;
-  left: 21%;
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: #d7aa50;
-  box-shadow: 0 0 16px rgba(215, 170, 80, 0.9);
-  content: "";
-}
-
-.mazeta-intro-orbit-one {
-  animation-delay: 120ms;
-}
-
-.mazeta-intro-orbit-two {
-  width: min(48vw, 540px);
-  border-color: rgba(255, 255, 255, 0.13);
-  transform: rotate(34deg) scaleY(0.3);
-  animation-delay: 260ms;
-}
-
-.mazeta-intro-orbit-two::after {
-  top: auto;
-  right: 19%;
-  bottom: -3px;
-  left: auto;
-  width: 4px;
-  height: 4px;
-  background: #f6f6f3;
-  box-shadow: 0 0 14px rgba(255, 255, 255, 0.8);
 }
 
 .mazeta-intro-content {
@@ -255,23 +197,42 @@ button:focus-visible {
   animation: mazeta-intro-content-in 900ms cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-.mazeta-intro-kicker {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin: 0 0 30px;
-  color: #b6b2a9;
-  font-size: 9px;
-  font-weight: 800;
-  letter-spacing: 0.3em;
+.mazeta-intro-icon-wrap {
+  position: relative;
+  display: grid;
+  width: clamp(150px, 34vw, 230px);
+  aspect-ratio: 1;
+  place-items: center;
 }
 
-.mazeta-intro-kicker span {
-  display: block;
-  width: 24px;
-  height: 1px;
-  background: #d7aa50;
-  box-shadow: 0 0 8px rgba(215, 170, 80, 0.72);
+.mazeta-intro-icon-wrap::before {
+  position: absolute;
+  inset: 24%;
+  border: 1px solid rgba(215, 170, 80, 0.2);
+  border-radius: 50%;
+  box-shadow: 0 0 34px rgba(215, 170, 80, 0.15);
+  content: "";
+  animation: mazeta-intro-icon-pulse 1.15s ease-out infinite;
+}
+
+.mazeta-intro-rays {
+  position: absolute;
+  inset: 0;
+  animation: mazeta-intro-rays-rotate 7s linear infinite;
+}
+
+.mazeta-intro-rays span {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 44%;
+  height: 2px;
+  transform: rotate(calc(var(--ray-index) * 36deg)) translateX(58px);
+  transform-origin: left center;
+  opacity: 0;
+  background: linear-gradient(90deg, rgba(215, 170, 80, 0.9), transparent);
+  box-shadow: 0 0 7px rgba(215, 170, 80, 0.55);
+  animation: mazeta-intro-ray-burst 1.25s calc(var(--ray-index) * 90ms) ease-out infinite;
 }
 
 .mazeta-intro-monogram {
@@ -305,39 +266,6 @@ button:focus-visible {
   color: #d7aa50;
 }
 
-.mazeta-intro-content h1 {
-  margin: 24px 0 20px;
-  color: #f6f6f3;
-  font-size: clamp(42px, 9vw, 76px);
-  font-weight: 900;
-  letter-spacing: -0.07em;
-  line-height: 0.86;
-  text-transform: uppercase;
-}
-
-.mazeta-intro-content h1 span {
-  display: block;
-  color: transparent;
-  -webkit-text-stroke: 1px rgba(246, 246, 243, 0.72);
-}
-
-.mazeta-intro-meta {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  color: #aaa69d;
-  font-size: 8px;
-  font-weight: 800;
-  letter-spacing: 0.2em;
-}
-
-.mazeta-intro-meta i {
-  width: 3px;
-  height: 3px;
-  border-radius: 50%;
-  background: #d7aa50;
-}
-
 .mazeta-intro-loader {
   width: min(180px, 48vw);
   height: 2px;
@@ -356,48 +284,39 @@ button:focus-visible {
   animation: mazeta-intro-loader 2.1s cubic-bezier(0.65, 0, 0.35, 1) forwards;
 }
 
-.mazeta-intro-skip {
-  position: absolute;
-  right: clamp(18px, 5vw, 48px);
-  bottom: clamp(20px, 5vw, 42px);
-  z-index: 2;
-  padding: 9px 0;
-  border: 0;
-  border-bottom: 1px solid rgba(215, 170, 80, 0.5);
-  color: #aaa69d;
-  background: transparent;
-  cursor: pointer;
-  font-size: 8px;
-  font-weight: 800;
-  letter-spacing: 0.18em;
-  transition: color 180ms ease, border-color 180ms ease;
-}
-
-.mazeta-intro-skip:hover,
-.mazeta-intro-skip:focus-visible {
-  border-bottom-color: #d7aa50;
-  color: #f6f6f3;
-}
-
-@keyframes mazeta-intro-grid-drift {
-  from {
-    transform: translate3d(0, 0, 0);
-  }
-
+@keyframes mazeta-intro-rays-rotate {
   to {
-    transform: translate3d(29px, 29px, 0);
+    transform: rotate(360deg);
   }
 }
 
-@keyframes mazeta-intro-orbit-in {
-  from {
+@keyframes mazeta-intro-ray-burst {
+  0% {
     opacity: 0;
-    transform: rotate(-24deg) scaleY(0.1) scaleX(1.25);
+    transform: rotate(calc(var(--ray-index) * 36deg)) translateX(38px) scaleX(0.2);
   }
 
-  to {
+  35%,
+  65% {
     opacity: 1;
-    transform: rotate(-24deg) scaleY(0.32) scaleX(1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: rotate(calc(var(--ray-index) * 36deg)) translateX(78px) scaleX(1);
+  }
+}
+
+@keyframes mazeta-intro-icon-pulse {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: scale(0.9);
+  }
+
+  50% {
+    opacity: 0;
+    transform: scale(1.2);
   }
 }
 
@@ -433,9 +352,10 @@ button:focus-visible {
 
 @media (prefers-reduced-motion: reduce) {
   .mazeta-intro,
-  .mazeta-intro-grid,
-  .mazeta-intro-orbit,
   .mazeta-intro-content,
+  .mazeta-intro-rays,
+  .mazeta-intro-rays span,
+  .mazeta-intro-icon-wrap::before,
   .mazeta-intro-monogram,
   .mazeta-intro-loader span {
     animation: none;
