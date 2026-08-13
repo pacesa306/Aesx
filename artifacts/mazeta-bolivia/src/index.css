@@ -2943,24 +2943,31 @@ body.product-detail-open .mazeta-bottom-nav {
 
 /* Mobile layout safety: keep every surface inside the viewport. */
 @media (max-width: 699px) {
-  /* Mobile menu: one clear column, no badges, and a dedicated social row. */
+  /* Mobile menu: two aligned columns, no badges, and a dedicated social row. */
   .mazeta-menu {
     justify-content: flex-start;
     padding-top: 10px;
   }
 
   .mazeta-menu ul {
-    grid-template-columns: minmax(0, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 14px;
     row-gap: 0;
     padding: 2px 18px 0;
   }
 
+  .mazeta-menu li {
+    display: flex;
+    min-width: 0;
+  }
+
   .mazeta-menu button {
-    min-height: 48px;
-    gap: 12px;
-    padding: 8px 6px;
+    min-height: 56px;
+    gap: 9px;
+    padding: 8px 4px;
     font-size: 10px;
     line-height: 1.15;
+    white-space: normal;
   }
 
   .mazeta-menu button small {
