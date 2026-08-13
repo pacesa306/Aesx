@@ -168,6 +168,281 @@ button:focus-visible {
   color: #f7f7f7;
 }
 
+.mazeta-intro {
+  position: fixed;
+  z-index: 100;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  color: #f6f6f3;
+  background:
+    radial-gradient(circle at 50% 48%, rgba(215, 170, 80, 0.1), transparent 25%),
+    #050505;
+  opacity: 1;
+  transition: opacity 520ms cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+.mazeta-intro.is-exiting {
+  pointer-events: none;
+  opacity: 0;
+}
+
+.mazeta-intro-grid {
+  position: absolute;
+  inset: 0;
+  opacity: 0.2;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
+  background-size: 58px 58px;
+  mask-image: radial-gradient(ellipse at center, black, transparent 72%);
+  animation: mazeta-intro-grid-drift 8s linear infinite;
+}
+
+.mazeta-intro-orbit {
+  position: absolute;
+  width: min(64vw, 720px);
+  aspect-ratio: 1;
+  border: 1px solid rgba(215, 170, 80, 0.2);
+  border-radius: 50%;
+  transform: rotate(-24deg) scaleY(0.32);
+  animation: mazeta-intro-orbit-in 1.3s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.mazeta-intro-orbit::after {
+  position: absolute;
+  top: -3px;
+  left: 21%;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #d7aa50;
+  box-shadow: 0 0 16px rgba(215, 170, 80, 0.9);
+  content: "";
+}
+
+.mazeta-intro-orbit-one {
+  animation-delay: 120ms;
+}
+
+.mazeta-intro-orbit-two {
+  width: min(48vw, 540px);
+  border-color: rgba(255, 255, 255, 0.13);
+  transform: rotate(34deg) scaleY(0.3);
+  animation-delay: 260ms;
+}
+
+.mazeta-intro-orbit-two::after {
+  top: auto;
+  right: 19%;
+  bottom: -3px;
+  left: auto;
+  width: 4px;
+  height: 4px;
+  background: #f6f6f3;
+  box-shadow: 0 0 14px rgba(255, 255, 255, 0.8);
+}
+
+.mazeta-intro-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  width: min(88vw, 520px);
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  animation: mazeta-intro-content-in 900ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.mazeta-intro-kicker {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 30px;
+  color: #b6b2a9;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.3em;
+}
+
+.mazeta-intro-kicker span {
+  display: block;
+  width: 24px;
+  height: 1px;
+  background: #d7aa50;
+  box-shadow: 0 0 8px rgba(215, 170, 80, 0.72);
+}
+
+.mazeta-intro-monogram {
+  display: grid;
+  width: clamp(72px, 13vw, 96px);
+  aspect-ratio: 1;
+  place-items: center;
+  border: 1px solid rgba(215, 170, 80, 0.66);
+  border-radius: 50%;
+  color: #d7aa50;
+  font-size: clamp(25px, 5vw, 36px);
+  font-weight: 900;
+  letter-spacing: -0.12em;
+  text-indent: -0.12em;
+  box-shadow:
+    0 0 0 7px rgba(215, 170, 80, 0.035),
+    0 0 36px rgba(215, 170, 80, 0.12);
+  animation: mazeta-intro-monogram-in 760ms 240ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.mazeta-intro-wordmark {
+  margin: 20px 0 0;
+  color: #f6f6f3;
+  font-size: clamp(16px, 3vw, 21px);
+  font-weight: 900;
+  letter-spacing: 0.24em;
+  text-indent: 0.24em;
+}
+
+.mazeta-intro-wordmark span {
+  color: #d7aa50;
+}
+
+.mazeta-intro-content h1 {
+  margin: 24px 0 20px;
+  color: #f6f6f3;
+  font-size: clamp(42px, 9vw, 76px);
+  font-weight: 900;
+  letter-spacing: -0.07em;
+  line-height: 0.86;
+  text-transform: uppercase;
+}
+
+.mazeta-intro-content h1 span {
+  display: block;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(246, 246, 243, 0.72);
+}
+
+.mazeta-intro-meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #aaa69d;
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+}
+
+.mazeta-intro-meta i {
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: #d7aa50;
+}
+
+.mazeta-intro-loader {
+  width: min(180px, 48vw);
+  height: 2px;
+  margin-top: 38px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.16);
+}
+
+.mazeta-intro-loader span {
+  display: block;
+  width: 100%;
+  height: 100%;
+  transform: translateX(-100%);
+  background: #d7aa50;
+  box-shadow: 0 0 12px rgba(215, 170, 80, 0.8);
+  animation: mazeta-intro-loader 2.1s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+}
+
+.mazeta-intro-skip {
+  position: absolute;
+  right: clamp(18px, 5vw, 48px);
+  bottom: clamp(20px, 5vw, 42px);
+  z-index: 2;
+  padding: 9px 0;
+  border: 0;
+  border-bottom: 1px solid rgba(215, 170, 80, 0.5);
+  color: #aaa69d;
+  background: transparent;
+  cursor: pointer;
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  transition: color 180ms ease, border-color 180ms ease;
+}
+
+.mazeta-intro-skip:hover,
+.mazeta-intro-skip:focus-visible {
+  border-bottom-color: #d7aa50;
+  color: #f6f6f3;
+}
+
+@keyframes mazeta-intro-grid-drift {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+
+  to {
+    transform: translate3d(29px, 29px, 0);
+  }
+}
+
+@keyframes mazeta-intro-orbit-in {
+  from {
+    opacity: 0;
+    transform: rotate(-24deg) scaleY(0.1) scaleX(1.25);
+  }
+
+  to {
+    opacity: 1;
+    transform: rotate(-24deg) scaleY(0.32) scaleX(1);
+  }
+}
+
+@keyframes mazeta-intro-content-in {
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes mazeta-intro-monogram-in {
+  from {
+    opacity: 0;
+    transform: scale(0.65) rotate(-16deg);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1) rotate(0);
+  }
+}
+
+@keyframes mazeta-intro-loader {
+  to {
+    transform: translateX(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mazeta-intro,
+  .mazeta-intro-grid,
+  .mazeta-intro-orbit,
+  .mazeta-intro-content,
+  .mazeta-intro-monogram,
+  .mazeta-intro-loader span {
+    animation: none;
+    transition: none;
+  }
+}
+
 .mazeta-header {
   position: fixed;
   z-index: 20;
