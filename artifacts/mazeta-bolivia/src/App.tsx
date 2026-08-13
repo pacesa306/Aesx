@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import {
   ArrowRight,
+  BookOpen,
   ChevronRight,
   ChevronLeft,
   Gift,
@@ -19,6 +20,7 @@ import {
   ShieldCheck,
   ShoppingBag,
   ShoppingCart,
+  Trophy,
   Trash2,
   Truck,
   UserRound,
@@ -27,7 +29,7 @@ import {
 } from "lucide-react";
 import { FaFacebookF, FaInstagram, FaTiktok, FaWhatsapp } from "react-icons/fa";
 
-type BottomTab = "inicio" | "tienda" | "inscribete" | "redes" | "whatsapp";
+type BottomTab = "inicio" | "tienda" | "inscribete" | "redes" | "atletas" | "estudios" | "whatsapp";
 
 const bottomTabs: Array<{
   id: BottomTab;
@@ -52,6 +54,8 @@ const menuItems: Array<{
   { label: "REGALOS", Icon: Gift },
   { label: "PRÓXIMOS LANZAMIENTOS", Icon: Rocket, badge: "PRÓXIMO" },
   { label: "¿QUIÉNES SOMOS?", Icon: Users },
+  { label: "ATLETAS", Icon: Trophy, tab: "atletas" },
+  { label: "MAZETA ESTUDIOS", Icon: BookOpen, tab: "estudios" },
   { label: "REDES SOCIALES", Icon: Instagram, tab: "redes" },
   { label: "BUZÓN DE SUGERENCIAS", Icon: MessageSquare },
   { label: "WHATSAPP", Icon: MessageCircle },
@@ -823,7 +827,7 @@ function StorePage({
         if (event.key === "Enter" || event.key === " ") onOpenProduct(product);
       }}
     >
-      <div className="store-product-image">
+      <div className={`store-product-image${product.collection === "COMPRESIÓN" ? " is-compression" : ""}`}>
         <img src={product.image} alt="" />
         <button
           type="button"
@@ -965,6 +969,135 @@ function SocialPage() {
 
       <p className="social-footer-note">#MAZETABOLIVIA · COMPARTE TU ESTILO</p>
       <div className="social-bottom-space" />
+    </div>
+  );
+}
+
+const communityActions = [
+  {
+    name: "WhatsApp",
+    label: "CONTACTAR",
+    href: "https://wa.me/59178524143",
+    className: "community-action-whatsapp",
+    Icon: FaWhatsapp,
+  },
+  {
+    name: "Instagram",
+    label: "SEGUIR",
+    href: "https://www.instagram.com/mazeta.bo?igsh=cm1waTdqZXlodnF2",
+    className: "community-action-instagram",
+    Icon: FaInstagram,
+  },
+  {
+    name: "TikTok",
+    label: "VER VIDEOS",
+    href: "https://www.tiktok.com/@mazeta.bo?_r=1&_t=ZS-98lFLylS5uX",
+    className: "community-action-tiktok",
+    Icon: FaTiktok,
+  },
+] as const;
+
+const communityPages = {
+  atletas: {
+    eyebrow: "COMUNIDAD MAZETA",
+    title: "ATLETAS",
+    description: "Rendimiento, disciplina y actitud para quienes entrenan con propósito.",
+    highlight: "VISTE TU MEJOR VERSIÓN",
+    highlightCopy: "Conoce las novedades y promociones que acompañan cada entrenamiento.",
+    promotions: [
+      {
+        title: "EQUIPA TU ENTRENAMIENTO",
+        copy: "Ropa deportiva diseñada para moverte con libertad y entrenar sin límites.",
+        image: "/store-hero.png",
+        tag: "COLECCIÓN DEPORTIVA",
+      },
+      {
+        title: "COMPRESIÓN MAZETA",
+        copy: "Soporte, comodidad y estilo para llevar tu rendimiento al siguiente nivel.",
+        image: "/mazeta-hero-drop-1.jpg",
+        tag: "PROMOCIÓN ESPECIAL",
+      },
+    ],
+  },
+  estudios: {
+    eyebrow: "CREATIVIDAD MAZETA",
+    title: "MAZETA ESTUDIOS",
+    description: "Un espacio para crear, colaborar y contar historias con identidad propia.",
+    highlight: "IDEAS QUE SE MUEVEN",
+    highlightCopy: "Descubre el lado creativo de Mazeta y conecta con nuestros próximos proyectos.",
+    promotions: [
+      {
+        title: "CREA CON NOSOTROS",
+        copy: "Producciones, contenido y colaboraciones para proyectos que quieren destacar.",
+        image: "/mazeta-hero-model.png",
+        tag: "COLABORACIONES",
+      },
+      {
+        title: "PRÓXIMO ESTUDIO",
+        copy: "Muy pronto compartiremos nuevas sesiones, lanzamientos y experiencias Mazeta.",
+        image: "/mazeta-hero-anuncio-3.jpg",
+        tag: "MUY PRONTO",
+      },
+    ],
+  },
+} as const;
+
+function CommunityPage({ page }: { page: keyof typeof communityPages }) {
+  const content = communityPages[page];
+
+  return (
+    <div className="community-page">
+      <section className="community-intro" aria-labelledby={`${page}-title`}>
+        <span className="community-eyebrow">{content.eyebrow}</span>
+        <h1 id={`${page}-title`}>{content.title}</h1>
+        <p>{content.description}</p>
+      </section>
+
+      <section className="community-highlight" aria-label={content.highlight}>
+        <span className="community-highlight-mark" aria-hidden="true">MZ</span>
+        <div>
+          <span>{content.eyebrow}</span>
+          <h2>{content.highlight}</h2>
+          <p>{content.highlightCopy}</p>
+        </div>
+      </section>
+
+      <section className="community-promotions" aria-label={`Promociones de ${content.title}`}>
+        {content.promotions.map((promotion) => (
+          <article className="community-promotion" key={promotion.title}>
+            <div className="community-promotion-image">
+              <img src={promotion.image} alt="" />
+              <span>{promotion.tag}</span>
+            </div>
+            <div className="community-promotion-copy">
+              <h2>{promotion.title}</h2>
+              <p>{promotion.copy}</p>
+              <a href="https://wa.me/59178524143" target="_blank" rel="noreferrer">
+                CONSULTAR
+                <ArrowRight aria-hidden="true" />
+              </a>
+            </div>
+          </article>
+        ))}
+      </section>
+
+      <section className="community-contact" aria-labelledby={`${page}-contact-title`}>
+        <div>
+          <span className="community-contact-eyebrow">CONECTA CON MAZETA</span>
+          <h2 id={`${page}-contact-title`}>HABLEMOS</h2>
+          <p>Estamos aquí para ayudarte y compartir lo que viene.</p>
+        </div>
+        <div className="community-actions">
+          {communityActions.map(({ name, label, href, className, Icon }) => (
+            <a className={`community-action ${className}`} href={href} target="_blank" rel="noreferrer" key={name}>
+              <Icon aria-hidden="true" />
+              <span>{name}</span>
+              <small>{label}</small>
+            </a>
+          ))}
+        </div>
+      </section>
+      <div className="community-bottom-space" />
     </div>
   );
 }
@@ -1117,6 +1250,10 @@ function HomePage() {
           />
         ) : activeTab === "redes" ? (
           <SocialPage />
+        ) : activeTab === "atletas" ? (
+          <CommunityPage page="atletas" />
+        ) : activeTab === "estudios" ? (
+          <CommunityPage page="estudios" />
         ) : (
         <div className="mazeta-home-content">
         <section className="mazeta-hero" aria-label="Nueva colección">
