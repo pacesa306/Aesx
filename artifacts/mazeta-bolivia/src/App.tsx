@@ -206,6 +206,42 @@ const userProducts: Product[] = [
     subtitle: "Negro · Solera deportiva",
     badge: "NUEVO",
   },
+  {
+    name: "Polera Compresión Roja",
+    price: "Bs. 180",
+    image: "/mazeta-compresion-roja.jpg",
+    category: "POLERAS",
+    collection: "COMPRESIÓN",
+    subtitle: "Negro · Detalles rojos",
+    badge: "COMPRESIÓN",
+  },
+  {
+    name: "Polera Compresión Plata",
+    price: "Bs. 180",
+    image: "/mazeta-compresion-plata.jpg",
+    category: "POLERAS",
+    collection: "COMPRESIÓN",
+    subtitle: "Negro · Detalles plateados",
+    badge: "COMPRESIÓN",
+  },
+  {
+    name: "Polera Compresión Blanca",
+    price: "Bs. 180",
+    image: "/mazeta-compresion-blanca.jpg",
+    category: "POLERAS",
+    collection: "COMPRESIÓN",
+    subtitle: "Blanco · Diseño completo",
+    badge: "COMPRESIÓN",
+  },
+  {
+    name: "Canguro Sin Mangas",
+    price: "Bs. 180",
+    image: "/mazeta-canguro-sin-mangas.jpg",
+    category: "POLERAS",
+    collection: "COMPRESIÓN",
+    subtitle: "Negro · Tallas M y L",
+    badge: "COMPRESIÓN",
+  },
 ];
 
 const featuredProductSlots = Array.from({ length: 4 }, (_, index) => index);
