@@ -1080,6 +1080,10 @@ function CommunityHeroCarousel({
 
   if (slides.length === 0) return null;
 
+  const changeSlide = (direction: number) => {
+    setActiveSlide((current) => (current + direction + slides.length) % slides.length);
+  };
+
   return (
     <>
       <section className="community-hero" aria-label="Anuncios de Mazeta Estudios">
@@ -1097,6 +1101,24 @@ function CommunityHeroCarousel({
               <img src={slide.image} alt={slide.alt} />
             </button>
           ))}
+          <button
+            type="button"
+            className="community-hero-arrow community-hero-arrow-left"
+            aria-label="Anuncio anterior"
+            disabled={slides.length < 2}
+            onClick={() => changeSlide(-1)}
+          >
+            <ChevronLeft aria-hidden="true" />
+          </button>
+          <button
+            type="button"
+            className="community-hero-arrow community-hero-arrow-right"
+            aria-label="Siguiente anuncio"
+            disabled={slides.length < 2}
+            onClick={() => changeSlide(1)}
+          >
+            <ChevronRight aria-hidden="true" />
+          </button>
           <div className="community-hero-shade" aria-hidden="true" />
           <div className="community-hero-dots" aria-label="Seleccionar anuncio">
             {slides.map((slide, index) => (
