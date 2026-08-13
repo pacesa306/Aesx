@@ -1406,6 +1406,16 @@ function HomePage() {
               </li>
             ))}
           </ul>
+           <div className="mazeta-mobile-socials" aria-label="Accesos sociales">
+             {socialLinks
+               .filter(({ name }) => name === "Instagram" || name === "TikTok" || name === "WhatsApp")
+               .map(({ name, href, Icon }) => (
+                 <a href={href} target="_blank" rel="noreferrer" key={name}>
+                   <Icon aria-hidden="true" />
+                   <span>{name}</span>
+                 </a>
+               ))}
+           </div>
           <div className="mazeta-menu-footer">
             <div className="mazeta-menu-footer-mark" aria-hidden="true">
               <Gift />

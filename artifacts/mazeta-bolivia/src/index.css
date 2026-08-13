@@ -2418,6 +2418,10 @@ body.product-detail-open .mazeta-bottom-nav {
   text-align: left;
 }
 
+.mazeta-mobile-socials {
+  display: none;
+}
+
 .mazeta-menu li {
   min-width: 0;
 }
@@ -2939,6 +2943,100 @@ body.product-detail-open .mazeta-bottom-nav {
 
 /* Mobile layout safety: keep every surface inside the viewport. */
 @media (max-width: 699px) {
+  /* Mobile menu: one clear column, no badges, and a dedicated social row. */
+  .mazeta-menu {
+    justify-content: flex-start;
+    padding-top: 10px;
+  }
+
+  .mazeta-menu ul {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 0;
+    padding: 2px 18px 0;
+  }
+
+  .mazeta-menu button {
+    min-height: 48px;
+    gap: 12px;
+    padding: 8px 6px;
+    font-size: 10px;
+    line-height: 1.15;
+  }
+
+  .mazeta-menu button small {
+    display: none;
+  }
+
+  .mazeta-menu-item-icon {
+    width: 23px;
+    height: 23px;
+    flex-basis: 23px;
+  }
+
+  .mazeta-menu-item-icon svg {
+    width: 21px;
+    height: 21px;
+  }
+
+  .mazeta-menu-item-arrow {
+    width: 18px;
+    height: 18px;
+    flex-basis: 18px;
+  }
+
+  .mazeta-menu button.is-active::after {
+    height: 26px;
+  }
+
+  .mazeta-mobile-socials {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 7px;
+    margin: 10px 18px 0;
+    padding: 12px 0 8px;
+    border-top: 1px solid rgba(255, 255, 255, 0.18);
+  }
+
+  .mazeta-mobile-socials a {
+    display: flex;
+    min-width: 0;
+    min-height: 48px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    padding: 6px 3px;
+    border: 1px solid rgba(215, 170, 80, 0.28);
+    border-radius: 7px;
+    color: #d7aa50;
+    background: rgba(215, 170, 80, 0.04);
+    text-decoration: none;
+    transition: background 180ms ease, border-color 180ms ease;
+  }
+
+  .mazeta-mobile-socials a:hover,
+  .mazeta-mobile-socials a:focus-visible {
+    border-color: rgba(215, 170, 80, 0.72);
+    background: rgba(215, 170, 80, 0.12);
+  }
+
+  .mazeta-mobile-socials svg {
+    width: 17px;
+    height: 17px;
+  }
+
+  .mazeta-mobile-socials span {
+    overflow: hidden;
+    max-width: 100%;
+    color: #f1f1f1;
+    font-size: 7px;
+    font-weight: 750;
+    letter-spacing: 0.06em;
+    line-height: 1;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
   html,
   body,
   #root {
