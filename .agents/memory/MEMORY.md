@@ -1,1 +1,2 @@
 - [Mobile catalog scrolling](mobile-catalog-scroll.md) — Keep catalog pages scrollable; contain only the product detail overlay on mobile.
+- [Imported Vite base paths](imported-vite-base-path.md) — Public assets need BASE_URL-aware URLs when an imported app moves under a nested artifact route.
